@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pickup Manager</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f3f4f6;
+            color: #1f2937;
+        }
+
+        header {
+            background: #172554;
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 24px;
+        }
+
+        header span {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .top-bar h2 {
+            font-size: 26px;
+        }
+
+        button {
+            border: none;
+            border-radius: 7px;
+            padding: 11px 18px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .primary:hover {
+            background: #1d4ed8;
+        }
+
+        .secondary {
+            background: #e5e7eb;
+            color: #111827;
+        }
+
+        .search-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .stat-title {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f9fafb;
+            text-align: left;
+            padding: 14px;
+            font-size: 13px;
+            color: #6b7280;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        td {
+            padding: 15px 14px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+        .status {
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .ready {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .completed {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 650px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 12px;
+            padding: 30px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .modal-header h2 {
+            font-size: 22px;
+        }
+
+        .close {
+            background: none;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .confirmation {
+            text-align: center;
+            padding: 25px;
+        }
+
+        .confirmation-code {
+            font-size: 36px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin: 20px 0;
+            color: #172554;
+        }
+
+        .success {
+            color: #166534;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 800px) {
+            .dashboard {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .table-container {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 800px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Pickup Manager</h1>
+    <span>Shipping & Receiving</span>
+</header>
+
+<div class="container">
+
+    <div class="top-bar">
+        <h2>Pickup Dashboard</h2>
+
+        <button class="primary" onclick="openModal()">
+            + New Pickup
+        </button>
+    </div>
+
+    <div class="dashboard">
+
+        <div class="stat">
+            <div class="stat-title">Today's Pickups</div>
+            <div class="stat-number" id="todayCount">0</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-title">Ready for Pickup</div>
+            <div class="stat-number" id="readyCount">0</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-title">Completed</div>
+            <div class="stat-number" id="completedCount">0</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-title">Total Packages</div>
+            <div class="stat-number" id="packageCount">0</div>
+        </div>
+
+    </div>
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="search"
+            placeholder="Search confirmation code, carrier, requester, company..."
+            oninput="displayPickups()"
+        >
+
+    </div>
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Confirmation</th>
+                    <th>Requester</th>
+                    <th>Carrier</th>
+                    <th>Packages</th>
+                    <th>Location</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+
+            </thead>
+
+            <tbody id="pickupTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<!-- NEW PICKUP MODAL -->
+
+<div class="modal" id="pickupModal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2>Create Pickup</h2>
+
+            <button class="close" onclick="closeModal()">
+                ×
+            </button>
+
+        </div>
+
+        <form id="pickupForm">
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label>Requester Name</label>
+
+                    <input
+                        type="text"
+                        id="requester"
+                        required
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Company</label>
+
+                    <input
+                        type="text"
+                        id="company"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label>Phone / Contact</label>
+
+                    <input
+                        type="text"
+                        id="phone"
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Carrier</label>
+
+                    <select id="carrier">
+
+                        <option>FedEx</option>
+                        <option>UPS</option>
+                        <option>Dayton Freight</option>
+                        <option>R+L Carriers</option>
+                        <option>Estes</option>
+                        <option>Customer Pickup</option>
+                        <option>Other</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label>Pickup Date</label>
+
+                    <input
+                        type="date"
+                        id="pickupDate"
+                        required
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Pickup Time</label>
+
+                    <input
+                        type="time"
+                        id="pickupTime"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label>Number of Packages</label>
+
+                    <input
+                        type="number"
+                        id="packages"
+                        min="1"
+                        value="1"
+                        required
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Package Location</label>
+
+                    <input
+                        type="text"
+                        id="location"
+                        placeholder="Example: Dock 2"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Package Description</label>
+
+                <textarea
+                    id="description"
+                    placeholder="What is being picked up?"
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Special Instructions</label>
+
+                <textarea
+                    id="instructions"
+                    placeholder="Anything the driver needs to know?"
+                ></textarea>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="primary"
+            >
+                Create Pickup
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- CONFIRMATION MODAL -->
+
+<div class="modal" id="confirmationModal">
+
+    <div class="modal-content confirmation">
+
+        <div class="success">
+            Pickup Created Successfully
+        </div>
+
+        <p>Your confirmation code is:</p>
+
+        <div
+            class="confirmation-code"
+            id="confirmationCode"
+        ></div>
+
+        <p>
+            Give this code to the driver and place it on the package.
+        </p>
+
+        <br>
+
+        <button
+            class="primary"
+            onclick="closeConfirmation()"
+        >
+            Done
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const SUPABASE_URL = "https://erttykaeyvhbzignpysr.supabase.co";
+
+const SUPABASE_KEY = "sb_publishable_lY2qbi-Q-lyiTW58m-_oQg_mio84a3L";
+
+
+let pickups = [];
+
+let accessToken = null;
+
+
+/* ================================
+   CREATE LOGIN SCREEN
+================================ */
+
+function createLoginScreen() {
+
+    const login = document.createElement("div");
+
+    login.id = "loginScreen";
+
+    login.innerHTML = `
+
+        <div style="
+            position:fixed;
+            inset:0;
+            background:#f3f4f6;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            z-index:9999;
+            font-family:Arial, sans-serif;
+        ">
+
+            <div style="
+                background:white;
+                width:100%;
+                max-width:420px;
+                padding:35px;
+                border-radius:12px;
+                box-shadow:0 4px 20px rgba(0,0,0,0.12);
+            ">
+
+                <h1 style="
+                    color:#172554;
+                    margin-bottom:8px;
+                ">
+                    Pickup Manager
+                </h1>
+
+                <p style="
+                    color:#6b7280;
+                    margin-bottom:25px;
+                ">
+                    Shipping & Receiving Admin
+                </p>
+
+                <label style="
+                    display:block;
+                    font-weight:bold;
+                    margin-bottom:6px;
+                ">
+                    Email
+                </label>
+
+                <input
+                    id="loginEmail"
+                    type="email"
+                    placeholder="Your email"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        margin-bottom:15px;
+                        border:1px solid #d1d5db;
+                        border-radius:6px;
+                    "
+                >
+
+                <label style="
+                    display:block;
+                    font-weight:bold;
+                    margin-bottom:6px;
+                ">
+                    Password
+                </label>
+
+                <input
+                    id="loginPassword"
+                    type="password"
+                    placeholder="Your password"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        margin-bottom:15px;
+                        border:1px solid #d1d5db;
+                        border-radius:6px;
+                    "
+                >
+
+                <button
+                    id="loginButton"
+                    style="
+                        width:100%;
+                        padding:13px;
+                        background:#2563eb;
+                        color:white;
+                        border:none;
+                        border-radius:6px;
+                        font-weight:bold;
+                        cursor:pointer;
+                    "
+                >
+                    Sign In
+                </button>
+
+                <p
+                    id="loginError"
+                    style="
+                        color:#dc2626;
+                        margin-top:15px;
+                        font-size:14px;
+                    "
+                ></p>
+
+            </div>
+
+        </div>
+    `;
+
+    document.body.appendChild(login);
+
+
+    document
+        .getElementById("loginButton")
+        .addEventListener("click", adminLogin);
+
+
+    document
+        .getElementById("loginPassword")
+        .addEventListener("keydown", function(event) {
+
+            if (event.key === "Enter") {
+                adminLogin();
+            }
+
+        });
+
+}
+
+
+/* ================================
+   LOGIN
+================================ */
+
+async function adminLogin() {
+
+    const email =
+        document.getElementById("loginEmail").value;
+
+    const password =
+        document.getElementById("loginPassword").value;
+
+
+    const errorBox =
+        document.getElementById("loginError");
+
+
+    errorBox.textContent = "";
+
+
+    if (!email || !password) {
+
+        errorBox.textContent =
+            "Please enter your email and password.";
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                SUPABASE_URL +
+                "/auth/v1/token?grant_type=password",
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "apikey":
+                            SUPABASE_KEY
+
+                    },
+
+                    body: JSON.stringify({
+
+                        email: email,
+
+                        password: password
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            console.error(data);
+
+            errorBox.textContent =
+                data.error_description ||
+                data.msg ||
+                "Login failed.";
+
+            return;
+
+        }
+
+
+        accessToken =
+            data.access_token;
+
+
+        document
+            .getElementById("loginScreen")
+            .remove();
+
+
+        loadPickups();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        errorBox.textContent =
+            "Could not connect to the server.";
+
+    }
+
+}
+
+
+/* ================================
+   LOAD PICKUPS
+================================ */
+
+async function loadPickups() {
+
+    try {
+
+        const response =
+            await fetch(
+                SUPABASE_URL +
+                "/rest/v1/pickups?select=*&order=pickup_date.asc,pickup_time.asc",
+                {
+
+                    method: "GET",
+
+                    headers: {
+
+                        "apikey":
+                            SUPABASE_KEY,
+
+                        "Authorization":
+                            "Bearer " + accessToken
+
+                    }
+
+                }
+            );
+
+
+        if (!response.ok) {
+
+            const error =
+                await response.text();
+
+            console.error(error);
+
+            alert(
+                "Could not load pickups."
+            );
+
+            return;
+
+        }
+
+
+        pickups =
+            await response.json();
+
+
+        displayPickups();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Could not connect to the database."
+        );
+
+    }
+
+}
+
+
+/* ================================
+   DISPLAY PICKUPS
+================================ */
+
+function displayPickups() {
+
+    const table =
+        document.getElementById("pickupTable");
+
+
+    const search =
+        document
+            .getElementById("search")
+            .value
+            .toLowerCase();
+
+
+    const filtered =
+        pickups.filter(function(pickup) {
+
+            return (
+
+                pickup.confirmation_code
+                    .toLowerCase()
+                    .includes(search)
+
+                ||
+
+                pickup.requester_name
+                    .toLowerCase()
+                    .includes(search)
+
+                ||
+
+                pickup.company
+                    .toLowerCase()
+                    .includes(search)
+
+                ||
+
+                pickup.carrier
+                    .toLowerCase()
+                    .includes(search)
+
+            );
+
+        });
+
+
+    table.innerHTML = "";
+
+
+    filtered.forEach(function(pickup) {
+
+        const row =
+            document.createElement("tr");
+
+
+        row.innerHTML = `
+
+            <td>
+                <strong>
+                    ${pickup.confirmation_code}
+                </strong>
+            </td>
+
+            <td>
+                ${pickup.requester_name}
+            </td>
+
+            <td>
+                ${pickup.carrier}
+            </td>
+
+            <td>
+                ${pickup.package_count}
+            </td>
+
+            <td>
+                ${pickup.package_location}
+            </td>
+
+            <td>
+
+                <span class="status ${
+                    pickup.status === "READY"
+                    ? "ready"
+                    : "completed"
+                }">
+
+                    ${pickup.status}
+
+                </span>
+
+            </td>
+
+            <td>
+
+                ${
+                    pickup.status === "READY"
+
+                    ?
+
+                    `<button
+                        class="primary"
+                        onclick="completePickup('${pickup.confirmation_code}')"
+                    >
+                        Picked Up
+                    </button>`
+
+                    :
+
+                    "Completed"
+
+                }
+
+            </td>
+
+        `;
+
+
+        table.appendChild(row);
+
+    });
+
+
+    updateStats();
+
+}
+
+
+/* ================================
+   COMPLETE PICKUP
+================================ */
+
+async function completePickup(code) {
+
+    const confirmed =
+        confirm(
+            "Mark pickup " +
+            code +
+            " as picked up?"
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                SUPABASE_URL +
+                "/rest/v1/pickups?confirmation_code=eq." +
+                encodeURIComponent(code),
+                {
+
+                    method: "PATCH",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "apikey":
+                            SUPABASE_KEY,
+
+                        "Authorization":
+                            "Bearer " + accessToken,
+
+                        "Prefer":
+                            "return=minimal"
+
+                    },
+
+                    body: JSON.stringify({
+
+                        status: "COMPLETED",
+
+                        picked_up_at:
+                            new Date().toISOString()
+
+                    })
+
+                }
+            );
+
+
+        if (!response.ok) {
+
+            const error =
+                await response.text();
+
+            console.error(error);
+
+            alert(
+                "Could not update the pickup."
+            );
+
+            return;
+
+        }
+
+
+        await loadPickups();
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Could not connect to the database."
+        );
+
+    }
+
+}
+
+
+/* ================================
+   STATISTICS
+================================ */
+
+function updateStats() {
+
+    const today =
+        new Date()
+            .toISOString()
+            .split("T")[0];
+
+
+    const todayPickups =
+        pickups.filter(function(p) {
+
+            return p.pickup_date === today;
+
+        });
+
+
+    const ready =
+        pickups.filter(function(p) {
+
+            return p.status === "READY";
+
+        });
+
+
+    const completed =
+        pickups.filter(function(p) {
+
+            return p.status === "COMPLETED";
+
+        });
+
+
+    const packages =
+        pickups.reduce(function(total, p) {
+
+            return total + Number(
+                p.package_count || 0
+            );
+
+        }, 0);
+
+
+    document
+        .getElementById("todayCount")
+        .textContent =
+        todayPickups.length;
+
+
+    document
+        .getElementById("readyCount")
+        .textContent =
+        ready.length;
+
+
+    document
+        .getElementById("completedCount")
+        .textContent =
+        completed.length;
+
+
+    document
+        .getElementById("packageCount")
+        .textContent =
+        packages;
+
+}
+
+
+/* ================================
+   SEARCH
+================================ */
+
+document
+    .getElementById("search")
+    .addEventListener(
+        "input",
+        displayPickups
+    );
+
+
+/* ================================
+   START
+================================ */
+
+createLoginScreen();
+
+</script>
+
+</body>
+</html>
