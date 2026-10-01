@@ -300,20 +300,34 @@ header p {
 
                 <select id="carrier" required>
 
-                    <option value="">
-                        Select carrier
-                    </option>
+    <option value="">
+        Select carrier
+    </option>
 
-                    <option>FedEx</option>
-                    <option>UPS</option>
-                    <option>Dayton Freight</option>
-                    <option>R+L Carriers</option>
-                    <option>Estes</option>
-                    <option>Old Dominion</option>
-                    <option>Customer Pickup</option>
-                    <option>Other</option>
+    <option>FedEx</option>
+    <option>UPS</option>
+    <option>Dayton Freight</option>
+    <option>R+L Carriers</option>
+    <option>Estes</option>
+    <option>Old Dominion</option>
+    <option>Customer Pickup</option>
+    <option>Other</option>
 
-                </select>
+</select>
+
+<div class="form-group" id="otherCarrierGroup" style="display: none; margin-top: 18px;">
+
+    <label for="otherCarrier">
+        Enter Carrier Name *
+    </label>
+
+    <input
+        type="text"
+        id="otherCarrier"
+        placeholder="Enter carrier name"
+    >
+
+</div>
 
             </div>
 
@@ -502,6 +516,26 @@ function generateCode() {
 }
 
 
+const carrierSelect = document.getElementById("carrier");
+const otherCarrierGroup = document.getElementById("otherCarrierGroup");
+const otherCarrierInput = document.getElementById("otherCarrier");
+
+carrierSelect.addEventListener("change", function() {
+
+    if (this.value === "Other") {
+
+        otherCarrierGroup.style.display = "block";
+        otherCarrierInput.required = true;
+
+    } else {
+
+        otherCarrierGroup.style.display = "none";
+        otherCarrierInput.required = false;
+        otherCarrierInput.value = "";
+
+    }
+
+});    
 document
     .getElementById("pickupForm")
     .addEventListener("submit", async function(event) {
@@ -527,7 +561,9 @@ document
                 document.getElementById("phone").value,
 
             carrier:
-                document.getElementById("carrier").value,
+    document.getElementById("carrier").value === "Other"
+        ? document.getElementById("otherCarrier").value
+        : document.getElementById("carrier").value,
 
             pickup_date:
                 document.getElementById("date").value,
