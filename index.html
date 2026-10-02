@@ -649,7 +649,287 @@
 
         const newRequestButton =
             document.getElementById("newRequestButton");
+/* =========================================================
+   SHIPPING HOURS
+========================================================= */
 
+const dateInput =
+    document.getElementById("date");
+
+const timeInput =
+    document.getElementById("time");
+
+
+/* =========================================================
+   UPDATE ALLOWED TIME BASED ON SELECTED DATE
+========================================================= */
+
+function updateShippingHours() {
+
+    if (!dateInput.value) {
+
+        timeInput.min = "";
+        timeInput.max = "";
+
+        return;
+
+    }
+
+
+    /* JavaScript date parsing using date parts
+       prevents timezone problems. */
+
+    const parts =
+        dateInput.value.split("-");
+
+    const year =
+        Number(parts[0]);
+
+    const month =
+        Number(parts[1]) - 1;
+
+    const day =
+        Number(parts[2]);
+
+
+    const selectedDate =
+        new Date(
+            year,
+            month,
+            day
+        );
+
+
+    const dayOfWeek =
+        selectedDate.getDay();
+
+
+    /* Sunday = 0
+       Monday = 1
+       Tuesday = 2
+       Wednesday = 3
+       Thursday = 4
+       Friday = 5
+       Saturday = 6 */
+
+
+    /* Saturday / Sunday */
+
+    if (
+        dayOfWeek === 0 ||
+        dayOfWeek === 6
+    ) {
+
+        alert(
+            "Shipping pickups are only available Monday through Friday."
+        );
+
+        dateInput.value = "";
+
+        timeInput.min = "";
+        timeInput.max = "";
+
+        return;
+
+    }
+
+
+    /* Monday - Thursday */
+
+    if (
+        dayOfWeek >= 1 &&
+        dayOfWeek <= 4
+    ) {
+
+        timeInput.min =
+            "08:30";
+
+        timeInput.max =
+            "15:30";
+
+        timeInput.value =
+            "";
+
+        return;
+
+    }
+
+
+    /* Friday */
+
+    if (dayOfWeek === 5) {
+
+        timeInput.min =
+            "08:30";
+
+        timeInput.max =
+            "14:30";
+
+        timeInput.value =
+            "";
+
+        return;
+
+    }
+
+}
+
+
+/* =========================================================
+   DATE CHANGE
+========================================================= */
+
+dateInput.addEventListener(
+    "change",
+    updateShippingHours
+);
+
+
+/* =========================================================
+   VALIDATE SHIPPING HOURS BEFORE SUBMIT
+========================================================= */
+
+function validateShippingHours() {
+
+    if (!dateInput.value) {
+
+        alert(
+            "Please select a pickup date."
+        );
+
+        return false;
+
+    }
+
+
+    if (!timeInput.value) {
+
+        alert(
+            "Please select a pickup time."
+        );
+
+        return false;
+
+    }
+
+
+    const parts =
+        dateInput.value.split("-");
+
+    const year =
+        Number(parts[0]);
+
+    const month =
+        Number(parts[1]) - 1;
+
+    const day =
+        Number(parts[2]);
+
+
+    const selectedDate =
+        new Date(
+            year,
+            month,
+            day
+        );
+
+
+    const dayOfWeek =
+        selectedDate.getDay();
+
+
+    /* No Saturday or Sunday */
+
+    if (
+        dayOfWeek === 0 ||
+        dayOfWeek === 6
+    ) {
+
+        alert(
+            "Shipping pickups are not available on Saturday or Sunday."
+        );
+
+        return false;
+
+    }
+
+
+    /* Convert selected time to minutes */
+
+    const timeParts =
+        timeInput.value.split(":");
+
+    const hours =
+        Number(timeParts[0]);
+
+    const minutes =
+        Number(timeParts[1]);
+
+    const selectedMinutes =
+        hours * 60 +
+        minutes;
+
+
+    const openingTime =
+        8 * 60 + 30;
+
+
+    let closingTime;
+
+
+    /* Monday - Thursday */
+
+    if (
+        dayOfWeek >= 1 &&
+        dayOfWeek <= 4
+    ) {
+
+        closingTime =
+            15 * 60 + 30;
+
+    }
+
+
+    /* Friday */
+
+    else {
+
+        closingTime =
+            14 * 60 + 30;
+
+    }
+
+
+    if (
+        selectedMinutes < openingTime ||
+        selectedMinutes > closingTime
+    ) {
+
+        if (
+            dayOfWeek >= 1 &&
+            dayOfWeek <= 4
+        ) {
+
+            alert(
+                "Pickup times Monday through Thursday must be between 8:30 AM and 3:30 PM."
+            );
+
+        } else {
+
+            alert(
+                "Pickup times on Friday must be between 8:30 AM and 2:30 PM."
+            );
+
+        }
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
 
         let locationPhotoInput =
             document.getElementById("locationPhoto");
@@ -835,8 +1115,17 @@
                 event.preventDefault();
 
 
-                submitButton.disabled =
-                    true;
+/* Check shipping date and time */
+
+if (!validateShippingHours()) {
+
+    return;
+
+}
+
+
+submitButton.disabled =
+    true;
 
                 submitButton.textContent =
                     "Submitting...";
