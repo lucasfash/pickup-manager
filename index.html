@@ -563,7 +563,6 @@
     </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
 <script>
 
     /* =========================================================
@@ -575,6 +574,27 @@
 
     const SUPABASE_KEY =
         "sb_publishable_lY2qbi-Q-lyiTW58m-_oQg_mio84a3L";
+
+
+    /* =========================================================
+       CREATE ONE SUPABASE CLIENT
+       
+       persistSession: false makes this public page use
+       the anonymous role instead of inheriting an admin login.
+    ========================================================= */
+
+    const supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY,
+            {
+                auth: {
+                    persistSession: false,
+                    autoRefreshToken: false,
+                    detectSessionInUrl: false
+                }
+            }
+        );
 
 
     /* =========================================================
@@ -605,34 +625,37 @@
         document.getElementById("otherCarrier");
 
 
-    carrierSelect.addEventListener("change", function() {
+    carrierSelect.addEventListener(
+        "change",
+        function() {
 
-        if (this.value === "Other") {
+            if (this.value === "Other") {
 
-            otherCarrierGroup.style.display = "block";
+                otherCarrierGroup.style.display =
+                    "block";
 
-            otherCarrierInput.required = true;
+                otherCarrierInput.required =
+                    true;
 
-        } else {
+            } else {
 
-            otherCarrierGroup.style.display = "none";
+                otherCarrierGroup.style.display =
+                    "none";
 
-            otherCarrierInput.required = false;
+                otherCarrierInput.required =
+                    false;
 
-            otherCarrierInput.value = "";
+                otherCarrierInput.value =
+                    "";
+
+            }
 
         }
-
-    });
+    );
 
 
     /* =========================================================
        PHOTO VARIABLES
-       
-       IMPORTANT:
-       This is LET, not CONST.
-       We replace the file input when Remove Photo
-       is clicked so the camera/file picker completely resets.
     ========================================================= */
 
     let locationPhotoInput =
@@ -647,8 +670,8 @@
     const removePhotoButton =
         document.getElementById("removePhoto");
 
-
-    let currentPhotoPreviewUrl = null;
+    let currentPhotoPreviewUrl =
+        null;
 
 
     /* =========================================================
@@ -670,10 +693,9 @@
                         "none";
 
                     return;
+
                 }
 
-
-                /* Only allow images */
 
                 if (!file.type.startsWith("image/")) {
 
@@ -684,10 +706,9 @@
                     resetPhotoInput();
 
                     return;
+
                 }
 
-
-                /* Remove previous preview URL */
 
                 if (currentPhotoPreviewUrl) {
 
@@ -697,8 +718,6 @@
 
                 }
 
-
-                /* Create preview */
 
                 currentPhotoPreviewUrl =
                     URL.createObjectURL(file);
@@ -721,15 +740,12 @@
 
     function resetPhotoInput() {
 
-        /* Clear preview */
-
-        photoPreview.src = "";
+        photoPreview.src =
+            "";
 
         photoPreviewContainer.style.display =
             "none";
 
-
-        /* Remove old preview URL */
 
         if (currentPhotoPreviewUrl) {
 
@@ -737,12 +753,11 @@
                 currentPhotoPreviewUrl
             );
 
-            currentPhotoPreviewUrl = null;
+            currentPhotoPreviewUrl =
+                null;
 
         }
 
-
-        /* Create a completely NEW file input */
 
         const newPhotoInput =
             document.createElement("input");
@@ -760,21 +775,15 @@
             "environment";
 
 
-        /* Replace the old input */
-
         locationPhotoInput.parentNode.replaceChild(
             newPhotoInput,
             locationPhotoInput
         );
 
 
-        /* Update our JavaScript reference */
-
         locationPhotoInput =
             newPhotoInput;
 
-
-        /* Set up the new input */
 
         setupPhotoInput();
 
@@ -789,7 +798,7 @@
 
 
     /* =========================================================
-       REMOVE PHOTO BUTTON
+       REMOVE PHOTO
     ========================================================= */
 
     removePhotoButton.addEventListener(
@@ -816,12 +825,13 @@
 
 
                 const submitButton =
-                    document.getElementById("submitButton");
+                    document.getElementById(
+                        "submitButton"
+                    );
 
 
-                /* Prevent double submissions */
-
-                submitButton.disabled = true;
+                submitButton.disabled =
+                    true;
 
                 submitButton.textContent =
                     "Submitting...";
@@ -829,108 +839,98 @@
 
                 try {
 
-                    /* -----------------------------------------
+                    /* =========================================
                        GENERATE CONFIRMATION CODE
-                    ----------------------------------------- */
+                    ========================================= */
 
                     const confirmationCode =
                         generateCode();
 
 
-                    /* -----------------------------------------
+                    /* =========================================
                        GET PHOTO
-                    ----------------------------------------- */
+                    ========================================= */
 
                     const photoFile =
                         locationPhotoInput.files[0];
-
 
                     let photoFileName =
                         null;
 
 
-                   /* -----------------------------------------
-   UPLOAD PHOTO IF ONE WAS SELECTED
------------------------------------------ */
+                    /* =========================================
+                       UPLOAD PHOTO
+                    ========================================= */
 
-if (photoFile) {
+                    if (photoFile) {
 
-    const fileExtension =
-        photoFile.name
-            .split(".")
-            .pop()
-            .toLowerCase();
-
-    photoFileName =
-        confirmationCode +
-        "-" +
-        Date.now() +
-        "." +
-        fileExtension;
+                        const fileExtension =
+                            photoFile.name
+                                .split(".")
+                                .pop()
+                                .toLowerCase();
 
 
-    /* Create Supabase client */
-
-    const supabaseClient =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY
-        );
-
-
-    /* Upload the photo */
-
-    const { data, error } =
-        await supabaseClient
-            .storage
-            .from("package-location-images")
-            .upload(
-                photoFileName,
-                photoFile,
-                {
-                    contentType:
-                        photoFile.type,
-
-                    upsert:
-                        false
-                }
-            );
+                        photoFileName =
+                            confirmationCode +
+                            "-" +
+                            Date.now() +
+                            "." +
+                            fileExtension;
 
 
-    /* Check for upload error */
-
-    if (error) {
-
-        console.error(
-            "Photo upload error:",
-            error
-        );
-
-        alert(
-            "The photo could not be uploaded. Please try again."
-        );
-
-        submitButton.disabled =
-            false;
-
-        submitButton.textContent =
-            "Submit Pickup Request";
-
-        return;
-    }
+                        console.log(
+                            "Uploading photo:",
+                            photoFileName
+                        );
 
 
-    console.log(
-        "Photo uploaded successfully:",
-        data.path
-    );
+                        const { data, error } =
+                            await supabaseClient
+                                .storage
+                                .from(
+                                    "package-location-images"
+                                )
+                                .upload(
+                                    photoFileName,
+                                    photoFile,
+                                    {
+                                        contentType:
+                                            photoFile.type,
 
-}
+                                        upsert:
+                                            false
+                                    }
+                                );
 
 
-                    /* -----------------------------------------
+                        if (error) {
+
+                            console.error(
+                                "Photo upload error:",
+                                error
+                            );
+
+                            alert(
+                                "The photo could not be uploaded. Please try again."
+                            );
+
+                            return;
+
+                        }
+
+
+                        console.log(
+                            "Photo uploaded successfully:",
+                            data.path
+                        );
+
+                    }
+
+
+                    /* =========================================
                        GET CARRIER
-                    ----------------------------------------- */
+                    ========================================= */
 
                     let carrier =
                         carrierSelect.value;
@@ -939,14 +939,16 @@ if (photoFile) {
                     if (carrier === "Other") {
 
                         carrier =
-                            otherCarrierInput.value.trim();
+                            otherCarrierInput
+                                .value
+                                .trim();
 
                     }
 
 
-                    /* -----------------------------------------
+                    /* =========================================
                        CREATE PICKUP OBJECT
-                    ----------------------------------------- */
+                    ========================================= */
 
                     const pickup = {
 
@@ -1024,69 +1026,44 @@ if (photoFile) {
                     };
 
 
-                    /* -----------------------------------------
-                       SEND PICKUP TO SUPABASE
-                    ----------------------------------------- */
+                    /* =========================================
+                       INSERT PICKUP INTO SUPABASE
+                       
+                       Uses Supabase JS instead of manual fetch.
+                    ========================================= */
 
-                    const response =
-                        await fetch(
-                            SUPABASE_URL +
-                            "/rest/v1/pickups",
-                            {
-                                method: "POST",
+                    const { data, error } =
+                        await supabaseClient
+                            .from("pickups")
+                            .insert([pickup])
+                            .select();
 
-                                headers: {
 
-                                    "Content-Type":
-                                        "application/json",
+                    if (error) {
 
-                                    "apikey":
-                                        SUPABASE_KEY,
-
-                                    "Authorization":
-                                        "Bearer " +
-                                        SUPABASE_KEY,
-
-                                    "Prefer":
-                                        "return=minimal"
-
-                                },
-
-                                body:
-                                    JSON.stringify(pickup)
-
-                            }
+                        console.error(
+                            "Pickup submission error:",
+                            error
                         );
-
-
-                    /* -----------------------------------------
-                       CHECK FOR DATABASE ERROR
-                    ----------------------------------------- */
-
-                    if (!response.ok) {
-
-                        const error =
-                            await response.text();
-
-                        console.error(error);
 
                         alert(
                             "There was an error submitting the pickup. Please try again."
                         );
 
-                        submitButton.disabled =
-                            false;
-
-                        submitButton.textContent =
-                            "Submit Pickup Request";
-
                         return;
+
                     }
 
 
-                    /* -----------------------------------------
+                    console.log(
+                        "Pickup submitted successfully:",
+                        data
+                    );
+
+
+                    /* =========================================
                        SHOW CONFIRMATION
-                    ----------------------------------------- */
+                    ========================================= */
 
                     document
                         .getElementById(
@@ -1114,7 +1091,10 @@ if (photoFile) {
 
                 } catch (error) {
 
-                    console.error(error);
+                    console.error(
+                        "Unexpected error:",
+                        error
+                    );
 
                     alert(
                         "Could not connect to the pickup system. Please try again."
@@ -1140,14 +1120,10 @@ if (photoFile) {
 
     function newRequest() {
 
-        /* Reset form */
-
         document
             .getElementById("pickupForm")
             .reset();
 
-
-        /* Reset carrier */
 
         otherCarrierGroup.style.display =
             "none";
@@ -1156,23 +1132,21 @@ if (photoFile) {
             false;
 
 
-        /* Reset photo */
-
         resetPhotoInput();
 
 
-        /* Hide confirmation */
-
         document
-            .getElementById("confirmationCard")
+            .getElementById(
+                "confirmationCard"
+            )
             .style.display =
                 "none";
 
 
-        /* Show form */
-
         document
-            .getElementById("requestCard")
+            .getElementById(
+                "requestCard"
+            )
             .style.display =
                 "block";
 
