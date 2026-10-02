@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Pickup Manager</title>
 
+
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
+
 
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -19,29 +27,35 @@
             color: #1f2937;
         }
 
+
         header {
             background: #172554;
             color: white;
             padding: 20px 30px;
+
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
+
         header h1 {
             font-size: 24px;
         }
+
 
         header span {
             font-size: 14px;
             opacity: 0.8;
         }
 
+
         .container {
             max-width: 1200px;
             margin: 30px auto;
             padding: 0 20px;
         }
+
 
         .top-bar {
             display: flex;
@@ -50,9 +64,11 @@
             margin-bottom: 25px;
         }
 
+
         .top-bar h2 {
             font-size: 26px;
         }
+
 
         button {
             border: none;
@@ -63,35 +79,62 @@
             cursor: pointer;
         }
 
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+
         .primary {
             background: #2563eb;
             color: white;
         }
 
+
         .primary:hover {
             background: #1d4ed8;
         }
+
 
         .secondary {
             background: #e5e7eb;
             color: #111827;
         }
 
+
+        .secondary:hover {
+            background: #d1d5db;
+        }
+
+
+        .danger {
+            background: #dc2626;
+            color: white;
+        }
+
+
         .search-box {
             background: white;
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.05);
         }
+
 
         .search-box input {
             width: 100%;
             padding: 12px;
+
             border: 1px solid #d1d5db;
             border-radius: 6px;
+
             font-size: 15px;
         }
+
 
         .dashboard {
             display: grid;
@@ -100,12 +143,16 @@
             margin-bottom: 25px;
         }
 
+
         .stat {
             background: white;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.05);
         }
+
 
         .stat-title {
             font-size: 13px;
@@ -113,88 +160,122 @@
             margin-bottom: 8px;
         }
 
+
         .stat-number {
             font-size: 28px;
             font-weight: bold;
         }
 
+
         .table-container {
             background: white;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.05);
         }
+
 
         table {
             width: 100%;
             border-collapse: collapse;
         }
 
+
         th {
             background: #f9fafb;
             text-align: left;
             padding: 14px;
+
             font-size: 13px;
             color: #6b7280;
-            border-bottom: 1px solid #e5e7eb;
+
+            border-bottom:
+                1px solid #e5e7eb;
         }
+
 
         td {
             padding: 15px 14px;
-            border-bottom: 1px solid #e5e7eb;
+
+            border-bottom:
+                1px solid #e5e7eb;
+
             font-size: 14px;
         }
+
 
         tr:hover {
             background: #f9fafb;
         }
 
+
         .status {
             padding: 5px 9px;
             border-radius: 20px;
+
             font-size: 12px;
             font-weight: bold;
         }
+
 
         .ready {
             background: #dcfce7;
             color: #166534;
         }
 
+
         .completed {
             background: #e5e7eb;
             color: #374151;
         }
 
+
         .modal {
             display: none;
+
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.5);
+
+            background:
+                rgba(0,0,0,0.5);
+
             justify-content: center;
             align-items: center;
+
             padding: 20px;
+
+            z-index: 1000;
         }
+
 
         .modal-content {
             background: white;
+
             width: 100%;
             max-width: 650px;
+
             max-height: 90vh;
             overflow-y: auto;
+
             border-radius: 12px;
             padding: 30px;
         }
 
+
         .modal-header {
             display: flex;
             justify-content: space-between;
+
             margin-bottom: 25px;
         }
+
 
         .modal-header h2 {
             font-size: 22px;
         }
+
 
         .close {
             background: none;
@@ -202,113 +283,403 @@
             cursor: pointer;
         }
 
+
         .form-group {
             margin-bottom: 17px;
         }
 
+
         .form-group label {
             display: block;
+
             margin-bottom: 6px;
+
             font-size: 13px;
             font-weight: bold;
         }
 
+
         .form-group input,
         .form-group select,
         .form-group textarea {
+
             width: 100%;
+
             padding: 11px;
-            border: 1px solid #d1d5db;
+
+            border:
+                1px solid #d1d5db;
+
             border-radius: 6px;
+
             font-size: 14px;
         }
+
 
         .form-group textarea {
             min-height: 80px;
             resize: vertical;
         }
 
+
         .form-row {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+
+            grid-template-columns:
+                1fr 1fr;
+
             gap: 15px;
         }
+
 
         .confirmation {
             text-align: center;
             padding: 25px;
         }
 
+
         .confirmation-code {
             font-size: 36px;
             font-weight: bold;
+
             letter-spacing: 3px;
+
             margin: 20px 0;
+
             color: #172554;
         }
 
+
         .success {
             color: #166534;
+
             font-weight: bold;
+
             margin-bottom: 10px;
         }
 
+
+        /* LOGIN */
+
+        #loginScreen {
+            position: fixed;
+
+            inset: 0;
+
+            background: #f3f4f6;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            z-index: 9999;
+
+            padding: 20px;
+        }
+
+
+        .login-box {
+            background: white;
+
+            width: 100%;
+            max-width: 420px;
+
+            padding: 35px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 4px 20px rgba(0,0,0,0.12);
+        }
+
+
+        .login-box h1 {
+            color: #172554;
+            margin-bottom: 8px;
+        }
+
+
+        .login-subtitle {
+            color: #6b7280;
+            margin-bottom: 25px;
+        }
+
+
+        .login-label {
+            display: block;
+
+            font-weight: bold;
+
+            margin-bottom: 6px;
+        }
+
+
+        .login-input {
+            width: 100%;
+
+            padding: 12px;
+
+            margin-bottom: 15px;
+
+            border:
+                1px solid #d1d5db;
+
+            border-radius: 6px;
+
+            font-size: 15px;
+        }
+
+
+        .remember-row {
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-bottom: 18px;
+
+            font-size: 14px;
+
+            color: #374151;
+        }
+
+
+        .remember-row input {
+            width: 16px;
+            height: 16px;
+
+            cursor: pointer;
+        }
+
+
+        .login-button {
+            width: 100%;
+
+            padding: 13px;
+
+            background: #2563eb;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 6px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+
+        .login-button:hover {
+            background: #1d4ed8;
+        }
+
+
+        .login-error {
+            color: #dc2626;
+
+            margin-top: 15px;
+
+            font-size: 14px;
+        }
+
+
+        .logout-button {
+            background: #dc2626;
+            color: white;
+
+            padding: 8px 13px;
+
+            font-size: 13px;
+
+            margin-left: 10px;
+        }
+
+
+        .logout-button:hover {
+            background: #b91c1c;
+        }
+
+
         @media (max-width: 800px) {
+
             .dashboard {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns:
+                    repeat(2, 1fr);
             }
+
 
             .table-container {
                 overflow-x: auto;
             }
 
+
             table {
-                min-width: 800px;
+                min-width: 900px;
             }
+
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+
+            header {
+                padding: 15px 20px;
+            }
+
         }
+
+
+        @media (max-width: 500px) {
+
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+
+            .container {
+                padding: 0 12px;
+            }
+
+
+            .top-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
+
+<!-- HEADER -->
+
 <header>
-    <h1>Pickup Manager</h1>
-    <span>Shipping & Receiving</span>
+
+    <h1>
+        Pickup Manager
+    </h1>
+
+    <span>
+        Shipping & Receiving
+    </span>
+
 </header>
+
+
+<!-- MAIN -->
 
 <div class="container">
 
     <div class="top-bar">
-        <h2>Pickup Dashboard</h2>
 
-        <button class="primary" onclick="openModal()">
-            + New Pickup
-        </button>
+        <h2>
+            Pickup Dashboard
+        </h2>
+
+        <div>
+
+            <button
+                class="primary"
+                onclick="openModal()"
+            >
+                + New Pickup
+            </button>
+
+            <button
+                class="logout-button"
+                onclick="logout()"
+            >
+                Sign Out
+            </button>
+
+        </div>
+
     </div>
+
+
+    <!-- DASHBOARD -->
 
     <div class="dashboard">
 
         <div class="stat">
-            <div class="stat-title">Today's Pickups</div>
-            <div class="stat-number" id="todayCount">0</div>
+
+            <div class="stat-title">
+                Today's Pickups
+            </div>
+
+            <div
+                class="stat-number"
+                id="todayCount"
+            >
+                0
+            </div>
+
         </div>
 
-        <div class="stat">
-            <div class="stat-title">Ready for Pickup</div>
-            <div class="stat-number" id="readyCount">0</div>
-        </div>
 
         <div class="stat">
-            <div class="stat-title">Completed</div>
-            <div class="stat-number" id="completedCount">0</div>
+
+            <div class="stat-title">
+                Ready for Pickup
+            </div>
+
+            <div
+                class="stat-number"
+                id="readyCount"
+            >
+                0
+            </div>
+
         </div>
 
+
         <div class="stat">
-            <div class="stat-title">Total Packages</div>
-            <div class="stat-number" id="packageCount">0</div>
+
+            <div class="stat-title">
+                Completed
+            </div>
+
+            <div
+                class="stat-number"
+                id="completedCount"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-title">
+                Total Packages
+            </div>
+
+            <div
+                class="stat-number"
+                id="packageCount"
+            >
+                0
+            </div>
+
         </div>
 
     </div>
+
+
+    <!-- SEARCH -->
 
     <div class="search-box">
 
@@ -316,10 +687,12 @@
             type="text"
             id="search"
             placeholder="Search confirmation code, carrier, requester, company..."
-            oninput="displayPickups()"
         >
 
     </div>
+
+
+    <!-- TABLE -->
 
     <div class="table-container">
 
@@ -328,16 +701,39 @@
             <thead>
 
                 <tr>
-                    <th>Confirmation</th>
-                    <th>Requester</th>
-                    <th>Carrier</th>
-                    <th>Packages</th>
-                    <th>Location</th>
-                    <th>Status</th>
-                    <th>Action</th>
+
+                    <th>
+                        Confirmation
+                    </th>
+
+                    <th>
+                        Requester
+                    </th>
+
+                    <th>
+                        Carrier
+                    </th>
+
+                    <th>
+                        Packages
+                    </th>
+
+                    <th>
+                        Location
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Action
+                    </th>
+
                 </tr>
 
             </thead>
+
 
             <tbody id="pickupTable">
 
@@ -352,27 +748,39 @@
 
 <!-- NEW PICKUP MODAL -->
 
-<div class="modal" id="pickupModal">
+<div
+    class="modal"
+    id="pickupModal"
+>
 
     <div class="modal-content">
 
         <div class="modal-header">
 
-            <h2>Create Pickup</h2>
+            <h2>
+                Create Pickup
+            </h2>
 
-            <button class="close" onclick="closeModal()">
+            <button
+                class="close"
+                onclick="closeModal()"
+            >
                 ×
             </button>
 
         </div>
 
+
         <form id="pickupForm">
+
 
             <div class="form-row">
 
                 <div class="form-group">
 
-                    <label>Requester Name</label>
+                    <label>
+                        Requester Name
+                    </label>
 
                     <input
                         type="text"
@@ -382,9 +790,12 @@
 
                 </div>
 
+
                 <div class="form-group">
 
-                    <label>Company</label>
+                    <label>
+                        Company
+                    </label>
 
                     <input
                         type="text"
@@ -401,7 +812,9 @@
 
                 <div class="form-group">
 
-                    <label>Phone / Contact</label>
+                    <label>
+                        Phone / Contact
+                    </label>
 
                     <input
                         type="text"
@@ -410,19 +823,42 @@
 
                 </div>
 
+
                 <div class="form-group">
 
-                    <label>Carrier</label>
+                    <label>
+                        Carrier
+                    </label>
 
                     <select id="carrier">
 
-                        <option>FedEx</option>
-                        <option>UPS</option>
-                        <option>Dayton Freight</option>
-                        <option>R+L Carriers</option>
-                        <option>Estes</option>
-                        <option>Customer Pickup</option>
-                        <option>Other</option>
+                        <option>
+                            FedEx
+                        </option>
+
+                        <option>
+                            UPS
+                        </option>
+
+                        <option>
+                            Dayton Freight
+                        </option>
+
+                        <option>
+                            R+L Carriers
+                        </option>
+
+                        <option>
+                            Estes
+                        </option>
+
+                        <option>
+                            Customer Pickup
+                        </option>
+
+                        <option>
+                            Other
+                        </option>
 
                     </select>
 
@@ -435,7 +871,9 @@
 
                 <div class="form-group">
 
-                    <label>Pickup Date</label>
+                    <label>
+                        Pickup Date
+                    </label>
 
                     <input
                         type="date"
@@ -445,9 +883,12 @@
 
                 </div>
 
+
                 <div class="form-group">
 
-                    <label>Pickup Time</label>
+                    <label>
+                        Pickup Time
+                    </label>
 
                     <input
                         type="time"
@@ -464,7 +905,9 @@
 
                 <div class="form-group">
 
-                    <label>Number of Packages</label>
+                    <label>
+                        Number of Packages
+                    </label>
 
                     <input
                         type="number"
@@ -476,9 +919,12 @@
 
                 </div>
 
+
                 <div class="form-group">
 
-                    <label>Package Location</label>
+                    <label>
+                        Package Location
+                    </label>
 
                     <input
                         type="text"
@@ -494,7 +940,9 @@
 
             <div class="form-group">
 
-                <label>Package Description</label>
+                <label>
+                    Package Description
+                </label>
 
                 <textarea
                     id="description"
@@ -507,7 +955,9 @@
 
             <div class="form-group">
 
-                <label>Special Instructions</label>
+                <label>
+                    Special Instructions
+                </label>
 
                 <textarea
                     id="instructions"
@@ -533,7 +983,10 @@
 
 <!-- CONFIRMATION MODAL -->
 
-<div class="modal" id="confirmationModal">
+<div
+    class="modal"
+    id="confirmationModal"
+>
 
     <div class="modal-content confirmation">
 
@@ -541,18 +994,25 @@
             Pickup Created Successfully
         </div>
 
-        <p>Your confirmation code is:</p>
+
+        <p>
+            Your confirmation code is:
+        </p>
+
 
         <div
             class="confirmation-code"
             id="confirmationCode"
         ></div>
 
+
         <p>
             Give this code to the driver and place it on the package.
         </p>
 
+
         <br>
+
 
         <button
             class="primary"
@@ -565,180 +1025,214 @@
 
 </div>
 
+
+<!-- SUPABASE JAVASCRIPT LIBRARY -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
+
+
 <script>
 
-const SUPABASE_URL = "https://erttykaeyvhbzignpysr.supabase.co";
 
-const SUPABASE_KEY = "sb_publishable_lY2qbi-Q-lyiTW58m-_oQg_mio84a3L";
+/* =========================================================
+   SUPABASE
+========================================================= */
 
+const SUPABASE_URL =
+    "https://erttykaeyvhbzignpysr.supabase.co";
+
+
+const SUPABASE_KEY =
+    "sb_publishable_lY2qbi-Q-lyiTW58m-_oQg_mio84a3L";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
 
 let pickups = [];
 
 let accessToken = null;
 
 
-/* ================================
-   CREATE LOGIN SCREEN
-================================ */
+/* =========================================================
+   LOGIN SCREEN
+========================================================= */
 
 function createLoginScreen() {
 
-    const login = document.createElement("div");
+    const existing =
+        document.getElementById("loginScreen");
 
-    login.id = "loginScreen";
+
+    if (existing) {
+        existing.remove();
+    }
+
+
+    const login =
+        document.createElement("div");
+
+
+    login.id =
+        "loginScreen";
+
 
     login.innerHTML = `
 
-        <div style="
-            position:fixed;
-            inset:0;
-            background:#f3f4f6;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            z-index:9999;
-            font-family:Arial, sans-serif;
-        ">
+        <div class="login-box">
 
-            <div style="
-                background:white;
-                width:100%;
-                max-width:420px;
-                padding:35px;
-                border-radius:12px;
-                box-shadow:0 4px 20px rgba(0,0,0,0.12);
-            ">
+            <h1>
+                Pickup Manager
+            </h1>
 
-                <h1 style="
-                    color:#172554;
-                    margin-bottom:8px;
-                ">
-                    Pickup Manager
-                </h1>
 
-                <p style="
-                    color:#6b7280;
-                    margin-bottom:25px;
-                ">
-                    Shipping & Receiving Admin
-                </p>
+            <p class="login-subtitle">
+                Shipping & Receiving Admin
+            </p>
 
-                <label style="
-                    display:block;
-                    font-weight:bold;
-                    margin-bottom:6px;
-                ">
-                    Email
-                </label>
 
-                <input
-                    id="loginEmail"
-                    type="email"
-                    placeholder="Your email"
-                    style="
-                        width:100%;
-                        padding:12px;
-                        margin-bottom:15px;
-                        border:1px solid #d1d5db;
-                        border-radius:6px;
-                    "
-                >
+            <label class="login-label">
+                Email
+            </label>
 
-                <label style="
-                    display:block;
-                    font-weight:bold;
-                    margin-bottom:6px;
-                ">
-                    Password
-                </label>
+
+            <input
+                id="loginEmail"
+                class="login-input"
+                type="email"
+                placeholder="Your email"
+                autocomplete="username"
+            >
+
+
+            <label class="login-label">
+                Password
+            </label>
+
+
+            <input
+                id="loginPassword"
+                class="login-input"
+                type="password"
+                placeholder="Your password"
+                autocomplete="current-password"
+            >
+
+
+            <label class="remember-row">
 
                 <input
-                    id="loginPassword"
-                    type="password"
-                    placeholder="Your password"
-                    style="
-                        width:100%;
-                        padding:12px;
-                        margin-bottom:15px;
-                        border:1px solid #d1d5db;
-                        border-radius:6px;
-                    "
+                    type="checkbox"
+                    id="rememberMe"
                 >
 
-                <button
-                    id="loginButton"
-                    style="
-                        width:100%;
-                        padding:13px;
-                        background:#2563eb;
-                        color:white;
-                        border:none;
-                        border-radius:6px;
-                        font-weight:bold;
-                        cursor:pointer;
-                    "
-                >
-                    Sign In
-                </button>
+                <span>
+                    Keep me signed in
+                </span>
 
-                <p
-                    id="loginError"
-                    style="
-                        color:#dc2626;
-                        margin-top:15px;
-                        font-size:14px;
-                    "
-                ></p>
+            </label>
 
-            </div>
+
+            <button
+                id="loginButton"
+                class="login-button"
+            >
+                Sign In
+            </button>
+
+
+            <p
+                id="loginError"
+                class="login-error"
+            ></p>
 
         </div>
+
     `;
+
 
     document.body.appendChild(login);
 
 
     document
         .getElementById("loginButton")
-        .addEventListener("click", adminLogin);
+        .addEventListener(
+            "click",
+            adminLogin
+        );
 
 
     document
         .getElementById("loginPassword")
-        .addEventListener("keydown", function(event) {
+        .addEventListener(
+            "keydown",
+            function(event) {
 
-            if (event.key === "Enter") {
-                adminLogin();
+                if (
+                    event.key === "Enter"
+                ) {
+
+                    adminLogin();
+
+                }
+
             }
-
-        });
+        );
 
 }
 
 
-/* ================================
+/* =========================================================
    LOGIN
-================================ */
+========================================================= */
 
 async function adminLogin() {
 
     const email =
-        document.getElementById("loginEmail").value;
+        document
+            .getElementById("loginEmail")
+            .value
+            .trim();
+
 
     const password =
-        document.getElementById("loginPassword").value;
+        document
+            .getElementById("loginPassword")
+            .value;
+
+
+    const rememberMe =
+        document
+            .getElementById("rememberMe")
+            .checked;
 
 
     const errorBox =
-        document.getElementById("loginError");
+        document
+            .getElementById("loginError");
 
 
-    errorBox.textContent = "";
+    const loginButton =
+        document
+            .getElementById("loginButton");
 
 
-    if (!email || !password) {
+    errorBox.textContent =
+        "";
+
+
+    if (
+        !email ||
+        !password
+    ) {
 
         errorBox.textContent =
             "Please enter your email and password.";
@@ -748,50 +1242,59 @@ async function adminLogin() {
     }
 
 
+    loginButton.disabled =
+        true;
+
+
+    loginButton.textContent =
+        "Signing In...";
+
+
     try {
 
-        const response =
-            await fetch(
-                SUPABASE_URL +
-                "/auth/v1/token?grant_type=password",
-                {
+        /*
+           Supabase handles the session.
+           If the user checks "Keep me signed in",
+           we also store the preference locally.
+        */
 
-                    method: "POST",
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .auth
+                .signInWithPassword({
+                    email: email,
+                    password: password
+                });
 
-                    headers: {
 
-                        "Content-Type":
-                            "application/json",
+        if (error) {
 
-                        "apikey":
-                            SUPABASE_KEY
-
-                    },
-
-                    body: JSON.stringify({
-
-                        email: email,
-
-                        password: password
-
-                    })
-
-                }
+            console.error(
+                "Login error:",
+                error
             );
 
 
-        const data =
-            await response.json();
+            errorBox.textContent =
+                error.message ||
+                "Login failed.";
 
 
-        if (!response.ok) {
+            return;
 
-            console.error(data);
+        }
+
+
+        if (
+            !data ||
+            !data.session
+        ) {
 
             errorBox.textContent =
-                data.error_description ||
-                data.msg ||
-                "Login failed.";
+                "Login succeeded, but no session was created.";
 
             return;
 
@@ -799,69 +1302,248 @@ async function adminLogin() {
 
 
         accessToken =
-            data.access_token;
+            data.session.access_token;
 
 
-        document
-            .getElementById("loginScreen")
-            .remove();
+        /*
+           Remember whether the user wants
+           the browser to keep the login.
+        */
+
+        if (rememberMe) {
+
+            localStorage.setItem(
+                "pickupManagerRememberMe",
+                "true"
+            );
+
+        } else {
+
+            localStorage.removeItem(
+                "pickupManagerRememberMe"
+            );
+
+        }
 
 
-        loadPickups();
+        /*
+           Supabase's client stores the session
+           automatically in browser storage.
+        */
+
+        const loginScreen =
+            document.getElementById(
+                "loginScreen"
+            );
+
+
+        if (loginScreen) {
+            loginScreen.remove();
+        }
+
+
+        await loadPickups();
 
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Login error:",
+            error
+        );
+
 
         errorBox.textContent =
             "Could not connect to the server.";
+
+
+    } finally {
+
+        loginButton.disabled =
+            false;
+
+        loginButton.textContent =
+            "Sign In";
 
     }
 
 }
 
 
-/* ================================
+/* =========================================================
+   CHECK EXISTING LOGIN
+========================================================= */
+
+async function checkExistingSession() {
+
+    try {
+
+        const {
+            data
+        } =
+            await supabaseClient
+                .auth
+                .getSession();
+
+
+        if (
+            data &&
+            data.session
+        ) {
+
+            accessToken =
+                data.session.access_token;
+
+
+            const loginScreen =
+                document.getElementById(
+                    "loginScreen"
+                );
+
+
+            if (loginScreen) {
+                loginScreen.remove();
+            }
+
+
+            await loadPickups();
+
+            return;
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Session check error:",
+            error
+        );
+
+    }
+
+
+    /*
+       No active session.
+       Show login.
+    */
+
+    createLoginScreen();
+
+
+    /*
+       Restore the remember-me checkbox
+       if the user previously selected it.
+    */
+
+    const remembered =
+        localStorage.getItem(
+            "pickupManagerRememberMe"
+        );
+
+
+    if (
+        remembered === "true"
+    ) {
+
+        document
+            .getElementById(
+                "rememberMe"
+            )
+            .checked = true;
+
+    }
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logout() {
+
+    try {
+
+        await supabaseClient
+            .auth
+            .signOut();
+
+
+    } catch (error) {
+
+        console.error(
+            "Logout error:",
+            error
+        );
+
+    }
+
+
+    accessToken =
+        null;
+
+
+    pickups =
+        [];
+
+
+    localStorage.removeItem(
+        "pickupManagerRememberMe"
+    );
+
+
+    document
+        .getElementById("pickupTable")
+        .innerHTML = "";
+
+
+    createLoginScreen();
+
+}
+
+
+/* =========================================================
    LOAD PICKUPS
-================================ */
+========================================================= */
 
 async function loadPickups() {
 
     try {
 
-        const response =
-            await fetch(
-                SUPABASE_URL +
-                "/rest/v1/pickups?select=*&order=pickup_date.asc,pickup_time.asc",
-                {
-
-                    method: "GET",
-
-                    headers: {
-
-                        "apikey":
-                            SUPABASE_KEY,
-
-                        "Authorization":
-                            "Bearer " + accessToken
-
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .from("pickups")
+                .select("*")
+                .order(
+                    "pickup_date",
+                    {
+                        ascending: true
                     }
+                )
+                .order(
+                    "pickup_time",
+                    {
+                        ascending: true
+                    }
+                );
 
-                }
+
+        if (error) {
+
+            console.error(
+                "Load pickups error:",
+                error
             );
 
-
-        if (!response.ok) {
-
-            const error =
-                await response.text();
-
-            console.error(error);
 
             alert(
                 "Could not load pickups."
             );
+
 
             return;
 
@@ -869,7 +1551,7 @@ async function loadPickups() {
 
 
         pickups =
-            await response.json();
+            data || [];
 
 
         displayPickups();
@@ -877,7 +1559,11 @@ async function loadPickups() {
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Load pickups error:",
+            error
+        );
+
 
         alert(
             "Could not connect to the database."
@@ -888,174 +1574,291 @@ async function loadPickups() {
 }
 
 
-/* ================================
+/* =========================================================
    DISPLAY PICKUPS
-================================ */
+========================================================= */
 
 function displayPickups() {
 
     const table =
-        document.getElementById("pickupTable");
+        document
+            .getElementById(
+                "pickupTable"
+            );
 
 
     const search =
         document
-            .getElementById("search")
+            .getElementById(
+                "search"
+            )
             .value
-            .toLowerCase();
+            .toLowerCase()
+            .trim();
 
 
     const filtered =
-        pickups.filter(function(pickup) {
+        pickups.filter(
+            function(pickup) {
 
-            return (
+                return (
 
-                pickup.confirmation_code
+                    String(
+                        pickup.confirmation_code || ""
+                    )
                     .toLowerCase()
                     .includes(search)
 
-                ||
+                    ||
 
-                pickup.requester_name
+                    String(
+                        pickup.requester_name || ""
+                    )
                     .toLowerCase()
                     .includes(search)
 
-                ||
+                    ||
 
-                pickup.company
+                    String(
+                        pickup.company || ""
+                    )
                     .toLowerCase()
                     .includes(search)
 
-                ||
+                    ||
 
-                pickup.carrier
+                    String(
+                        pickup.carrier || ""
+                    )
                     .toLowerCase()
                     .includes(search)
 
-            );
+                );
 
-        });
-
-
-    table.innerHTML = "";
+            }
+        );
 
 
-    filtered.forEach(function(pickup) {
-
-        const row =
-            document.createElement("tr");
+    table.innerHTML =
+        "";
 
 
-        row.innerHTML = `
+    filtered.forEach(
+        function(pickup) {
 
-            <td>
-                <strong>
-                    ${pickup.confirmation_code}
-                </strong>
-            </td>
+            const row =
+                document.createElement("tr");
 
-            <td>
-                ${pickup.requester_name}
-            </td>
 
-            <td>
-                ${pickup.carrier}
-            </td>
+            const photoButton =
+                pickup.package_location_image
 
-            <td>
-                ${pickup.package_count}
-            </td>
+                ?
 
-            <td>
-    ${pickup.package_location}
+                `
+                    <br>
 
-    ${
-        pickup.package_location_image
-        ?
-        `<br>
-        <button
-            class="secondary"
-            style="margin-top:8px;"
-            onclick="viewLocationPhoto('${pickup.package_location_image}')"
-        >
-            📷 View Photo
-        </button>`
-        :
-        ""
-    }
-</td>
+                    <button
+                        class="secondary"
+                        style="margin-top:8px;"
+                        onclick="viewLocationPhoto('${escapeHtmlAttribute(pickup.package_location_image)}')"
+                    >
+                        📷 View Photo
+                    </button>
+                `
 
-            <td>
+                :
 
-                <span class="status ${
-                    pickup.status === "READY"
-                    ? "ready"
-                    : "completed"
-                }">
+                "";
 
-                    ${pickup.status}
 
-                </span>
+            const actionButton =
+                pickup.status === "READY"
 
-            </td>
+                ?
 
-            <td>
-
-                ${
-                    pickup.status === "READY"
-
-                    ?
-
-                    `<button
+                `
+                    <button
                         class="primary"
-                        onclick="completePickup('${pickup.confirmation_code}')"
+                        onclick="completePickup('${escapeHtmlAttribute(pickup.confirmation_code)}')"
                     >
                         Picked Up
-                    </button>`
+                    </button>
+                `
 
-                    :
+                :
 
-                    "Completed"
-
-                }
-
-            </td>
-
-        `;
+                `
+                    Completed
+                `;
 
 
-        table.appendChild(row);
+            row.innerHTML = `
 
-    });
+                <td>
+                    <strong>
+                        ${escapeHtml(
+                            pickup.confirmation_code
+                        )}
+                    </strong>
+                </td>
+
+
+                <td>
+                    ${escapeHtml(
+                        pickup.requester_name
+                    )}
+                </td>
+
+
+                <td>
+                    ${escapeHtml(
+                        pickup.carrier
+                    )}
+                </td>
+
+
+                <td>
+                    ${Number(
+                        pickup.package_count || 0
+                    )}
+                </td>
+
+
+                <td>
+
+                    ${escapeHtml(
+                        pickup.package_location
+                    )}
+
+                    ${photoButton}
+
+                </td>
+
+
+                <td>
+
+                    <span
+                        class="status ${
+                            pickup.status === "READY"
+                            ? "ready"
+                            : "completed"
+                        }"
+                    >
+
+                        ${escapeHtml(
+                            pickup.status
+                        )}
+
+                    </span>
+
+                </td>
+
+
+                <td>
+                    ${actionButton}
+                </td>
+
+            `;
+
+
+            table.appendChild(row);
+
+        }
+    );
 
 
     updateStats();
 
 }
 
-/* ================================
-   VIEW LOCATION PHOTO
-================================ */
 
-/* ================================
-   VIEW LOCATION PHOTO
-================================ */
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
 
-async function viewLocationPhoto(fileName) {
+function escapeHtml(value) {
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+/* =========================================================
+   ESCAPE ATTRIBUTE
+========================================================= */
+
+function escapeHtmlAttribute(value) {
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /\\/g,
+        "\\\\"
+    )
+    .replace(
+        /'/g,
+        "\\'"
+    );
+
+}
+
+
+/* =========================================================
+   VIEW LOCATION PHOTO
+========================================================= */
+
+async function viewLocationPhoto(
+    fileName
+) {
 
     try {
 
-        const supabaseClient =
-            window.supabase.createClient(
-                SUPABASE_URL,
-                SUPABASE_KEY
+        if (
+            !fileName
+        ) {
+
+            alert(
+                "No photo was attached to this pickup."
             );
 
+            return;
 
-        const { data, error } =
+        }
+
+
+        const {
+            data,
+            error
+        } =
             await supabaseClient
                 .storage
-                .from("package-location-images")
+                .from(
+                    "package-location-images"
+                )
                 .createSignedUrl(
                     fileName,
                     300
@@ -1069,33 +1872,48 @@ async function viewLocationPhoto(fileName) {
                 error
             );
 
+
             alert(
                 "Could not open the package location photo."
             );
 
+
             return;
+
         }
 
 
-        if (!data || !data.signedUrl) {
+        if (
+            !data ||
+            !data.signedUrl
+        ) {
 
             console.error(
                 "No signed URL returned:",
                 data
             );
 
+
             alert(
                 "Could not create a link to the photo."
             );
 
+
             return;
+
         }
 
+
+        /*
+           Open the actual signed URL
+           returned by Supabase.
+        */
 
         window.open(
             data.signedUrl,
             "_blank"
         );
+
 
     } catch (error) {
 
@@ -1104,6 +1922,7 @@ async function viewLocationPhoto(fileName) {
             error
         );
 
+
         alert(
             "Could not load the package location photo."
         );
@@ -1111,42 +1930,15 @@ async function viewLocationPhoto(fileName) {
     }
 
 }
-        );
 
-        if (!response.ok) {
 
-            const error = await response.text();
-
-            console.error(error);
-
-            alert("Could not open the package location photo.");
-
-            return;
-        }
-
-        const data = await response.json();
-
-        window.open(
-            SUPABASE_URL +
-            "/storage/v1" +
-            data.signedURL,
-            "_blank"
-        );
-
-    } catch (error) {
-
-        console.error(error);
-
-        alert("Could not load the photo.");
-
-    }
-
-}
-/* ================================
+/* =========================================================
    COMPLETE PICKUP
-================================ */
+========================================================= */
 
-async function completePickup(code) {
+async function completePickup(
+    code
+) {
 
     const confirmed =
         confirm(
@@ -1163,54 +1955,39 @@ async function completePickup(code) {
 
     try {
 
-        const response =
-            await fetch(
-                SUPABASE_URL +
-                "/rest/v1/pickups?confirmation_code=eq." +
-                encodeURIComponent(code),
-                {
+        const {
+            error
+        } =
+            await supabaseClient
+                .from("pickups")
+                .update({
 
-                    method: "PATCH",
+                    status:
+                        "COMPLETED",
 
-                    headers: {
+                    picked_up_at:
+                        new Date()
+                            .toISOString()
 
-                        "Content-Type":
-                            "application/json",
+                })
+                .eq(
+                    "confirmation_code",
+                    code
+                );
 
-                        "apikey":
-                            SUPABASE_KEY,
 
-                        "Authorization":
-                            "Bearer " + accessToken,
+        if (error) {
 
-                        "Prefer":
-                            "return=minimal"
-
-                    },
-
-                    body: JSON.stringify({
-
-                        status: "COMPLETED",
-
-                        picked_up_at:
-                            new Date().toISOString()
-
-                    })
-
-                }
+            console.error(
+                "Complete pickup error:",
+                error
             );
 
-
-        if (!response.ok) {
-
-            const error =
-                await response.text();
-
-            console.error(error);
 
             alert(
                 "Could not update the pickup."
             );
+
 
             return;
 
@@ -1219,9 +1996,14 @@ async function completePickup(code) {
 
         await loadPickups();
 
+
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Complete pickup error:",
+            error
+        );
+
 
         alert(
             "Could not connect to the database."
@@ -1232,9 +2014,9 @@ async function completePickup(code) {
 }
 
 
-/* ================================
+/* =========================================================
    STATISTICS
-================================ */
+========================================================= */
 
 function updateStats() {
 
@@ -1245,68 +2027,97 @@ function updateStats() {
 
 
     const todayPickups =
-        pickups.filter(function(p) {
+        pickups.filter(
+            function(pickup) {
 
-            return p.pickup_date === today;
+                return (
+                    pickup.pickup_date ===
+                    today
+                );
 
-        });
+            }
+        );
 
 
     const ready =
-        pickups.filter(function(p) {
+        pickups.filter(
+            function(pickup) {
 
-            return p.status === "READY";
+                return (
+                    pickup.status ===
+                    "READY"
+                );
 
-        });
+            }
+        );
 
 
     const completed =
-        pickups.filter(function(p) {
+        pickups.filter(
+            function(pickup) {
 
-            return p.status === "COMPLETED";
+                return (
+                    pickup.status ===
+                    "COMPLETED"
+                );
 
-        });
+            }
+        );
 
 
     const packages =
-        pickups.reduce(function(total, p) {
+        pickups.reduce(
+            function(total, pickup) {
 
-            return total + Number(
-                p.package_count || 0
-            );
+                return (
+                    total +
+                    Number(
+                        pickup.package_count || 0
+                    )
+                );
 
-        }, 0);
+            },
+            0
+        );
 
 
     document
-        .getElementById("todayCount")
+        .getElementById(
+            "todayCount"
+        )
         .textContent =
         todayPickups.length;
 
 
     document
-        .getElementById("readyCount")
+        .getElementById(
+            "readyCount"
+        )
         .textContent =
         ready.length;
 
 
     document
-        .getElementById("completedCount")
+        .getElementById(
+            "completedCount"
+        )
         .textContent =
         completed.length;
 
 
     document
-        .getElementById("packageCount")
+        .getElementById(
+            "packageCount"
+        )
         .textContent =
         packages;
 
 }
 
 
-/* ================================
+/* =========================================================
    SEARCH
-================================ */
+========================================================= */
 
 document
     .getElementById("search")
@@ -1316,13 +2127,272 @@ document
     );
 
 
-/* ================================
-   START
-================================ */
+/* =========================================================
+   NEW PICKUP MODAL
+========================================================= */
 
-createLoginScreen();
+function openModal() {
+
+    document
+        .getElementById(
+            "pickupModal"
+        )
+        .style.display =
+        "flex";
+
+}
+
+
+function closeModal() {
+
+    document
+        .getElementById(
+            "pickupModal"
+        )
+        .style.display =
+        "none";
+
+}
+
+
+/* =========================================================
+   CONFIRMATION MODAL
+========================================================= */
+
+function closeConfirmation() {
+
+    document
+        .getElementById(
+            "confirmationModal"
+        )
+        .style.display =
+        "none";
+
+
+    loadPickups();
+
+}
+
+
+/* =========================================================
+   ADMIN CREATE PICKUP
+========================================================= */
+
+document
+    .getElementById(
+        "pickupForm"
+    )
+    .addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const confirmationCode =
+                generateCode();
+
+
+            const pickup = {
+
+                confirmation_code:
+                    confirmationCode,
+
+                requester_name:
+                    document
+                        .getElementById(
+                            "requester"
+                        )
+                        .value
+                        .trim(),
+
+                company:
+                    document
+                        .getElementById(
+                            "company"
+                        )
+                        .value
+                        .trim(),
+
+                email:
+                    "",
+
+                phone:
+                    document
+                        .getElementById(
+                            "phone"
+                        )
+                        .value
+                        .trim(),
+
+                carrier:
+                    document
+                        .getElementById(
+                            "carrier"
+                        )
+                        .value,
+
+                pickup_date:
+                    document
+                        .getElementById(
+                            "pickupDate"
+                        )
+                        .value,
+
+                pickup_time:
+                    document
+                        .getElementById(
+                            "pickupTime"
+                        )
+                        .value,
+
+                package_count:
+                    Number(
+                        document
+                            .getElementById(
+                                "packages"
+                            )
+                            .value
+                    ),
+
+                package_location:
+                    document
+                        .getElementById(
+                            "location"
+                        )
+                        .value
+                        .trim(),
+
+                package_description:
+                    document
+                        .getElementById(
+                            "description"
+                        )
+                        .value
+                        .trim(),
+
+                special_instructions:
+                    document
+                        .getElementById(
+                            "instructions"
+                        )
+                        .value
+                        .trim(),
+
+                status:
+                    "READY"
+
+            };
+
+
+            try {
+
+                const {
+                    error
+                } =
+                    await supabaseClient
+                        .from("pickups")
+                        .insert(
+                            pickup
+                        );
+
+
+                if (error) {
+
+                    console.error(
+                        "Create pickup error:",
+                        error
+                    );
+
+
+                    alert(
+                        "Could not create the pickup."
+                    );
+
+
+                    return;
+
+                }
+
+
+                document
+                    .getElementById(
+                        "confirmationCode"
+                    )
+                    .textContent =
+                    confirmationCode;
+
+
+                closeModal();
+
+
+                document
+                    .getElementById(
+                        "confirmationModal"
+                    )
+                    .style.display =
+                    "flex";
+
+
+                document
+                    .getElementById(
+                        "pickupForm"
+                    )
+                    .reset();
+
+
+                await loadPickups();
+
+
+            } catch (error) {
+
+                console.error(
+                    "Create pickup error:",
+                    error
+                );
+
+
+                alert(
+                    "Could not connect to the database."
+                );
+
+            }
+
+        }
+    );
+
+
+/* =========================================================
+   GENERATE CONFIRMATION CODE
+========================================================= */
+
+function generateCode() {
+
+    const number =
+        Math.floor(
+            10000 +
+            Math.random() *
+            90000
+        );
+
+
+    return (
+        "BS-" +
+        number
+    );
+
+}
+
+
+/* =========================================================
+   START ADMIN
+========================================================= */
+
+checkExistingSession();
+
 
 </script>
+
 
 </body>
 </html>
