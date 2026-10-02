@@ -4,67 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Schedule a Pickup</title>
+    <title>Pickup Request</title>
 
     <style>
         * {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
         }
 
         body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f3f4f6;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
             color: #1f2937;
         }
 
-        header {
-    background: #172554;
-    color: white;
-    padding: 18px 30px;
-    text-align: center;
-}
+        .header {
+            background: #ffffff;
+            border-bottom: 1px solid #d1d5db;
+            padding: 18px 20px;
+            text-align: center;
+        }
 
-.company-logo {
-    display: block;
-    width: 180px;
-    max-height: 70px;
-    object-fit: contain;
-    margin: 0 auto 10px auto;
-}
-
-header h1 {
-    font-size: 24px;
-}
-
-header p {
-    margin-top: 5px;
-    font-size: 14px;
-    opacity: 0.8;
-}
+        .header img {
+            max-width: 180px;
+            max-height: 80px;
+            object-fit: contain;
+        }
 
         .container {
             max-width: 700px;
-            margin: 40px auto;
+            margin: 30px auto;
             padding: 0 20px;
         }
 
         .card {
-            background: white;
-            padding: 30px;
+            background: #ffffff;
             border-radius: 12px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
         }
 
-        h2 {
+        h1 {
+            margin-top: 0;
             margin-bottom: 8px;
+            font-size: 28px;
         }
 
-        .description {
+        .subtitle {
             color: #6b7280;
             margin-bottom: 25px;
-            line-height: 1.5;
         }
 
         .form-group {
@@ -73,8 +61,7 @@ header p {
 
         label {
             display: block;
-            font-size: 14px;
-            font-weight: bold;
+            font-weight: 600;
             margin-bottom: 7px;
         }
 
@@ -82,10 +69,18 @@ header p {
         select,
         textarea {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #d1d5db;
+            padding: 11px 12px;
+            border: 1px solid #cbd5e1;
             border-radius: 7px;
-            font-size: 14px;
+            font-size: 15px;
+            font-family: inherit;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #2563eb;
         }
 
         textarea {
@@ -93,91 +88,121 @@ header p {
             resize: vertical;
         }
 
-        .form-row {
+        .row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
         }
 
-        .submit-button {
+        button {
             width: 100%;
-            background: #2563eb;
-            color: white;
             border: none;
-            padding: 14px;
             border-radius: 7px;
-            font-size: 15px;
-            font-weight: bold;
+            padding: 13px 18px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            margin-top: 8px;
         }
 
-        .submit-button:hover {
-            background: #1d4ed8;
+        .primary {
+            background: #1f4f82;
+            color: white;
+        }
+
+        .primary:hover {
+            background: #173d64;
+        }
+
+        .secondary {
+            background: #e5e7eb;
+            color: #111827;
+            width: auto;
+        }
+
+        .secondary:hover {
+            background: #d1d5db;
         }
 
         .confirmation {
-            display: none;
             text-align: center;
         }
 
-        .checkmark {
-            font-size: 50px;
-            margin-bottom: 15px;
-        }
-
         .confirmation h2 {
-            color: #166534;
-        }
-
-        .code-box {
-            background: #f3f4f6;
-            border: 2px dashed #9ca3af;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 25px 0;
-        }
-
-        .code-label {
-            font-size: 13px;
-            color: #6b7280;
+            margin-top: 0;
         }
 
         .confirmation-code {
-            font-size: 36px;
+            font-size: 32px;
             font-weight: bold;
-            letter-spacing: 3px;
-            color: #172554;
-            margin-top: 8px;
+            letter-spacing: 2px;
+            background: #f3f4f6;
+            padding: 18px;
+            border-radius: 8px;
+            margin: 20px 0;
         }
 
         .important {
-            background: #eff6ff;
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
             padding: 15px;
-            border-radius: 7px;
-            font-size: 14px;
-            line-height: 1.5;
+            border-radius: 8px;
             margin-bottom: 20px;
         }
 
-        .new-button {
-            background: #e5e7eb;
-            color: #111827;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 7px;
-            font-weight: bold;
-            cursor: pointer;
+        #otherCarrierGroup {
+            display: none;
+        }
+
+        #photoPreviewContainer {
+            display: none;
+            margin-top: 12px;
+        }
+
+        #photoPreview {
+            max-width: 100%;
+            max-height: 250px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .remove-photo {
+            background: #dc2626;
+            color: white;
+            width: auto;
+            padding: 9px 14px;
+            font-size: 14px;
+        }
+
+        .remove-photo:hover {
+            background: #b91c1c;
+        }
+
+        .help-text {
+            display: block;
+            margin-top: 7px;
+            color: #6b7280;
+            font-size: 13px;
         }
 
         @media (max-width: 600px) {
-            .form-row {
+            .row {
                 grid-template-columns: 1fr;
                 gap: 0;
             }
 
+            .container {
+                margin: 15px auto;
+                padding: 0 12px;
+            }
+
             .card {
-                padding: 22px;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 24px;
             }
         }
     </style>
@@ -185,62 +210,45 @@ header p {
 
 <body>
 
-<header>
-    <img
-        src="https://tse2.mm.bing.net/th/id/OIP.3OwjdChLT1U_CzQMKTLHxQHaDt?w=321&h=174&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
-        alt="SORVIA"
-        class="company-logo"
-    >
-
-    <h1>Pickup Manager</h1>
-    <p>Shipping & Receiving</p>
-</header>
+    <!-- HEADER -->
+    <div class="header">
+        <img
+            src="https://tse2.mm.bing.net/th/id/OIP.3OwjdChLT1U_CzQMKTLHxQHaDt?w=321&h=174&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
+            alt="Company Logo"
+        >
+    </div>
 
 
-<div class="container">
+    <div class="container">
 
-    <!-- REQUEST FORM -->
+        <!-- REQUEST FORM -->
+        <div class="card" id="requestCard">
 
-    <div class="card" id="requestCard">
+            <h1>Schedule a Pickup</h1>
 
-        <h2>Schedule a Pickup</h2>
-
-        <p class="description">
-            Please provide the information below to schedule a package
-            pickup. You will receive a confirmation code after submitting
-            the request.
-        </p>
+            <div class="subtitle">
+                Submit your shipment information to notify Shipping & Receiving.
+            </div>
 
 
-        <div class="important">
-            <strong>Important:</strong>
-            Please place the confirmation code on the package and provide
-            the code to the driver when they arrive.
-        </div>
+            <form id="pickupForm">
 
-
-        <form id="pickupForm">
-
-            <div class="form-row">
-
+                <!-- NAME -->
                 <div class="form-group">
-
                     <label for="name">
-                        Your Name *
+                        Requester Name *
                     </label>
 
                     <input
                         type="text"
                         id="name"
                         required
-                        placeholder="John Smith"
                     >
-
                 </div>
 
 
+                <!-- COMPANY -->
                 <div class="form-group">
-
                     <label for="company">
                         Company *
                     </label>
@@ -249,125 +257,140 @@ header p {
                         type="text"
                         id="company"
                         required
-                        placeholder="ABC Company"
                     >
+                </div>
+
+
+                <!-- EMAIL / PHONE -->
+                <div class="row">
+
+                    <div class="form-group">
+                        <label for="email">
+                            Email *
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="phone">
+                            Phone
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                        >
+                    </div>
 
                 </div>
 
-            </div>
 
-
-            <div class="form-row">
-
+                <!-- CARRIER -->
                 <div class="form-group">
 
-                    <label for="email">
-                        Email *
+                    <label for="carrier">
+                        Carrier *
+                    </label>
+
+                    <select id="carrier" required>
+
+                        <option value="">
+                            Select Carrier
+                        </option>
+
+                        <option value="FedEx">
+                            FedEx
+                        </option>
+
+                        <option value="UPS">
+                            UPS
+                        </option>
+
+                        <option value="Dayton Freight">
+                            Dayton Freight
+                        </option>
+
+                        <option value="Estes">
+                            Estes
+                        </option>
+
+                        <option value="XPO">
+                            XPO
+                        </option>
+
+                        <option value="Old Dominion">
+                            Old Dominion
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- OTHER CARRIER -->
+                <div
+                    class="form-group"
+                    id="otherCarrierGroup"
+                >
+
+                    <label for="otherCarrier">
+                        Enter Carrier Name *
                     </label>
 
                     <input
-                        type="email"
-                        id="email"
-                        required
-                        placeholder="john@example.com"
+                        type="text"
+                        id="otherCarrier"
                     >
 
                 </div>
 
 
-                <div class="form-group">
+                <!-- DATE / TIME -->
+                <div class="row">
 
-                    <label for="phone">
-                        Phone
-                    </label>
+                    <div class="form-group">
 
-                    <input
-                        type="tel"
-                        id="phone"
-                        placeholder="555-555-5555"
-                    >
+                        <label for="date">
+                            Pickup Date *
+                        </label>
 
-                </div>
+                        <input
+                            type="date"
+                            id="date"
+                            required
+                        >
 
-            </div>
-
-
-            <div class="form-group">
-
-                <label for="carrier">
-                    Carrier *
-                </label>
-
-                <select id="carrier" required>
-
-    <option value="">
-        Select carrier
-    </option>
-
-    <option>FedEx</option>
-    <option>UPS</option>
-    <option>Dayton Freight</option>
-    <option>R+L Carriers</option>
-    <option>Estes</option>
-    <option>Old Dominion</option>
-    <option>Customer Pickup</option>
-    <option>Other</option>
-
-</select>
-
-<div class="form-group" id="otherCarrierGroup" style="display: none; margin-top: 18px;">
-
-    <label for="otherCarrier">
-        Enter Carrier Name *
-    </label>
-
-    <input
-        type="text"
-        id="otherCarrier"
-        placeholder="Enter carrier name"
-    >
-
-</div>
-
-            </div>
+                    </div>
 
 
-            <div class="form-row">
+                    <div class="form-group">
 
-                <div class="form-group">
+                        <label for="time">
+                            Pickup Time *
+                        </label>
 
-                    <label for="date">
-                        Pickup Date *
-                    </label>
+                        <input
+                            type="time"
+                            id="time"
+                            required
+                        >
 
-                    <input
-                        type="date"
-                        id="date"
-                        required
-                    >
+                    </div>
 
                 </div>
 
 
-                <div class="form-group">
-
-                    <label for="time">
-                        Pickup Time *
-                    </label>
-
-                    <input
-                        type="time"
-                        id="time"
-                        required
-                    >
-
-                </div>
-
-            </div>
-
-
-            <div class="form-row">
-
+                <!-- PACKAGE COUNT -->
                 <div class="form-group">
 
                     <label for="packages">
@@ -378,202 +401,775 @@ header p {
                         type="number"
                         id="packages"
                         min="1"
-                        value="1"
+                        step="1"
                         required
                     >
 
                 </div>
 
 
+                <!-- PACKAGE LOCATION -->
                 <div class="form-group">
 
-    <label for="location">
-        Package Location *
-    </label>
+                    <label for="location">
+                        Package Location *
+                    </label>
 
-    <input
-        type="text"
-        id="location"
-        required
-        placeholder="Dock 2"
-    >
+                    <input
+                        type="text"
+                        id="location"
+                        placeholder="Example: Dock 3, Shipping Office"
+                        required
+                    >
 
-</div>
-
-<div class="form-group">
-    <label for="locationPhoto">Photo of Package Location</label>
-
-    <input
-        type="file"
-        id="locationPhoto"
-        accept="image/*"
-        capture="environment"
-    >
-
-    <div id="photoPreviewContainer" style="display:none; margin-top:12px;">
-
-        <img
-            id="photoPreview"
-            src=""
-            alt="Package location preview"
-            style="
-                max-width:100%;
-                max-height:250px;
-                border-radius:8px;
-                border:1px solid #d1d5db;
-                display:block;
-                margin-bottom:10px;
-            "
-        >
-
-        <button
-            type="button"
-            id="removePhoto"
-            class="secondary"
-        >
-            Remove Photo
-        </button>
-
-    </div>
-
-    <small style="display:block; margin-top:7px; color:#6b7280;">
-        Add a photo showing where the package is located.
-    </small>
-</div>
-
-            </div>
+                </div>
 
 
-            <div class="form-group">
+                <!-- PHOTO -->
+                <div class="form-group">
 
-                <label for="description">
-                    What is being picked up? *
-                </label>
+                    <label for="locationPhoto">
+                        Photo of Package Location
+                    </label>
 
-                <textarea
-                    id="description"
-                    required
-                    placeholder="Example: 2 boxes of machine parts"
-                ></textarea>
+                    <input
+                        type="file"
+                        id="locationPhoto"
+                        accept="image/*"
+                        capture="environment"
+                    >
 
-            </div>
+                    <div id="photoPreviewContainer">
 
+                        <img
+                            id="photoPreview"
+                            src=""
+                            alt="Package location preview"
+                        >
 
-            <div class="form-group">
+                        <button
+                            type="button"
+                            id="removePhoto"
+                            class="remove-photo"
+                        >
+                            Remove Photo
+                        </button>
 
-                <label for="instructions">
-                    Special Instructions
-                </label>
+                    </div>
 
-                <textarea
-                    id="instructions"
-                    placeholder="Anything the driver needs to know?"
-                ></textarea>
+                    <small class="help-text">
+                        Add a photo showing where the package is located.
+                    </small>
 
-            </div>
-
-
-            <button
-                type="submit"
-                class="submit-button"
-            >
-                Submit Pickup Request
-            </button>
-
-        </form>
-
-    </div>
+                </div>
 
 
-    <!-- CONFIRMATION -->
+                <!-- DESCRIPTION -->
+                <div class="form-group">
 
-    <div class="card confirmation" id="confirmationCard">
+                    <label for="description">
+                        Package Description *
+                    </label>
 
-        <div class="checkmark">
-            ✓
+                    <textarea
+                        id="description"
+                        placeholder="Describe the shipment or packages."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <!-- SPECIAL INSTRUCTIONS -->
+                <div class="form-group">
+
+                    <label for="instructions">
+                        Special Instructions
+                    </label>
+
+                    <textarea
+                        id="instructions"
+                        placeholder="Any special pickup instructions?"
+                    ></textarea>
+
+                </div>
+
+
+                <!-- SUBMIT -->
+                <button
+                    type="submit"
+                    class="primary"
+                    id="submitButton"
+                >
+                    Submit Pickup Request
+                </button>
+
+            </form>
+
         </div>
 
-        <h2>
-            Pickup Request Submitted
-        </h2>
 
-        <p style="margin-top: 10px;">
-            Your pickup request has been submitted.
-        </p>
+        <!-- CONFIRMATION -->
+        <div
+            class="card confirmation"
+            id="confirmationCard"
+            style="display:none;"
+        >
+
+            <h2>
+                Pickup Request Submitted
+            </h2>
+
+            <p>
+                Your pickup request has been successfully submitted.
+            </p>
 
 
-        <div class="code-box">
+            <div class="important">
 
-            <div class="code-label">
-                YOUR CONFIRMATION CODE
+                <strong>
+                    IMPORTANT
+                </strong>
+
+                <p>
+                    Write the confirmation code below on the package
+                    before giving it to the driver.
+                </p>
+
             </div>
+
 
             <div
                 class="confirmation-code"
                 id="confirmationCode"
+            ></div>
+
+
+            <p>
+                Give this confirmation code to the driver when they
+                arrive for pickup.
+            </p>
+
+
+            <button
+                type="button"
+                class="primary"
+                onclick="newRequest()"
             >
-                BS-00000
-            </div>
+                Submit Another Pickup
+            </button>
 
         </div>
-
-
-        <div class="important">
-
-            <strong>Important:</strong><br>
-
-            Write this confirmation code on the package
-            and provide it to the driver when they arrive.
-
-        </div>
-
-
-        <button
-            class="new-button"
-            onclick="newRequest()"
-        >
-            Submit Another Pickup
-        </button>
 
     </div>
-
-</div>
 
 
 <script>
 
-const SUPABASE_URL = "https://erttykaeyvhbzignpysr.supabase.co";
+    /* =========================================================
+       SUPABASE SETTINGS
+    ========================================================= */
 
-const SUPABASE_KEY = "sb_publishable_lY2qbi-Q-lyiTW58m-_oQg_mio84a3L";
+    const SUPABASE_URL =
+        "https://erttykaeyvhbzignpysr.supabase.co";
 
-
-function generateCode() {
-
-    const number =
-        Math.floor(10000 + Math.random() * 90000);
-
-    return "BS-" + number;
-
-}
+    const SUPABASE_KEY =
+        "sb_publishable_lY2qbi-Q-lyiTW58m-_oQg_mio84a3L";
 
 
-const carrierSelect = document.getElementById("carrier");
-const otherCarrierGroup = document.getElementById("otherCarrierGroup");
-const otherCarrierInput = document.getElementById("otherCarrier");
+    /* =========================================================
+       GENERATE CONFIRMATION CODE
+    ========================================================= */
 
-carrierSelect.addEventListener("change", function() {
+    function generateCode() {
 
-    if (this.value === "Other") {
+        const number =
+            Math.floor(10000 + Math.random() * 90000);
 
-        otherCarrierGroup.style.display = "block";
-        otherCarrierInput.required = true;
-
-    } else {
-
-        otherCarrierGroup.style.display = "none";
-        otherCarrierInput.required = false;
-        otherCarrierInput.value = "";
+        return "BS-" + number;
 
     }
 
-});    
+
+    /* =========================================================
+       CARRIER - OTHER FIELD
+    ========================================================= */
+
+    const carrierSelect =
+        document.getElementById("carrier");
+
+    const otherCarrierGroup =
+        document.getElementById("otherCarrierGroup");
+
+    const otherCarrierInput =
+        document.getElementById("otherCarrier");
+
+
+    carrierSelect.addEventListener("change", function() {
+
+        if (this.value === "Other") {
+
+            otherCarrierGroup.style.display = "block";
+
+            otherCarrierInput.required = true;
+
+        } else {
+
+            otherCarrierGroup.style.display = "none";
+
+            otherCarrierInput.required = false;
+
+            otherCarrierInput.value = "";
+
+        }
+
+    });
+
+
+    /* =========================================================
+       PHOTO VARIABLES
+       
+       IMPORTANT:
+       This is LET, not CONST.
+       We replace the file input when Remove Photo
+       is clicked so the camera/file picker completely resets.
+    ========================================================= */
+
+    let locationPhotoInput =
+        document.getElementById("locationPhoto");
+
+    const photoPreviewContainer =
+        document.getElementById("photoPreviewContainer");
+
+    const photoPreview =
+        document.getElementById("photoPreview");
+
+    const removePhotoButton =
+        document.getElementById("removePhoto");
+
+
+    let currentPhotoPreviewUrl = null;
+
+
+    /* =========================================================
+       SET UP PHOTO INPUT
+    ========================================================= */
+
+    function setupPhotoInput() {
+
+        locationPhotoInput.addEventListener(
+            "change",
+            function() {
+
+                const file =
+                    this.files[0];
+
+                if (!file) {
+
+                    photoPreviewContainer.style.display =
+                        "none";
+
+                    return;
+                }
+
+
+                /* Only allow images */
+
+                if (!file.type.startsWith("image/")) {
+
+                    alert(
+                        "Please select an image file."
+                    );
+
+                    resetPhotoInput();
+
+                    return;
+                }
+
+
+                /* Remove previous preview URL */
+
+                if (currentPhotoPreviewUrl) {
+
+                    URL.revokeObjectURL(
+                        currentPhotoPreviewUrl
+                    );
+
+                }
+
+
+                /* Create preview */
+
+                currentPhotoPreviewUrl =
+                    URL.createObjectURL(file);
+
+                photoPreview.src =
+                    currentPhotoPreviewUrl;
+
+                photoPreviewContainer.style.display =
+                    "block";
+
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       RESET PHOTO INPUT
+    ========================================================= */
+
+    function resetPhotoInput() {
+
+        /* Clear preview */
+
+        photoPreview.src = "";
+
+        photoPreviewContainer.style.display =
+            "none";
+
+
+        /* Remove old preview URL */
+
+        if (currentPhotoPreviewUrl) {
+
+            URL.revokeObjectURL(
+                currentPhotoPreviewUrl
+            );
+
+            currentPhotoPreviewUrl = null;
+
+        }
+
+
+        /* Create a completely NEW file input */
+
+        const newPhotoInput =
+            document.createElement("input");
+
+        newPhotoInput.type =
+            "file";
+
+        newPhotoInput.id =
+            "locationPhoto";
+
+        newPhotoInput.accept =
+            "image/*";
+
+        newPhotoInput.capture =
+            "environment";
+
+
+        /* Replace the old input */
+
+        locationPhotoInput.parentNode.replaceChild(
+            newPhotoInput,
+            locationPhotoInput
+        );
+
+
+        /* Update our JavaScript reference */
+
+        locationPhotoInput =
+            newPhotoInput;
+
+
+        /* Set up the new input */
+
+        setupPhotoInput();
+
+    }
+
+
+    /* =========================================================
+       INITIAL PHOTO INPUT
+    ========================================================= */
+
+    setupPhotoInput();
+
+
+    /* =========================================================
+       REMOVE PHOTO BUTTON
+    ========================================================= */
+
+    removePhotoButton.addEventListener(
+        "click",
+        function() {
+
+            resetPhotoInput();
+
+        }
+    );
+
+
+    /* =========================================================
+       SUBMIT FORM
+    ========================================================= */
+
+    document
+        .getElementById("pickupForm")
+        .addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                const submitButton =
+                    document.getElementById("submitButton");
+
+
+                /* Prevent double submissions */
+
+                submitButton.disabled = true;
+
+                submitButton.textContent =
+                    "Submitting...";
+
+
+                try {
+
+                    /* -----------------------------------------
+                       GENERATE CONFIRMATION CODE
+                    ----------------------------------------- */
+
+                    const confirmationCode =
+                        generateCode();
+
+
+                    /* -----------------------------------------
+                       GET PHOTO
+                    ----------------------------------------- */
+
+                    const photoFile =
+                        locationPhotoInput.files[0];
+
+
+                    let photoFileName =
+                        null;
+
+
+                    /* -----------------------------------------
+                       UPLOAD PHOTO IF ONE WAS SELECTED
+                    ----------------------------------------- */
+
+                    if (photoFile) {
+
+                        const fileExtension =
+                            photoFile.name
+                                .split(".")
+                                .pop()
+                                .toLowerCase();
+
+
+                        photoFileName =
+                            confirmationCode +
+                            "-" +
+                            Date.now() +
+                            "." +
+                            fileExtension;
+
+
+                        const uploadResponse =
+                            await fetch(
+                                SUPABASE_URL +
+                                "/storage/v1/object/package-location-images/" +
+                                photoFileName,
+                                {
+                                    method: "POST",
+
+                                    headers: {
+                                        "apikey":
+                                            SUPABASE_KEY,
+
+                                        "Authorization":
+                                            "Bearer " +
+                                            SUPABASE_KEY,
+
+                                        "Content-Type":
+                                            photoFile.type
+                                    },
+
+                                    body:
+                                        photoFile
+                                }
+                            );
+
+
+                        if (!uploadResponse.ok) {
+
+                            const error =
+                                await uploadResponse.text();
+
+                            console.error(error);
+
+                            alert(
+                                "The photo could not be uploaded. Please try again."
+                            );
+
+                            submitButton.disabled =
+                                false;
+
+                            submitButton.textContent =
+                                "Submit Pickup Request";
+
+                            return;
+                        }
+
+                    }
+
+
+                    /* -----------------------------------------
+                       GET CARRIER
+                    ----------------------------------------- */
+
+                    let carrier =
+                        carrierSelect.value;
+
+
+                    if (carrier === "Other") {
+
+                        carrier =
+                            otherCarrierInput.value.trim();
+
+                    }
+
+
+                    /* -----------------------------------------
+                       CREATE PICKUP OBJECT
+                    ----------------------------------------- */
+
+                    const pickup = {
+
+                        confirmation_code:
+                            confirmationCode,
+
+                        requester_name:
+                            document
+                                .getElementById("name")
+                                .value
+                                .trim(),
+
+                        company:
+                            document
+                                .getElementById("company")
+                                .value
+                                .trim(),
+
+                        email:
+                            document
+                                .getElementById("email")
+                                .value
+                                .trim(),
+
+                        phone:
+                            document
+                                .getElementById("phone")
+                                .value
+                                .trim(),
+
+                        carrier:
+                            carrier,
+
+                        pickup_date:
+                            document
+                                .getElementById("date")
+                                .value,
+
+                        pickup_time:
+                            document
+                                .getElementById("time")
+                                .value,
+
+                        package_count:
+                            Number(
+                                document
+                                    .getElementById("packages")
+                                    .value
+                            ),
+
+                        package_location:
+                            document
+                                .getElementById("location")
+                                .value
+                                .trim(),
+
+                        package_location_image:
+                            photoFileName,
+
+                        package_description:
+                            document
+                                .getElementById("description")
+                                .value
+                                .trim(),
+
+                        special_instructions:
+                            document
+                                .getElementById("instructions")
+                                .value
+                                .trim(),
+
+                        status:
+                            "READY"
+
+                    };
+
+
+                    /* -----------------------------------------
+                       SEND PICKUP TO SUPABASE
+                    ----------------------------------------- */
+
+                    const response =
+                        await fetch(
+                            SUPABASE_URL +
+                            "/rest/v1/pickups",
+                            {
+                                method: "POST",
+
+                                headers: {
+
+                                    "Content-Type":
+                                        "application/json",
+
+                                    "apikey":
+                                        SUPABASE_KEY,
+
+                                    "Authorization":
+                                        "Bearer " +
+                                        SUPABASE_KEY,
+
+                                    "Prefer":
+                                        "return=minimal"
+
+                                },
+
+                                body:
+                                    JSON.stringify(pickup)
+
+                            }
+                        );
+
+
+                    /* -----------------------------------------
+                       CHECK FOR DATABASE ERROR
+                    ----------------------------------------- */
+
+                    if (!response.ok) {
+
+                        const error =
+                            await response.text();
+
+                        console.error(error);
+
+                        alert(
+                            "There was an error submitting the pickup. Please try again."
+                        );
+
+                        submitButton.disabled =
+                            false;
+
+                        submitButton.textContent =
+                            "Submit Pickup Request";
+
+                        return;
+                    }
+
+
+                    /* -----------------------------------------
+                       SHOW CONFIRMATION
+                    ----------------------------------------- */
+
+                    document
+                        .getElementById(
+                            "confirmationCode"
+                        )
+                        .textContent =
+                            confirmationCode;
+
+
+                    document
+                        .getElementById(
+                            "requestCard"
+                        )
+                        .style.display =
+                            "none";
+
+
+                    document
+                        .getElementById(
+                            "confirmationCard"
+                        )
+                        .style.display =
+                            "block";
+
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    alert(
+                        "Could not connect to the pickup system. Please try again."
+                    );
+
+                } finally {
+
+                    submitButton.disabled =
+                        false;
+
+                    submitButton.textContent =
+                        "Submit Pickup Request";
+
+                }
+
+            }
+        );
+
+
+    /* =========================================================
+       NEW REQUEST
+    ========================================================= */
+
+    function newRequest() {
+
+        /* Reset form */
+
+        document
+            .getElementById("pickupForm")
+            .reset();
+
+
+        /* Reset carrier */
+
+        otherCarrierGroup.style.display =
+            "none";
+
+        otherCarrierInput.required =
+            false;
+
+
+        /* Reset photo */
+
+        resetPhotoInput();
+
+
+        /* Hide confirmation */
+
+        document
+            .getElementById("confirmationCard")
+            .style.display =
+                "none";
+
+
+        /* Show form */
+
+        document
+            .getElementById("requestCard")
+            .style.display =
+                "block";
+
+    }
+
+</script>
+
+</body>
+</html>
