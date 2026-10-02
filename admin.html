@@ -980,7 +980,67 @@
 
 </div>
 
+<!-- PHOTO VIEWER MODAL -->
 
+<div
+    class="modal"
+    id="photoModal"
+    onclick="closePhotoModal(event)"
+>
+
+    <div
+        class="modal-content"
+        style="
+            max-width:900px;
+            text-align:center;
+            position:relative;
+        "
+        onclick="event.stopPropagation()"
+    >
+
+        <div class="modal-header">
+
+            <h2>
+                Package Location Photo
+            </h2>
+
+            <button
+                class="close"
+                onclick="closePhotoModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <div
+            id="photoLoading"
+            style="
+                text-align:center;
+                padding:40px;
+                color:#6b7280;
+            "
+        >
+            Loading photo...
+        </div>
+
+        <img
+            id="locationPhotoViewer"
+            src=""
+            alt="Package location"
+            style="
+                display:none;
+                max-width:100%;
+                max-height:70vh;
+                object-fit:contain;
+                margin:auto;
+                border-radius:8px;
+            "
+        >
+
+    </div>
+
+</div>
 <!-- CONFIRMATION MODAL -->
 
 <div
@@ -1831,15 +1891,14 @@ function escapeHtmlAttribute(value) {
    VIEW LOCATION PHOTO
 ========================================================= */
 
-async function viewLocationPhoto(
-    fileName
-) {
+let currentPhotoUrl = null;
+
+
+async function viewLocationPhoto(fileName) {
 
     try {
 
-        if (
-            !fileName
-        ) {
+        if (!fileName) {
 
             alert(
                 "No photo was attached to this pickup."
@@ -1849,6 +1908,226 @@ async function viewLocationPhoto(
 
         }
 
+
+        const photoModal =
+            document.getElementById(
+                "photoModal"
+            );
+
+
+        const photoViewer =
+            document.getElementById(
+                "locationPhotoViewer"
+            );
+
+
+        const photoLoading =
+            document.getElementById(
+                "photoLoading"
+            );
+
+
+        /*
+           Show the photo window immediately.
+        */
+
+        photoModal.style.display =
+            "flex";
+
+
+        photoViewer.style.display =
+            "none";
+
+
+        photoViewer.src =
+            "";
+
+
+        photoLoading.style.display =
+            "block";
+
+
+        photoLoading.textContent =
+            "Loading photo...";
+
+
+        /*
+           Remove the previous temporary
+           browser image URL if one exists.
+        */
+
+        if (currentPhotoUrl) {
+
+            URL.revokeObjectURL(
+                currentPhotoUrl
+            );
+
+            currentPhotoUrl =
+                null;
+
+        }
+
+
+        /*
+           Download the private image directly
+           through the authenticated Supabase
+           client.
+        */
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .storage
+                .from(
+                    "package-location-images"
+                )
+                .download(
+                    fileName
+                );
+
+
+        if (error) {
+
+            console.error(
+                "Photo download error:",
+                error
+            );
+
+
+            photoLoading.textContent =
+                "Could not load the photo.";
+
+
+            return;
+
+        }
+
+
+        if (!data) {
+
+            console.error(
+                "No photo data returned."
+            );
+
+
+            photoLoading.textContent =
+                "No photo data was returned.";
+
+
+            return;
+
+        }
+
+
+        /*
+           Convert the downloaded image into
+           a temporary browser-only URL.
+        */
+
+        currentPhotoUrl =
+            URL.createObjectURL(
+                data
+            );
+
+
+        photoViewer.src =
+            currentPhotoUrl;
+
+
+        photoViewer.style.display =
+            "block";
+
+
+        photoLoading.style.display =
+            "none";
+
+
+    } catch (error) {
+
+        console.error(
+            "Photo viewing error:",
+            error
+        );
+
+
+        const photoLoading =
+            document.getElementById(
+                "photoLoading"
+            );
+
+
+        if (photoLoading) {
+
+            photoLoading.textContent =
+                "Could not load the photo.";
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   CLOSE PHOTO VIEWER
+========================================================= */
+
+function closePhotoModal(event) {
+
+    /*
+       If the user clicks the dark background,
+       close the window.
+    */
+
+    if (
+        event &&
+        event.target !== event.currentTarget
+    ) {
+
+        return;
+
+    }
+
+
+    const photoModal =
+        document.getElementById(
+            "photoModal"
+        );
+
+
+    const photoViewer =
+        document.getElementById(
+            "locationPhotoViewer"
+        );
+
+
+    photoModal.style.display =
+        "none";
+
+
+    photoViewer.src =
+        "";
+
+
+    /*
+       Delete the temporary browser URL
+       when the photo is closed.
+    */
+
+    if (currentPhotoUrl) {
+
+        URL.revokeObjectURL(
+            currentPhotoUrl
+        );
+
+        currentPhotoUrl =
+            null;
+
+    }
+
+}
 
         const {
             data,
