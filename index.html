@@ -16,7 +16,6 @@
             font-family: Arial, Helvetica, sans-serif;
             color: #1f2937;
 
-            /* Professional background */
             background:
                 linear-gradient(
                     135deg,
@@ -421,9 +420,7 @@
             <form id="pickupForm">
 
 
-                <!-- =================================================
-                     NAME
-                ================================================= -->
+                <!-- NAME -->
 
                 <div class="form-group">
 
@@ -441,9 +438,7 @@
 
 
 
-                <!-- =================================================
-                     COMPANY
-                ================================================= -->
+                <!-- COMPANY -->
 
                 <div class="form-group">
 
@@ -461,9 +456,7 @@
 
 
 
-                <!-- =================================================
-                     EMAIL / PHONE
-                ================================================= -->
+                <!-- EMAIL / PHONE -->
 
                 <div class="row">
 
@@ -499,9 +492,7 @@
 
 
 
-                <!-- =================================================
-                     CARRIER
-                ================================================= -->
+                <!-- CARRIER -->
 
                 <div class="form-group">
 
@@ -552,9 +543,7 @@
 
 
 
-                <!-- =================================================
-                     OTHER CARRIER
-                ================================================= -->
+                <!-- OTHER CARRIER -->
 
                 <div
                     class="form-group"
@@ -574,14 +563,9 @@
 
 
 
-                <!-- =================================================
-                     DATE / TIME
-                ================================================= -->
+                <!-- DATE / TIME -->
 
                 <div class="row">
-
-
-                    <!-- DATE -->
 
                     <div class="form-group">
 
@@ -597,8 +581,6 @@
 
                     </div>
 
-
-                    <!-- TIME -->
 
                     <div class="form-group">
 
@@ -623,9 +605,7 @@
 
 
 
-                <!-- =================================================
-                     PACKAGE COUNT
-                ================================================= -->
+                <!-- PACKAGE COUNT -->
 
                 <div class="form-group">
 
@@ -645,9 +625,7 @@
 
 
 
-                <!-- =================================================
-                     PACKAGE LOCATION
-                ================================================= -->
+                <!-- PACKAGE LOCATION -->
 
                 <div class="form-group">
 
@@ -666,9 +644,7 @@
 
 
 
-                <!-- =================================================
-                     PHOTO
-                ================================================= -->
+                <!-- PHOTO -->
 
                 <div class="form-group">
 
@@ -712,9 +688,7 @@
 
 
 
-                <!-- =================================================
-                     DESCRIPTION
-                ================================================= -->
+                <!-- DESCRIPTION -->
 
                 <div class="form-group">
 
@@ -732,9 +706,7 @@
 
 
 
-                <!-- =================================================
-                     SPECIAL INSTRUCTIONS
-                ================================================= -->
+                <!-- SPECIAL INSTRUCTIONS -->
 
                 <div class="form-group">
 
@@ -751,9 +723,7 @@
 
 
 
-                <!-- =================================================
-                     SUBMIT
-                ================================================= -->
+                <!-- SUBMIT -->
 
                 <button
                     type="submit"
@@ -833,14 +803,12 @@
 
     <!-- =========================================================
          SUPABASE
-         ONLY ONE COPY
     ========================================================= -->
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
     <script>
-
 
         /* =========================================================
            SUPABASE SETTINGS
@@ -852,7 +820,6 @@
 
         const SUPABASE_KEY =
             "sb_publishable_lY2qbi-Q-lyiTW58m-_oQg_mio84a3L";
-
 
 
         /* =========================================================
@@ -873,7 +840,6 @@
             );
 
 
-
         /* =========================================================
            GENERATE CONFIRMATION CODE
         ========================================================= */
@@ -891,7 +857,6 @@
         }
 
 
-
         /* =========================================================
            ELEMENTS
         ========================================================= */
@@ -899,58 +864,44 @@
         const pickupForm =
             document.getElementById("pickupForm");
 
-
         const submitButton =
             document.getElementById("submitButton");
-
 
         const carrierSelect =
             document.getElementById("carrier");
 
-
         const otherCarrierGroup =
             document.getElementById("otherCarrierGroup");
-
 
         const otherCarrierInput =
             document.getElementById("otherCarrier");
 
-
         const photoPreviewContainer =
             document.getElementById("photoPreviewContainer");
-
 
         const photoPreview =
             document.getElementById("photoPreview");
 
-
         const removePhotoButton =
             document.getElementById("removePhoto");
-
 
         const confirmationCard =
             document.getElementById("confirmationCard");
 
-
         const requestCard =
             document.getElementById("requestCard");
-
 
         const confirmationCodeElement =
             document.getElementById("confirmationCode");
 
-
         const newRequestButton =
             document.getElementById("newRequestButton");
-
 
         const dateInput =
             document.getElementById("date");
 
-
         const timeInput =
             document.getElementById("time");
-
 
 
         /* =========================================================
@@ -960,32 +911,33 @@
         const today =
             new Date();
 
-
         const todayYear =
             today.getFullYear();
-
 
         const todayMonth =
             String(
                 today.getMonth() + 1
             ).padStart(2, "0");
 
-
         const todayDay =
             String(
                 today.getDate()
             ).padStart(2, "0");
 
-
         dateInput.min =
             `${todayYear}-${todayMonth}-${todayDay}`;
-
 
 
         /* =========================================================
            CREATE TIME OPTIONS
            
-           15-minute intervals
+           Monday-Thursday:
+           8:30 AM - 3:30 PM
+
+           Friday:
+           8:30 AM - 2:30 PM
+
+           15-minute increments
         ========================================================= */
 
         function createTimeOptions(
@@ -997,11 +949,11 @@
 
             timeInput.innerHTML = "";
 
-
             const firstOption =
                 document.createElement("option");
 
-            firstOption.value = "";
+            firstOption.value =
+                "";
 
             firstOption.textContent =
                 "Select a pickup time";
@@ -1031,7 +983,6 @@
                         currentMinutes / 60
                     );
 
-
                 const minutes =
                     currentMinutes % 60;
 
@@ -1046,12 +997,24 @@
                         .padStart(2, "0");
 
 
-                const displayHour =
-                    hours === 0
-                        ? 12
-                        : hours > 12
-                            ? hours - 12
-                            : hours;
+                let displayHour;
+
+                if (hours === 0) {
+
+                    displayHour =
+                        12;
+
+                } else if (hours > 12) {
+
+                    displayHour =
+                        hours - 12;
+
+                } else {
+
+                    displayHour =
+                        hours;
+
+                }
 
 
                 const amPm =
@@ -1088,9 +1051,8 @@
         }
 
 
-
         /* =========================================================
-           UPDATE TIMES WHEN DATE CHANGES
+           UPDATE TIME OPTIONS WHEN DATE CHANGES
         ========================================================= */
 
         function updateShippingHours() {
@@ -1101,13 +1063,11 @@
             const defaultOption =
                 document.createElement("option");
 
-
-            defaultOption.value = "";
-
+            defaultOption.value =
+                "";
 
             defaultOption.textContent =
                 "Select a pickup time";
-
 
             timeInput.appendChild(
                 defaultOption
@@ -1128,10 +1088,8 @@
             const year =
                 Number(parts[0]);
 
-
             const month =
                 Number(parts[1]) - 1;
-
 
             const day =
                 Number(parts[2]);
@@ -1149,7 +1107,6 @@
                 selectedDate.getDay();
 
 
-
             /* =====================================================
                SATURDAY / SUNDAY
             ===================================================== */
@@ -1164,7 +1121,8 @@
                 );
 
 
-                dateInput.value = "";
+                dateInput.value =
+                    "";
 
 
                 return;
@@ -1172,11 +1130,8 @@
             }
 
 
-
             /* =====================================================
                MONDAY - THURSDAY
-               
-               8:30 AM - 3:30 PM
             ===================================================== */
 
             if (
@@ -1196,11 +1151,8 @@
             }
 
 
-
             /* =====================================================
                FRIDAY
-               
-               8:30 AM - 2:30 PM
             ===================================================== */
 
             if (
@@ -1221,18 +1173,14 @@
         }
 
 
-
         dateInput.addEventListener(
             "change",
             updateShippingHours
         );
 
 
-
         /* =========================================================
            VALIDATE SHIPPING HOURS
-           
-           This is a second layer of protection.
         ========================================================= */
 
         function validateShippingHours() {
@@ -1266,10 +1214,8 @@
             const year =
                 Number(parts[0]);
 
-
             const month =
                 Number(parts[1]) - 1;
-
 
             const day =
                 Number(parts[2]);
@@ -1286,8 +1232,6 @@
             const dayOfWeek =
                 selectedDate.getDay();
 
-
-            /* Weekend */
 
             if (
                 dayOfWeek === 0 ||
@@ -1309,7 +1253,6 @@
 
             const hours =
                 Number(timeParts[0]);
-
 
             const minutes =
                 Number(timeParts[1]);
@@ -1368,7 +1311,6 @@
         }
 
 
-
         /* =========================================================
            OTHER CARRIER
         ========================================================= */
@@ -1384,7 +1326,6 @@
                     otherCarrierGroup.style.display =
                         "block";
 
-
                     otherCarrierInput.required =
                         true;
 
@@ -1393,10 +1334,8 @@
                     otherCarrierGroup.style.display =
                         "none";
 
-
                     otherCarrierInput.required =
                         false;
-
 
                     otherCarrierInput.value =
                         "";
@@ -1405,7 +1344,6 @@
 
             }
         );
-
 
 
         /* =========================================================
@@ -1417,10 +1355,8 @@
                 "locationPhoto"
             );
 
-
         let currentPhotoPreviewUrl =
             null;
-
 
 
         function setupPhotoInput() {
@@ -1453,9 +1389,7 @@
                             "Please select an image file."
                         );
 
-
                         resetPhotoInput();
-
 
                         return;
 
@@ -1492,7 +1426,6 @@
         }
 
 
-
         /* =========================================================
            RESET PHOTO
         ========================================================= */
@@ -1501,7 +1434,6 @@
 
             photoPreview.src =
                 "";
-
 
             photoPreviewContainer.style.display =
                 "none";
@@ -1514,7 +1446,6 @@
                 URL.revokeObjectURL(
                     currentPhotoPreviewUrl
                 );
-
 
                 currentPhotoPreviewUrl =
                     null;
@@ -1531,14 +1462,11 @@
             newInput.type =
                 "file";
 
-
             newInput.id =
                 "locationPhoto";
 
-
             newInput.accept =
                 "image/*";
-
 
             newInput.capture =
                 "environment";
@@ -1562,7 +1490,6 @@
         setupPhotoInput();
 
 
-
         /* =========================================================
            REMOVE PHOTO
         ========================================================= */
@@ -1577,7 +1504,6 @@
         );
 
 
-
         /* =========================================================
            SUBMIT PICKUP
         ========================================================= */
@@ -1589,9 +1515,8 @@
                 event.preventDefault();
 
 
-
                 /* ================================================
-                   VALIDATE SHIPPING DATE / TIME
+                   VALIDATE DATE / TIME
                 ================================================= */
 
                 if (
@@ -1603,14 +1528,11 @@
                 }
 
 
-
                 submitButton.disabled =
                     true;
 
-
                 submitButton.textContent =
                     "Submitting...";
-
 
 
                 try {
@@ -1624,7 +1546,6 @@
                         generateCode();
 
 
-
                     /* ============================================
                        GET PHOTO
                     ============================================ */
@@ -1635,7 +1556,6 @@
 
                     let photoFileName =
                         null;
-
 
 
                     /* ============================================
@@ -1716,7 +1636,6 @@
                     }
 
 
-
                     /* ============================================
                        GET CARRIER
                     ============================================ */
@@ -1737,7 +1656,6 @@
                     }
 
 
-
                     /* ============================================
                        CREATE PICKUP
                     ============================================ */
@@ -1747,7 +1665,6 @@
                         confirmation_code:
                             confirmationCode,
 
-
                         requester_name:
                             document
                                 .getElementById(
@@ -1755,7 +1672,6 @@
                                 )
                                 .value
                                 .trim(),
-
 
                         company:
                             document
@@ -1765,7 +1681,6 @@
                                 .value
                                 .trim(),
 
-
                         email:
                             document
                                 .getElementById(
@@ -1773,7 +1688,6 @@
                                 )
                                 .value
                                 .trim(),
-
 
                         phone:
                             document
@@ -1783,18 +1697,14 @@
                                 .value
                                 .trim(),
 
-
                         carrier:
                             carrier,
-
 
                         pickup_date:
                             dateInput.value,
 
-
                         pickup_time:
                             timeInput.value,
-
 
                         package_count:
                             Number(
@@ -1805,7 +1715,6 @@
                                     .value
                             ),
 
-
                         package_location:
                             document
                                 .getElementById(
@@ -1814,10 +1723,8 @@
                                 .value
                                 .trim(),
 
-
                         package_location_image:
                             photoFileName,
-
 
                         package_description:
                             document
@@ -1827,7 +1734,6 @@
                                 .value
                                 .trim(),
 
-
                         special_instructions:
                             document
                                 .getElementById(
@@ -1836,12 +1742,10 @@
                                 .value
                                 .trim(),
 
-
                         status:
                             "READY"
 
                     };
-
 
 
                     console.log(
@@ -1850,186 +1754,111 @@
                     );
 
 
-
                     /* ============================================
-                       INSERT INTO SUPABASE
-                       
-                       No .select()
+                       SAVE PICKUP TO SUPABASE
                     ============================================ */
 
-                   const insertResult =
-    await supabaseClient
-        .from("pickups")
-        .insert([
-            pickup
-        ]);
+                    const insertResult =
+                        await supabaseClient
+                            .from("pickups")
+                            .insert([
+                                pickup
+                            ]);
 
 
-if (
-    insertResult.error
-) {
+                    if (
+                        insertResult.error
+                    ) {
 
-    console.error(
-        "Pickup submission error:",
-        insertResult.error
-    );
-
-
-    alert(
-        "There was an error submitting the pickup. Please try again."
-    );
+                        console.error(
+                            "Pickup submission error:",
+                            insertResult.error
+                        );
 
 
-    return;
-
-}
-
-
-console.log(
-    "Pickup submitted successfully."
-);
-                    
-/* =========================================================
-   SEND CONFIRMATION EMAIL
-========================================================= */
-
-console.log(
-    "Sending confirmation email..."
-);
-
-const emailResult =
-    await supabaseClient.functions.invoke(
-        "send-pickup-email",
-        {
-            body: {
-
-                email:
-                    pickup.email,
-
-                requesterName:
-                    pickup.requester_name,
-
-                confirmationCode:
-                    pickup.confirmation_code,
-
-                company:
-                    pickup.company,
-
-                carrier:
-                    pickup.carrier,
-
-                pickupDate:
-                    pickup.pickup_date,
-
-                pickupTime:
-                    pickup.pickup_time,
-
-                packageCount:
-                    pickup.package_count,
-
-                packageLocation:
-                    pickup.package_location
-
-            }
-        }
-    );
+                        alert(
+                            "There was an error submitting the pickup. Please try again."
+                        );
 
 
-if (emailResult.error) {
+                        return;
 
-    console.error(
-        "Email error:",
-        emailResult.error
-    );
-
-    console.warn(
-        "Pickup was saved, but the confirmation email could not be sent."
-    );
-
-} else {
-
-    console.log(
-        "Confirmation email sent successfully."
-    );
-
-}
+                    }
 
 
-/* =========================================================
-   SEND CONFIRMATION EMAIL
-========================================================= */
-
-console.log(
-    "Sending confirmation email..."
-);
+                    console.log(
+                        "Pickup submitted successfully."
+                    );
 
 
-const emailResult =
-    await supabaseClient.functions.invoke(
-        "send-pickup-email",
-        {
-            body: {
+                    /* ============================================
+                       SEND CONFIRMATION EMAIL
+                    ============================================ */
 
-                email:
-                    pickup.email,
-
-                requesterName:
-                    pickup.requester_name,
-
-                confirmationCode:
-                    pickup.confirmation_code,
-
-                company:
-                    pickup.company,
-
-                carrier:
-                    pickup.carrier,
-
-                pickupDate:
-                    pickup.pickup_date,
-
-                pickupTime:
-                    pickup.pickup_time,
-
-                packageCount:
-                    pickup.package_count,
-
-                packageLocation:
-                    pickup.package_location
-
-            }
-        }
-    );
+                    console.log(
+                        "Sending confirmation email..."
+                    );
 
 
-if (
-    emailResult.error
-) {
+                    const emailResult =
+                        await supabaseClient.functions.invoke(
+                            "send-pickup-email",
+                            {
+                                body: {
 
-    console.error(
-        "Email error:",
-        emailResult.error
-    );
+                                    email:
+                                        pickup.email,
+
+                                    requesterName:
+                                        pickup.requester_name,
+
+                                    confirmationCode:
+                                        pickup.confirmation_code,
+
+                                    company:
+                                        pickup.company,
+
+                                    carrier:
+                                        pickup.carrier,
+
+                                    pickupDate:
+                                        pickup.pickup_date,
+
+                                    pickupTime:
+                                        pickup.pickup_time,
+
+                                    packageCount:
+                                        pickup.package_count,
+
+                                    packageLocation:
+                                        pickup.package_location
+
+                                }
+                            }
+                        );
 
 
-    /*
-       The pickup WAS saved successfully.
-       We don't want to tell the user
-       that the entire pickup failed just
-       because the email had a problem.
-    */
+                    if (
+                        emailResult.error
+                    ) {
 
-    console.warn(
-        "Pickup was saved, but the confirmation email could not be sent."
-    );
+                        console.error(
+                            "Email error:",
+                            emailResult.error
+                        );
 
-} else {
 
-    console.log(
-        "Confirmation email sent successfully."
-    );
+                        console.warn(
+                            "Pickup was saved, but the confirmation email could not be sent."
+                        );
 
-}
+                    } else {
+
+                        console.log(
+                            "Confirmation email sent successfully."
+                        );
+
+                    }
 
 
                     /* ============================================
@@ -2048,7 +1877,6 @@ if (
                         "block";
 
 
-
                 } catch (error) {
 
                     console.error(
@@ -2060,8 +1888,6 @@ if (
                     alert(
                         "Could not connect to the pickup system. Please try again."
                     );
-
-
 
                 } finally {
 
@@ -2078,7 +1904,6 @@ if (
         );
 
 
-
         /* =========================================================
            NEW REQUEST
         ========================================================= */
@@ -2090,7 +1915,7 @@ if (
                 pickupForm.reset();
 
 
-                /* Reset time dropdown */
+                /* Reset time */
 
                 timeInput.innerHTML =
                     `
