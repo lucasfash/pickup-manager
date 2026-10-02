@@ -1857,38 +1857,115 @@
                        No .select()
                     ============================================ */
 
-                    const insertResult =
-                        await supabaseClient
-                            .from("pickups")
-                            .insert([
-                                pickup
-                            ]);
+                   const insertResult =
+    await supabaseClient
+        .from("pickups")
+        .insert([
+            pickup
+        ]);
 
 
-                    if (
-                        insertResult.error
-                    ) {
+if (
+    insertResult.error
+) {
 
-                        console.error(
-                            "Pickup submission error:",
-                            insertResult.error
-                        );
-
-
-                        alert(
-                            "There was an error submitting the pickup. Please try again."
-                        );
+    console.error(
+        "Pickup submission error:",
+        insertResult.error
+    );
 
 
-                        return;
+    alert(
+        "There was an error submitting the pickup. Please try again."
+    );
 
-                    }
+
+    return;
+
+}
 
 
-                    console.log(
-                        "Pickup submitted successfully."
-                    );
+console.log(
+    "Pickup submitted successfully."
+);
 
+
+
+/* =========================================================
+   SEND CONFIRMATION EMAIL
+========================================================= */
+
+console.log(
+    "Sending confirmation email..."
+);
+
+
+const emailResult =
+    await supabaseClient.functions.invoke(
+        "send-pickup-email",
+        {
+            body: {
+
+                email:
+                    pickup.email,
+
+                requesterName:
+                    pickup.requester_name,
+
+                confirmationCode:
+                    pickup.confirmation_code,
+
+                company:
+                    pickup.company,
+
+                carrier:
+                    pickup.carrier,
+
+                pickupDate:
+                    pickup.pickup_date,
+
+                pickupTime:
+                    pickup.pickup_time,
+
+                packageCount:
+                    pickup.package_count,
+
+                packageLocation:
+                    pickup.package_location
+
+            }
+        }
+    );
+
+
+if (
+    emailResult.error
+) {
+
+    console.error(
+        "Email error:",
+        emailResult.error
+    );
+
+
+    /*
+       The pickup WAS saved successfully.
+       We don't want to tell the user
+       that the entire pickup failed just
+       because the email had a problem.
+    */
+
+    console.warn(
+        "Pickup was saved, but the confirmation email could not be sent."
+    );
+
+} else {
+
+    console.log(
+        "Confirmation email sent successfully."
+    );
+
+}
 
 
                     /* ============================================
