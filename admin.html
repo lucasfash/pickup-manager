@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <meta charset="UTF-8">
@@ -232,6 +233,10 @@
         }
 
 
+        /* =====================================================
+           MODALS
+        ===================================================== */
+
         .modal {
             display: none;
 
@@ -267,6 +272,7 @@
         .modal-header {
             display: flex;
             justify-content: space-between;
+            align-items: center;
 
             margin-bottom: 25px;
         }
@@ -279,10 +285,61 @@
 
         .close {
             background: none;
-            font-size: 25px;
+            font-size: 28px;
             cursor: pointer;
+            padding: 0 8px;
+            color: #374151;
         }
 
+
+        .close:hover {
+            color: #dc2626;
+        }
+
+
+        /* =====================================================
+           PHOTO VIEWER
+        ===================================================== */
+
+        #photoModal {
+            z-index: 2000;
+        }
+
+
+        .photo-modal-content {
+            max-width: 950px;
+            text-align: center;
+        }
+
+
+        #locationPhotoViewer {
+            display: none;
+
+            max-width: 100%;
+            max-height: 70vh;
+
+            object-fit: contain;
+
+            margin: 0 auto;
+
+            border-radius: 8px;
+        }
+
+
+        #photoLoading {
+            text-align: center;
+
+            padding: 40px;
+
+            color: #6b7280;
+
+            font-size: 16px;
+        }
+
+
+        /* =====================================================
+           FORM
+        ===================================================== */
 
         .form-group {
             margin-bottom: 17px;
@@ -359,7 +416,9 @@
         }
 
 
-        /* LOGIN */
+        /* =====================================================
+           LOGIN
+        ===================================================== */
 
         #loginScreen {
             position: fixed;
@@ -504,6 +563,10 @@
         }
 
 
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
         @media (max-width: 800px) {
 
             .dashboard {
@@ -563,7 +626,9 @@
 <body>
 
 
-<!-- HEADER -->
+<!-- =========================================================
+     HEADER
+========================================================= -->
 
 <header>
 
@@ -578,7 +643,9 @@
 </header>
 
 
-<!-- MAIN -->
+<!-- =========================================================
+     MAIN DASHBOARD
+========================================================= -->
 
 <div class="container">
 
@@ -597,6 +664,7 @@
                 + New Pickup
             </button>
 
+
             <button
                 class="logout-button"
                 onclick="logout()"
@@ -609,7 +677,7 @@
     </div>
 
 
-    <!-- DASHBOARD -->
+    <!-- DASHBOARD STATS -->
 
     <div class="dashboard">
 
@@ -746,7 +814,59 @@
 </div>
 
 
-<!-- NEW PICKUP MODAL -->
+<!-- =========================================================
+     PHOTO VIEWER MODAL
+========================================================= -->
+
+<div
+    class="modal"
+    id="photoModal"
+    onclick="closePhotoModal(event)"
+>
+
+    <div
+        class="modal-content photo-modal-content"
+        onclick="event.stopPropagation()"
+    >
+
+        <div class="modal-header">
+
+            <h2>
+                Package Location Photo
+            </h2>
+
+
+            <button
+                class="close"
+                onclick="closePhotoModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div
+            id="photoLoading"
+        >
+            Loading photo...
+        </div>
+
+
+        <img
+            id="locationPhotoViewer"
+            src=""
+            alt="Package location photo"
+        >
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     NEW PICKUP MODAL
+========================================================= -->
 
 <div
     class="modal"
@@ -760,6 +880,7 @@
             <h2>
                 Create Pickup
             </h2>
+
 
             <button
                 class="close"
@@ -980,68 +1101,10 @@
 
 </div>
 
-<!-- PHOTO VIEWER MODAL -->
 
-<div
-    class="modal"
-    id="photoModal"
-    onclick="closePhotoModal(event)"
->
-
-    <div
-        class="modal-content"
-        style="
-            max-width:900px;
-            text-align:center;
-            position:relative;
-        "
-        onclick="event.stopPropagation()"
-    >
-
-        <div class="modal-header">
-
-            <h2>
-                Package Location Photo
-            </h2>
-
-            <button
-                class="close"
-                onclick="closePhotoModal()"
-            >
-                ×
-            </button>
-
-        </div>
-
-        <div
-            id="photoLoading"
-            style="
-                text-align:center;
-                padding:40px;
-                color:#6b7280;
-            "
-        >
-            Loading photo...
-        </div>
-
-        <img
-            id="locationPhotoViewer"
-            src=""
-            alt="Package location"
-            style="
-                display:none;
-                max-width:100%;
-                max-height:70vh;
-                object-fit:contain;
-                margin:auto;
-                border-radius:8px;
-            "
-        >
-
-    </div>
-
-</div>
-<!-- CONFIRMATION MODAL -->
+<!-- =========================================================
+     CONFIRMATION MODAL
+========================================================= -->
 
 <div
     class="modal"
@@ -1086,7 +1149,9 @@
 </div>
 
 
-<!-- SUPABASE JAVASCRIPT LIBRARY -->
+<!-- =========================================================
+     SUPABASE
+========================================================= -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -1095,7 +1160,7 @@
 
 
 /* =========================================================
-   SUPABASE
+   SUPABASE CONFIGURATION
 ========================================================= */
 
 const SUPABASE_URL =
@@ -1109,7 +1174,14 @@ const SUPABASE_KEY =
 const supabaseClient =
     window.supabase.createClient(
         SUPABASE_URL,
-        SUPABASE_KEY
+        SUPABASE_KEY,
+        {
+            auth: {
+                persistSession: true,
+                autoRefreshToken: true,
+                detectSessionInUrl: true
+            }
+        }
     );
 
 
@@ -1121,6 +1193,8 @@ let pickups = [];
 
 let accessToken = null;
 
+let currentPhotoUrl = null;
+
 
 /* =========================================================
    LOGIN SCREEN
@@ -1129,16 +1203,22 @@ let accessToken = null;
 function createLoginScreen() {
 
     const existing =
-        document.getElementById("loginScreen");
+        document.getElementById(
+            "loginScreen"
+        );
 
 
     if (existing) {
+
         existing.remove();
+
     }
 
 
     const login =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
     login.id =
@@ -1219,11 +1299,15 @@ function createLoginScreen() {
     `;
 
 
-    document.body.appendChild(login);
+    document.body.appendChild(
+        login
+    );
 
 
     document
-        .getElementById("loginButton")
+        .getElementById(
+            "loginButton"
+        )
         .addEventListener(
             "click",
             adminLogin
@@ -1231,7 +1315,9 @@ function createLoginScreen() {
 
 
     document
-        .getElementById("loginPassword")
+        .getElementById(
+            "loginPassword"
+        )
         .addEventListener(
             "keydown",
             function(event) {
@@ -1247,46 +1333,74 @@ function createLoginScreen() {
             }
         );
 
+
+    const remembered =
+        localStorage.getItem(
+            "pickupManagerRememberMe"
+        );
+
+
+    if (
+        remembered === "true"
+    ) {
+
+        document
+            .getElementById(
+                "rememberMe"
+            )
+            .checked = true;
+
+    }
+
 }
 
 
 /* =========================================================
-   LOGIN
+   ADMIN LOGIN
 ========================================================= */
 
 async function adminLogin() {
 
     const email =
         document
-            .getElementById("loginEmail")
+            .getElementById(
+                "loginEmail"
+            )
             .value
             .trim();
 
 
     const password =
         document
-            .getElementById("loginPassword")
+            .getElementById(
+                "loginPassword"
+            )
             .value;
 
 
     const rememberMe =
         document
-            .getElementById("rememberMe")
+            .getElementById(
+                "rememberMe"
+            )
             .checked;
 
 
     const errorBox =
         document
-            .getElementById("loginError");
+            .getElementById(
+                "loginError"
+            );
 
 
     const loginButton =
         document
-            .getElementById("loginButton");
+            .getElementById(
+                "loginButton"
+            );
 
 
-    errorBox.textContent =
-        "";
+    errorBox.textContent = "";
 
 
     if (
@@ -1311,12 +1425,6 @@ async function adminLogin() {
 
 
     try {
-
-        /*
-           Supabase handles the session.
-           If the user checks "Keep me signed in",
-           we also store the preference locally.
-        */
 
         const {
             data,
@@ -1365,11 +1473,6 @@ async function adminLogin() {
             data.session.access_token;
 
 
-        /*
-           Remember whether the user wants
-           the browser to keep the login.
-        */
-
         if (rememberMe) {
 
             localStorage.setItem(
@@ -1386,11 +1489,6 @@ async function adminLogin() {
         }
 
 
-        /*
-           Supabase's client stores the session
-           automatically in browser storage.
-        */
-
         const loginScreen =
             document.getElementById(
                 "loginScreen"
@@ -1398,7 +1496,9 @@ async function adminLogin() {
 
 
         if (loginScreen) {
+
             loginScreen.remove();
+
         }
 
 
@@ -1431,7 +1531,7 @@ async function adminLogin() {
 
 
 /* =========================================================
-   CHECK EXISTING LOGIN
+   CHECK EXISTING SESSION
 ========================================================= */
 
 async function checkExistingSession() {
@@ -1439,11 +1539,22 @@ async function checkExistingSession() {
     try {
 
         const {
-            data
+            data,
+            error
         } =
             await supabaseClient
                 .auth
                 .getSession();
+
+
+        if (error) {
+
+            console.error(
+                "Session error:",
+                error
+            );
+
+        }
 
 
         if (
@@ -1462,7 +1573,9 @@ async function checkExistingSession() {
 
 
             if (loginScreen) {
+
                 loginScreen.remove();
+
             }
 
 
@@ -1471,7 +1584,6 @@ async function checkExistingSession() {
             return;
 
         }
-
 
     } catch (error) {
 
@@ -1483,36 +1595,7 @@ async function checkExistingSession() {
     }
 
 
-    /*
-       No active session.
-       Show login.
-    */
-
     createLoginScreen();
-
-
-    /*
-       Restore the remember-me checkbox
-       if the user previously selected it.
-    */
-
-    const remembered =
-        localStorage.getItem(
-            "pickupManagerRememberMe"
-        );
-
-
-    if (
-        remembered === "true"
-    ) {
-
-        document
-            .getElementById(
-                "rememberMe"
-            )
-            .checked = true;
-
-    }
 
 }
 
@@ -1528,7 +1611,6 @@ async function logout() {
         await supabaseClient
             .auth
             .signOut();
-
 
     } catch (error) {
 
@@ -1554,7 +1636,9 @@ async function logout() {
 
 
     document
-        .getElementById("pickupTable")
+        .getElementById(
+            "pickupTable"
+        )
         .innerHTML = "";
 
 
@@ -1601,7 +1685,8 @@ async function loadPickups() {
 
 
             alert(
-                "Could not load pickups."
+                "Could not load pickups: " +
+                error.message
             );
 
 
@@ -1641,20 +1726,23 @@ async function loadPickups() {
 function displayPickups() {
 
     const table =
-        document
-            .getElementById(
-                "pickupTable"
-            );
+        document.getElementById(
+            "pickupTable"
+        );
+
+
+    const searchInput =
+        document.getElementById(
+            "search"
+        );
 
 
     const search =
-        document
-            .getElementById(
-                "search"
-            )
-            .value
-            .toLowerCase()
-            .trim();
+        searchInput
+            ? searchInput.value
+                .toLowerCase()
+                .trim()
+            : "";
 
 
     const filtered =
@@ -1693,6 +1781,14 @@ function displayPickups() {
                     .toLowerCase()
                     .includes(search)
 
+                    ||
+
+                    String(
+                        pickup.package_location || ""
+                    )
+                    .toLowerCase()
+                    .includes(search)
+
                 );
 
             }
@@ -1707,60 +1803,101 @@ function displayPickups() {
         function(pickup) {
 
             const row =
-                document.createElement("tr");
+                document.createElement(
+                    "tr"
+                );
 
 
-            const photoButton =
+            let photoButton =
+                "";
+
+
+            if (
                 pickup.package_location_image
+            ) {
 
-                ?
+                const safeFileName =
+                    String(
+                        pickup.package_location_image
+                    )
+                    .replace(
+                        /\\/g,
+                        "\\\\"
+                    )
+                    .replace(
+                        /'/g,
+                        "\\'"
+                    );
 
-                `
+
+                photoButton = `
+
                     <br>
 
                     <button
                         class="secondary"
                         style="margin-top:8px;"
-                        onclick="viewLocationPhoto('${escapeHtmlAttribute(pickup.package_location_image)}')"
+                        onclick="viewLocationPhoto('${safeFileName}')"
                     >
                         📷 View Photo
                     </button>
-                `
 
-                :
+                `;
 
+            }
+
+
+            let actionButton =
                 "";
 
 
-            const actionButton =
+            if (
                 pickup.status === "READY"
+            ) {
 
-                ?
+                const safeCode =
+                    String(
+                        pickup.confirmation_code
+                    )
+                    .replace(
+                        /\\/g,
+                        "\\\\"
+                    )
+                    .replace(
+                        /'/g,
+                        "\\'"
+                    );
 
-                `
+
+                actionButton = `
+
                     <button
                         class="primary"
-                        onclick="completePickup('${escapeHtmlAttribute(pickup.confirmation_code)}')"
+                        onclick="completePickup('${safeCode}')"
                     >
                         Picked Up
                     </button>
-                `
 
-                :
-
-                `
-                    Completed
                 `;
+
+            } else {
+
+                actionButton =
+                    "Completed";
+
+            }
 
 
             row.innerHTML = `
 
                 <td>
+
                     <strong>
                         ${escapeHtml(
                             pickup.confirmation_code
                         )}
                     </strong>
+
                 </td>
 
 
@@ -1801,8 +1938,8 @@ function displayPickups() {
                     <span
                         class="status ${
                             pickup.status === "READY"
-                            ? "ready"
-                            : "completed"
+                                ? "ready"
+                                : "completed"
                         }"
                     >
 
@@ -1822,7 +1959,9 @@ function displayPickups() {
             `;
 
 
-            table.appendChild(row);
+            table.appendChild(
+                row
+            );
 
         }
     );
@@ -1867,34 +2006,30 @@ function escapeHtml(value) {
 
 
 /* =========================================================
-   ESCAPE ATTRIBUTE
-========================================================= */
-
-function escapeHtmlAttribute(value) {
-
-    return String(
-        value ?? ""
-    )
-    .replace(
-        /\\/g,
-        "\\\\"
-    )
-    .replace(
-        /'/g,
-        "\\'"
-    );
-
-}
-
-
-/* =========================================================
    VIEW LOCATION PHOTO
 ========================================================= */
 
-let currentPhotoUrl = null;
+async function viewLocationPhoto(
+    fileName
+) {
+
+    const photoModal =
+        document.getElementById(
+            "photoModal"
+        );
 
 
-async function viewLocationPhoto(fileName) {
+    const photoViewer =
+        document.getElementById(
+            "locationPhotoViewer"
+        );
+
+
+    const photoLoading =
+        document.getElementById(
+            "photoLoading"
+        );
+
 
     try {
 
@@ -1909,59 +2044,33 @@ async function viewLocationPhoto(fileName) {
         }
 
 
-        const photoModal =
-            document.getElementById(
-                "photoModal"
-            );
+        /*
+           Open the viewer immediately.
+        */
+
+        photoModal.style.display =
+            "flex";
 
 
-        const photoViewer =
-            document.getElementById(
-                "locationPhotoViewer"
-            );
+        photoViewer.style.display =
+            "none";
 
 
-        const photoLoading =
-            document.getElementById(
-                "photoLoading"
-            );/* =========================================================
-   VIEW LOCATION PHOTO
-========================================================= */
+        photoViewer.src =
+            "";
 
-let currentPhotoUrl = null;
 
-async function viewLocationPhoto(fileName) {
+        photoLoading.style.display =
+            "block";
 
-    try {
 
-        if (!fileName) {
+        photoLoading.textContent =
+            "Loading photo...";
 
-            alert(
-                "No photo was attached to this pickup."
-            );
 
-            return;
-        }
-
-        const photoModal =
-            document.getElementById("photoModal");
-
-        const photoViewer =
-            document.getElementById("locationPhotoViewer");
-
-        const photoLoading =
-            document.getElementById("photoLoading");
-
-        photoModal.style.display = "flex";
-
-        photoViewer.style.display = "none";
-
-        photoViewer.src = "";
-
-        photoLoading.style.display = "block";
-
-        photoLoading.textContent = "Loading photo...";
-
+        /*
+           Remove previous temporary image.
+        */
 
         if (currentPhotoUrl) {
 
@@ -1969,17 +2078,30 @@ async function viewLocationPhoto(fileName) {
                 currentPhotoUrl
             );
 
-            currentPhotoUrl = null;
+            currentPhotoUrl =
+                null;
+
         }
 
+
+        /*
+           Download the private image
+           through the authenticated
+           Supabase client.
+        */
 
         const {
             data,
             error
-        } = await supabaseClient
-            .storage
-            .from("package-location-images")
-            .download(fileName);
+        } =
+            await supabaseClient
+                .storage
+                .from(
+                    "package-location-images"
+                )
+                .download(
+                    fileName
+                );
 
 
         if (error) {
@@ -1989,10 +2111,14 @@ async function viewLocationPhoto(fileName) {
                 error
             );
 
+
             photoLoading.textContent =
-                "Could not load the photo.";
+                "Could not load the photo: " +
+                error.message;
+
 
             return;
+
         }
 
 
@@ -2001,12 +2127,21 @@ async function viewLocationPhoto(fileName) {
             photoLoading.textContent =
                 "No photo data was returned.";
 
+
             return;
+
         }
 
 
+        /*
+           Create a temporary browser URL
+           from the downloaded image.
+        */
+
         currentPhotoUrl =
-            URL.createObjectURL(data);
+            URL.createObjectURL(
+                data
+            );
 
 
         photoViewer.src =
@@ -2029,16 +2164,8 @@ async function viewLocationPhoto(fileName) {
         );
 
 
-        const photoLoading =
-            document.getElementById("photoLoading");
-
-
-        if (photoLoading) {
-
-            photoLoading.textContent =
-                "Could not load the photo.";
-
-        }
+        photoLoading.textContent =
+            "Could not load the package location photo.";
 
     }
 
@@ -2049,7 +2176,14 @@ async function viewLocationPhoto(fileName) {
    CLOSE PHOTO VIEWER
 ========================================================= */
 
-function closePhotoModal(event) {
+function closePhotoModal(
+    event
+) {
+
+    /*
+       If clicking inside the photo window,
+       do not close it.
+    */
 
     if (
         event &&
@@ -2057,15 +2191,20 @@ function closePhotoModal(event) {
     ) {
 
         return;
+
     }
 
 
     const photoModal =
-        document.getElementById("photoModal");
+        document.getElementById(
+            "photoModal"
+        );
 
 
     const photoViewer =
-        document.getElementById("locationPhotoViewer");
+        document.getElementById(
+            "locationPhotoViewer"
+        );
 
 
     photoModal.style.display =
@@ -2082,11 +2221,14 @@ function closePhotoModal(event) {
             currentPhotoUrl
         );
 
-        currentPhotoUrl = null;
+        currentPhotoUrl =
+            null;
 
     }
 
 }
+
+
 /* =========================================================
    COMPLETE PICKUP
 ========================================================= */
@@ -2104,7 +2246,9 @@ async function completePickup(
 
 
     if (!confirmed) {
+
         return;
+
     }
 
 
@@ -2140,7 +2284,8 @@ async function completePickup(
 
 
             alert(
-                "Could not update the pickup."
+                "Could not update the pickup: " +
+                error.message
             );
 
 
@@ -2275,7 +2420,9 @@ function updateStats() {
 ========================================================= */
 
 document
-    .getElementById("search")
+    .getElementById(
+        "search"
+    )
     .addEventListener(
         "input",
         displayPickups
@@ -2461,7 +2608,8 @@ document
 
 
                     alert(
-                        "Could not create the pickup."
+                        "Could not create the pickup: " +
+                        error.message
                     );
 
 
@@ -2540,6 +2688,52 @@ function generateCode() {
 
 
 /* =========================================================
+   CLOSE MODALS WHEN CLICKING BACKGROUND
+========================================================= */
+
+document
+    .getElementById(
+        "pickupModal"
+    )
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target ===
+                event.currentTarget
+            ) {
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "confirmationModal"
+    )
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target ===
+                event.currentTarget
+            ) {
+
+                closeConfirmation();
+
+            }
+
+        }
+    );
+
+
+/* =========================================================
    START ADMIN
 ========================================================= */
 
@@ -2548,6 +2742,6 @@ checkExistingSession();
 
 </script>
 
-
 </body>
+
 </html>
