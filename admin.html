@@ -63,11 +63,20 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 25px;
+            gap: 15px;
         }
 
 
         .top-bar h2 {
             font-size: 26px;
+        }
+
+
+        .top-buttons {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
 
@@ -109,9 +118,28 @@
         }
 
 
-        .danger {
+        .archive-button {
+            background: #7c3aed;
+            color: white;
+        }
+
+
+        .archive-button:hover {
+            background: #6d28d9;
+        }
+
+
+        .logout-button {
             background: #dc2626;
             color: white;
+            padding: 8px 13px;
+            font-size: 13px;
+            margin-left: 5px;
+        }
+
+
+        .logout-button:hover {
+            background: #b91c1c;
         }
 
 
@@ -233,6 +261,12 @@
         }
 
 
+        .archived {
+            background: #ede9fe;
+            color: #5b21b6;
+        }
+
+
         /* =====================================================
            MODALS
         ===================================================== */
@@ -334,6 +368,122 @@
             color: #6b7280;
 
             font-size: 16px;
+        }
+
+
+        /* =====================================================
+           ARCHIVE
+        ===================================================== */
+
+        .archive-modal-content {
+            max-width: 1000px;
+        }
+
+
+        .archive-search {
+            margin-bottom: 20px;
+        }
+
+
+        .archive-search input {
+            width: 100%;
+            padding: 12px;
+
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+
+            font-size: 15px;
+        }
+
+
+        .archive-date {
+            margin-bottom: 25px;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 10px;
+
+            overflow: hidden;
+        }
+
+
+        .archive-date-header {
+            background: #f3f4f6;
+
+            padding: 14px 16px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            color: #172554;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+
+        .archive-date-count {
+            font-size: 12px;
+
+            background: #e5e7eb;
+
+            padding: 5px 9px;
+
+            border-radius: 20px;
+
+            color: #374151;
+        }
+
+
+        .archive-ticket {
+            padding: 15px 16px;
+
+            border-top: 1px solid #e5e7eb;
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr 1fr 1fr;
+
+            gap: 15px;
+
+            align-items: center;
+        }
+
+
+        .archive-ticket:hover {
+            background: #f9fafb;
+        }
+
+
+        .archive-ticket-title {
+            font-weight: bold;
+
+            color: #172554;
+
+            margin-bottom: 4px;
+        }
+
+
+        .archive-ticket-label {
+            font-size: 11px;
+
+            color: #6b7280;
+
+            text-transform: uppercase;
+
+            margin-bottom: 3px;
+        }
+
+
+        .archive-empty {
+            text-align: center;
+
+            padding: 50px 20px;
+
+            color: #6b7280;
         }
 
 
@@ -546,23 +696,6 @@
         }
 
 
-        .logout-button {
-            background: #dc2626;
-            color: white;
-
-            padding: 8px 13px;
-
-            font-size: 13px;
-
-            margin-left: 10px;
-        }
-
-
-        .logout-button:hover {
-            background: #b91c1c;
-        }
-
-
         /* =====================================================
            MOBILE
         ===================================================== */
@@ -591,6 +724,11 @@
             }
 
 
+            .archive-ticket {
+                grid-template-columns: 1fr 1fr;
+            }
+
+
             header {
                 padding: 15px 20px;
             }
@@ -614,6 +752,16 @@
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 15px;
+            }
+
+
+            .top-buttons {
+                width: 100%;
+            }
+
+
+            .archive-ticket {
+                grid-template-columns: 1fr;
             }
 
         }
@@ -655,7 +803,16 @@
             Pickup Dashboard
         </h2>
 
-        <div>
+
+        <div class="top-buttons">
+
+            <button
+                class="archive-button"
+                onclick="openArchive()"
+            >
+                📁 Picked Up
+            </button>
+
 
             <button
                 class="primary"
@@ -815,7 +972,7 @@
 
 
 <!-- =========================================================
-     PHOTO VIEWER MODAL
+     PHOTO VIEWER
 ========================================================= -->
 
 <div
@@ -858,6 +1015,54 @@
             src=""
             alt="Package location photo"
         >
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     PICKED UP ARCHIVE
+========================================================= -->
+
+<div
+    class="modal"
+    id="archiveModal"
+>
+
+    <div class="modal-content archive-modal-content">
+
+        <div class="modal-header">
+
+            <h2>
+                📁 Picked Up
+            </h2>
+
+
+            <button
+                class="close"
+                onclick="closeArchive()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="archive-search">
+
+            <input
+                type="text"
+                id="archiveSearch"
+                placeholder="Search old pickups..."
+            >
+
+        </div>
+
+
+        <div id="archiveContent">
+
+        </div>
 
     </div>
 
@@ -1400,7 +1605,8 @@ async function adminLogin() {
             );
 
 
-    errorBox.textContent = "";
+    errorBox.textContent =
+        "";
 
 
     if (
@@ -1720,7 +1926,7 @@ async function loadPickups() {
 
 
 /* =========================================================
-   DISPLAY PICKUPS
+   DISPLAY ACTIVE PICKUPS
 ========================================================= */
 
 function displayPickups() {
@@ -1745,8 +1951,29 @@ function displayPickups() {
             : "";
 
 
-    const filtered =
+    /*
+       Only READY and COMPLETED pickups
+       appear on the main dashboard.
+
+       ARCHIVED pickups stay in the
+       Picked Up folder.
+    */
+
+    const activePickups =
         pickups.filter(
+            function(pickup) {
+
+                return (
+                    pickup.status === "READY" ||
+                    pickup.status === "COMPLETED"
+                );
+
+            }
+        );
+
+
+    const filtered =
+        activePickups.filter(
             function(pickup) {
 
                 return (
@@ -1851,23 +2078,23 @@ function displayPickups() {
                 "";
 
 
+            const safeCode =
+                String(
+                    pickup.confirmation_code
+                )
+                .replace(
+                    /\\/g,
+                    "\\\\"
+                )
+                .replace(
+                    /'/g,
+                    "\\'"
+                );
+
+
             if (
                 pickup.status === "READY"
             ) {
-
-                const safeCode =
-                    String(
-                        pickup.confirmation_code
-                    )
-                    .replace(
-                        /\\/g,
-                        "\\\\"
-                    )
-                    .replace(
-                        /'/g,
-                        "\\'"
-                    );
-
 
                 actionButton = `
 
@@ -1880,10 +2107,20 @@ function displayPickups() {
 
                 `;
 
-            } else {
+            } else if (
+                pickup.status === "COMPLETED"
+            ) {
 
-                actionButton =
-                    "Completed";
+                actionButton = `
+
+                    <button
+                        class="archive-button"
+                        onclick="archivePickup('${safeCode}')"
+                    >
+                        📁 Archive
+                    </button>
+
+                `;
 
             }
 
@@ -2044,10 +2281,6 @@ async function viewLocationPhoto(
         }
 
 
-        /*
-           Open the viewer immediately.
-        */
-
         photoModal.style.display =
             "flex";
 
@@ -2068,10 +2301,6 @@ async function viewLocationPhoto(
             "Loading photo...";
 
 
-        /*
-           Remove previous temporary image.
-        */
-
         if (currentPhotoUrl) {
 
             URL.revokeObjectURL(
@@ -2083,12 +2312,6 @@ async function viewLocationPhoto(
 
         }
 
-
-        /*
-           Download the private image
-           through the authenticated
-           Supabase client.
-        */
 
         const {
             data,
@@ -2133,11 +2356,6 @@ async function viewLocationPhoto(
         }
 
 
-        /*
-           Create a temporary browser URL
-           from the downloaded image.
-        */
-
         currentPhotoUrl =
             URL.createObjectURL(
                 data
@@ -2179,11 +2397,6 @@ async function viewLocationPhoto(
 function closePhotoModal(
     event
 ) {
-
-    /*
-       If clicking inside the photo window,
-       do not close it.
-    */
 
     if (
         event &&
@@ -2315,6 +2528,538 @@ async function completePickup(
 
 
 /* =========================================================
+   ARCHIVE PICKUP
+========================================================= */
+
+async function archivePickup(
+    code
+) {
+
+    const confirmed =
+        confirm(
+            "Move pickup " +
+            code +
+            " to the Picked Up folder?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const {
+            error
+        } =
+            await supabaseClient
+                .from("pickups")
+                .update({
+
+                    status:
+                        "ARCHIVED"
+
+                })
+                .eq(
+                    "confirmation_code",
+                    code
+                );
+
+
+        if (error) {
+
+            console.error(
+                "Archive pickup error:",
+                error
+            );
+
+
+            alert(
+                "Could not archive the pickup: " +
+                error.message
+            );
+
+
+            return;
+
+        }
+
+
+        await loadPickups();
+
+
+    } catch (error) {
+
+        console.error(
+            "Archive pickup error:",
+            error
+        );
+
+
+        alert(
+            "Could not connect to the database."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   OPEN ARCHIVE
+========================================================= */
+
+function openArchive() {
+
+    document
+        .getElementById(
+            "archiveModal"
+        )
+        .style.display =
+        "flex";
+
+
+    document
+        .getElementById(
+            "archiveSearch"
+        )
+        .value =
+        "";
+
+
+    displayArchive();
+
+}
+
+
+/* =========================================================
+   CLOSE ARCHIVE
+========================================================= */
+
+function closeArchive() {
+
+    document
+        .getElementById(
+            "archiveModal"
+        )
+        .style.display =
+        "none";
+
+}
+
+
+/* =========================================================
+   DISPLAY ARCHIVE
+========================================================= */
+
+function displayArchive() {
+
+    const container =
+        document.getElementById(
+            "archiveContent"
+        );
+
+
+    const search =
+        document
+            .getElementById(
+                "archiveSearch"
+            )
+            .value
+            .toLowerCase()
+            .trim();
+
+
+    const archived =
+        pickups.filter(
+            function(pickup) {
+
+                return (
+                    pickup.status ===
+                    "ARCHIVED"
+                );
+
+            }
+        );
+
+
+    const filtered =
+        archived.filter(
+            function(pickup) {
+
+                const searchable =
+                    [
+
+                        pickup.confirmation_code,
+
+                        pickup.requester_name,
+
+                        pickup.company,
+
+                        pickup.carrier,
+
+                        pickup.package_location,
+
+                        pickup.package_description
+
+                    ]
+                    .join(" ")
+                    .toLowerCase();
+
+
+                return searchable.includes(
+                    search
+                );
+
+            }
+        );
+
+
+    if (
+        filtered.length === 0
+    ) {
+
+        container.innerHTML = `
+
+            <div class="archive-empty">
+
+                <div style="font-size:40px;">
+                    📁
+                </div>
+
+                <br>
+
+                No picked up tickets found.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    /*
+       Sort newest pickup date first.
+    */
+
+    filtered.sort(
+        function(a, b) {
+
+            return (
+                new Date(
+                    b.picked_up_at || 0
+                ) -
+                new Date(
+                    a.picked_up_at || 0
+                )
+            );
+
+        }
+    );
+
+
+    /*
+       Group tickets by pickup date.
+    */
+
+    const groups = {};
+
+
+    filtered.forEach(
+        function(pickup) {
+
+            const date =
+                pickup.picked_up_at
+                    ? new Date(
+                        pickup.picked_up_at
+                    )
+                    : null;
+
+
+            let dateKey =
+                "Unknown Date";
+
+
+            if (date) {
+
+                dateKey =
+                    date.toLocaleDateString(
+                        "en-US",
+                        {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric"
+                        }
+                    );
+
+            }
+
+
+            if (!groups[dateKey]) {
+
+                groups[dateKey] = [];
+
+            }
+
+
+            groups[dateKey].push(
+                pickup
+            );
+
+        }
+    );
+
+
+    container.innerHTML =
+        "";
+
+
+    Object.keys(groups).forEach(
+        function(dateKey) {
+
+            const tickets =
+                groups[dateKey];
+
+
+            const dateSection =
+                document.createElement(
+                    "div"
+                );
+
+
+            dateSection.className =
+                "archive-date";
+
+
+            dateSection.innerHTML = `
+
+                <div class="archive-date-header">
+
+                    <span>
+                        ${escapeHtml(
+                            dateKey
+                        )}
+                    </span>
+
+                    <span class="archive-date-count">
+
+                        ${tickets.length}
+
+                        ${
+                            tickets.length === 1
+                                ? "pickup"
+                                : "pickups"
+                        }
+
+                    </span>
+
+                </div>
+
+            `;
+
+
+            tickets.forEach(
+                function(pickup) {
+
+                    const ticket =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    ticket.className =
+                        "archive-ticket";
+
+
+                    const pickedDate =
+                        pickup.picked_up_at
+                            ? new Date(
+                                pickup.picked_up_at
+                            )
+                            : null;
+
+
+                    const pickedTime =
+                        pickedDate
+                            ? pickedDate.toLocaleTimeString(
+                                "en-US",
+                                {
+                                    hour: "numeric",
+                                    minute: "2-digit"
+                                }
+                            )
+                            : "Unknown";
+
+
+                    let photoButton =
+                        "";
+
+
+                    if (
+                        pickup.package_location_image
+                    ) {
+
+                        const safeFileName =
+                            String(
+                                pickup.package_location_image
+                            )
+                            .replace(
+                                /\\/g,
+                                "\\\\"
+                            )
+                            .replace(
+                                /'/g,
+                                "\\'"
+                            );
+
+
+                        photoButton = `
+
+                            <button
+                                class="secondary"
+                                style="margin-top:8px;"
+                                onclick="viewLocationPhoto('${safeFileName}')"
+                            >
+                                📷 Photo
+                            </button>
+
+                        `;
+
+                    }
+
+
+                    ticket.innerHTML = `
+
+                        <div>
+
+                            <div class="archive-ticket-label">
+                                Confirmation
+                            </div>
+
+                            <div class="archive-ticket-title">
+
+                                ${escapeHtml(
+                                    pickup.confirmation_code
+                                )}
+
+                            </div>
+
+                        </div>
+
+
+                        <div>
+
+                            <div class="archive-ticket-label">
+                                Requester
+                            </div>
+
+                            <div>
+                                ${escapeHtml(
+                                    pickup.requester_name
+                                )}
+                            </div>
+
+                            <div style="font-size:12px;color:#6b7280;">
+                                ${escapeHtml(
+                                    pickup.company
+                                )}
+                            </div>
+
+                        </div>
+
+
+                        <div>
+
+                            <div class="archive-ticket-label">
+                                Pickup
+                            </div>
+
+                            <div>
+                                ${escapeHtml(
+                                    pickup.carrier
+                                )}
+                            </div>
+
+                            <div style="font-size:12px;color:#6b7280;">
+                                ${escapeHtml(
+                                    pickup.package_location
+                                )}
+                            </div>
+
+                        </div>
+
+
+                        <div>
+
+                            <div class="archive-ticket-label">
+                                Picked Up
+                            </div>
+
+                            <div>
+                                ${escapeHtml(
+                                    pickedTime
+                                )}
+                            </div>
+
+                            <div style="font-size:12px;color:#6b7280;">
+                                ${Number(
+                                    pickup.package_count || 0
+                                )}
+
+                                ${
+                                    Number(
+                                        pickup.package_count || 0
+                                    ) === 1
+                                        ? "package"
+                                        : "packages"
+                                }
+                            </div>
+
+                            ${photoButton}
+
+                        </div>
+
+                    `;
+
+
+                    dateSection.appendChild(
+                        ticket
+                    );
+
+                }
+            );
+
+
+            container.appendChild(
+                dateSection
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   ARCHIVE SEARCH
+========================================================= */
+
+document
+    .getElementById(
+        "archiveSearch"
+    )
+    .addEventListener(
+        "input",
+        displayArchive
+    );
+
+
+/* =========================================================
    STATISTICS
 ========================================================= */
 
@@ -2366,19 +3111,30 @@ function updateStats() {
 
 
     const packages =
-        pickups.reduce(
-            function(total, pickup) {
+        pickups
+            .filter(
+                function(pickup) {
 
-                return (
-                    total +
-                    Number(
-                        pickup.package_count || 0
-                    )
-                );
+                    return (
+                        pickup.status !==
+                        "ARCHIVED"
+                    );
 
-            },
-            0
-        );
+                }
+            )
+            .reduce(
+                function(total, pickup) {
+
+                    return (
+                        total +
+                        Number(
+                            pickup.package_count || 0
+                        )
+                    );
+
+                },
+                0
+            );
 
 
     document
@@ -2688,7 +3444,7 @@ function generateCode() {
 
 
 /* =========================================================
-   CLOSE MODALS WHEN CLICKING BACKGROUND
+   MODAL BACKGROUND CLICKS
 ========================================================= */
 
 document
@@ -2726,6 +3482,27 @@ document
             ) {
 
                 closeConfirmation();
+
+            }
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "archiveModal"
+    )
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target ===
+                event.currentTarget
+            ) {
+
+                closeArchive();
 
             }
 
