@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Pickup Request</title>
+    <title>Pickup Request | Shipping & Receiving</title>
 
     <style>
         * {
@@ -13,15 +13,33 @@
 
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f6f8;
+            font-family: Arial, Helvetica, sans-serif;
             color: #1f2937;
+
+            /* Professional background */
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef2f7 0%,
+                    #f8fafc 45%,
+                    #e8edf3 100%
+                );
+
+            min-height: 100vh;
         }
+
+        /* =========================================================
+           HEADER
+        ========================================================= */
 
         .header {
             background: #ffffff;
-            border-bottom: 1px solid #d1d5db;
+            border-bottom: 1px solid #d9e0e7;
             padding: 18px 20px;
+
+            box-shadow:
+                0 2px 8px rgba(15, 23, 42, 0.05);
+
             text-align: center;
         }
 
@@ -31,56 +49,108 @@
             object-fit: contain;
         }
 
+
+        /* =========================================================
+           MAIN CONTAINER
+        ========================================================= */
+
         .container {
-            max-width: 700px;
-            margin: 30px auto;
-            padding: 0 20px;
+            max-width: 720px;
+            margin: 42px auto;
+            padding: 0 20px 50px;
         }
+
+
+        /* =========================================================
+           CARD
+        ========================================================= */
 
         .card {
             background: #ffffff;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border: 1px solid #e1e7ee;
+            border-radius: 14px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 10px 30px rgba(15, 23, 42, 0.08);
         }
+
+
+        /* =========================================================
+           HEADINGS
+        ========================================================= */
 
         h1 {
             margin-top: 0;
             margin-bottom: 8px;
+
             font-size: 28px;
+            line-height: 1.2;
+
+            color: #172033;
         }
 
         .subtitle {
-            color: #6b7280;
-            margin-bottom: 25px;
+            color: #64748b;
+            margin-bottom: 28px;
+            line-height: 1.5;
         }
 
+
+        /* =========================================================
+           FORM
+        ========================================================= */
+
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 19px;
         }
 
         label {
             display: block;
+
             font-weight: 600;
             margin-bottom: 7px;
+
+            color: #334155;
         }
 
         input,
         select,
         textarea {
             width: 100%;
+
             padding: 11px 12px;
+
             border: 1px solid #cbd5e1;
             border-radius: 7px;
+
             font-size: 15px;
             font-family: inherit;
+
+            background: #ffffff;
+            color: #1f2937;
+
+            transition:
+                border-color 0.15s ease,
+                box-shadow 0.15s ease;
+        }
+
+        input:hover,
+        select:hover,
+        textarea:hover {
+            border-color: #94a3b8;
         }
 
         input:focus,
         select:focus,
         textarea:focus {
             outline: none;
+
             border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px rgba(37, 99, 235, 0.10);
         }
 
         textarea {
@@ -94,14 +164,31 @@
             gap: 15px;
         }
 
+
+        /* =========================================================
+           BUTTONS
+        ========================================================= */
+
         button {
             width: 100%;
+
             border: none;
             border-radius: 7px;
+
             padding: 13px 18px;
+
             font-size: 16px;
             font-weight: 600;
+
             cursor: pointer;
+
+            transition:
+                background 0.15s ease,
+                transform 0.05s ease;
+        }
+
+        button:active {
+            transform: translateY(1px);
         }
 
         button:disabled {
@@ -118,35 +205,86 @@
             background: #173d64;
         }
 
+
+        /* =========================================================
+           SHIPPING HOURS INFO
+        ========================================================= */
+
+        .hours-box {
+            background: #f8fafc;
+            border: 1px solid #dbe3ec;
+
+            border-radius: 8px;
+
+            padding: 13px 15px;
+
+            margin-bottom: 24px;
+
+            color: #475569;
+
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .hours-box strong {
+            color: #334155;
+        }
+
+
+        /* =========================================================
+           CONFIRMATION
+        ========================================================= */
+
         .confirmation {
             text-align: center;
         }
 
         .confirmation h2 {
             margin-top: 0;
+            color: #172033;
         }
 
         .confirmation-code {
             font-size: 32px;
             font-weight: bold;
             letter-spacing: 2px;
+
             background: #f3f4f6;
+
             padding: 18px;
+
             border-radius: 8px;
+
             margin: 20px 0;
+
+            color: #1f4f82;
         }
 
         .important {
             background: #fff7ed;
+
             border: 1px solid #fed7aa;
+
             padding: 15px;
+
             border-radius: 8px;
+
             margin-bottom: 20px;
         }
+
+
+        /* =========================================================
+           OTHER CARRIER
+        ========================================================= */
 
         #otherCarrierGroup {
             display: none;
         }
+
+
+        /* =========================================================
+           PHOTO
+        ========================================================= */
 
         #photoPreviewContainer {
             display: none;
@@ -156,17 +294,24 @@
         #photoPreview {
             max-width: 100%;
             max-height: 250px;
+
             border-radius: 8px;
+
             border: 1px solid #d1d5db;
+
             display: block;
+
             margin-bottom: 10px;
         }
 
         .remove-photo {
             background: #dc2626;
             color: white;
+
             width: auto;
+
             padding: 9px 14px;
+
             font-size: 14px;
         }
 
@@ -176,71 +321,132 @@
 
         .help-text {
             display: block;
+
             margin-top: 7px;
+
             color: #6b7280;
+
             font-size: 13px;
         }
 
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
         @media (max-width: 600px) {
+
             .row {
                 grid-template-columns: 1fr;
                 gap: 0;
             }
 
             .container {
-                margin: 15px auto;
-                padding: 0 12px;
+                margin: 20px auto;
+                padding: 0 12px 35px;
             }
 
             .card {
-                padding: 20px;
+                padding: 21px;
             }
 
             h1 {
                 font-size: 24px;
             }
+
+            .header {
+                padding: 14px 15px;
+            }
         }
     </style>
 </head>
 
+
 <body>
 
-    <!-- HEADER -->
+
+    <!-- =========================================================
+         HEADER
+    ========================================================= -->
+
     <div class="header">
+
         <img
             src="https://tse2.mm.bing.net/th/id/OIP.3OwjdChLT1U_CzQMKTLHxQHaDt?w=321&h=174&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
             alt="Company Logo"
         >
+
     </div>
+
 
 
     <div class="container">
 
-        <!-- REQUEST FORM -->
+
+        <!-- =====================================================
+             REQUEST FORM
+        ===================================================== -->
+
         <div class="card" id="requestCard">
 
-            <h1>Schedule a Pickup</h1>
+            <h1>
+                Schedule a Pickup
+            </h1>
 
             <div class="subtitle">
-                Submit your shipment information to notify Shipping & Receiving.
+                Submit your shipment information to notify
+                Shipping & Receiving.
             </div>
+
+
+            <!-- SHIPPING HOURS -->
+
+            <div class="hours-box">
+
+                <strong>Shipping & Receiving Hours</strong><br>
+
+                Monday – Thursday:
+                8:30 AM – 3:30 PM<br>
+
+                Friday:
+                8:30 AM – 2:30 PM<br>
+
+                Saturday & Sunday:
+                Closed
+
+            </div>
+
+
 
             <form id="pickupForm">
 
-                <!-- NAME -->
+
+                <!-- =================================================
+                     NAME
+                ================================================= -->
+
                 <div class="form-group">
+
                     <label for="name">
                         Requester Name *
                     </label>
 
-                    <select id="time" required>
-    <option value="">Select a pickup time</option>
-</select>
+                    <input
+                        type="text"
+                        id="name"
+                        required
+                    >
+
                 </div>
 
 
-                <!-- COMPANY -->
+
+                <!-- =================================================
+                     COMPANY
+                ================================================= -->
+
                 <div class="form-group">
+
                     <label for="company">
                         Company *
                     </label>
@@ -250,13 +456,19 @@
                         id="company"
                         required
                     >
+
                 </div>
 
 
-                <!-- EMAIL / PHONE -->
+
+                <!-- =================================================
+                     EMAIL / PHONE
+                ================================================= -->
+
                 <div class="row">
 
                     <div class="form-group">
+
                         <label for="email">
                             Email *
                         </label>
@@ -266,9 +478,12 @@
                             id="email"
                             required
                         >
+
                     </div>
 
+
                     <div class="form-group">
+
                         <label for="phone">
                             Phone
                         </label>
@@ -277,19 +492,27 @@
                             type="tel"
                             id="phone"
                         >
+
                     </div>
 
                 </div>
 
 
-                <!-- CARRIER -->
+
+                <!-- =================================================
+                     CARRIER
+                ================================================= -->
+
                 <div class="form-group">
 
                     <label for="carrier">
                         Carrier *
                     </label>
 
-                    <select id="carrier" required>
+                    <select
+                        id="carrier"
+                        required
+                    >
 
                         <option value="">
                             Select Carrier
@@ -328,7 +551,11 @@
                 </div>
 
 
-                <!-- OTHER CARRIER -->
+
+                <!-- =================================================
+                     OTHER CARRIER
+                ================================================= -->
+
                 <div
                     class="form-group"
                     id="otherCarrierGroup"
@@ -346,8 +573,15 @@
                 </div>
 
 
-                <!-- DATE / TIME -->
+
+                <!-- =================================================
+                     DATE / TIME
+                ================================================= -->
+
                 <div class="row">
+
+
+                    <!-- DATE -->
 
                     <div class="form-group">
 
@@ -364,24 +598,35 @@
                     </div>
 
 
+                    <!-- TIME -->
+
                     <div class="form-group">
 
                         <label for="time">
                             Pickup Time *
                         </label>
 
-                        <input
-                            type="time"
+                        <select
                             id="time"
                             required
                         >
+
+                            <option value="">
+                                Select a date first
+                            </option>
+
+                        </select>
 
                     </div>
 
                 </div>
 
 
-                <!-- PACKAGE COUNT -->
+
+                <!-- =================================================
+                     PACKAGE COUNT
+                ================================================= -->
+
                 <div class="form-group">
 
                     <label for="packages">
@@ -399,7 +644,11 @@
                 </div>
 
 
-                <!-- PACKAGE LOCATION -->
+
+                <!-- =================================================
+                     PACKAGE LOCATION
+                ================================================= -->
+
                 <div class="form-group">
 
                     <label for="location">
@@ -416,7 +665,11 @@
                 </div>
 
 
-                <!-- PHOTO -->
+
+                <!-- =================================================
+                     PHOTO
+                ================================================= -->
+
                 <div class="form-group">
 
                     <label for="locationPhoto">
@@ -430,6 +683,7 @@
                         capture="environment"
                     >
 
+
                     <div id="photoPreviewContainer">
 
                         <img
@@ -437,6 +691,7 @@
                             src=""
                             alt="Package location preview"
                         >
+
 
                         <button
                             type="button"
@@ -448,6 +703,7 @@
 
                     </div>
 
+
                     <small class="help-text">
                         Add a photo showing where the package is located.
                     </small>
@@ -455,7 +711,11 @@
                 </div>
 
 
-                <!-- DESCRIPTION -->
+
+                <!-- =================================================
+                     DESCRIPTION
+                ================================================= -->
+
                 <div class="form-group">
 
                     <label for="description">
@@ -471,7 +731,11 @@
                 </div>
 
 
-                <!-- SPECIAL INSTRUCTIONS -->
+
+                <!-- =================================================
+                     SPECIAL INSTRUCTIONS
+                ================================================= -->
+
                 <div class="form-group">
 
                     <label for="instructions">
@@ -486,7 +750,11 @@
                 </div>
 
 
-                <!-- SUBMIT -->
+
+                <!-- =================================================
+                     SUBMIT
+                ================================================= -->
+
                 <button
                     type="submit"
                     class="primary"
@@ -500,7 +768,11 @@
         </div>
 
 
-        <!-- CONFIRMATION -->
+
+        <!-- =====================================================
+             CONFIRMATION
+        ===================================================== -->
+
         <div
             class="card confirmation"
             id="confirmationCard"
@@ -511,15 +783,18 @@
                 Pickup Request Submitted
             </h2>
 
+
             <p>
                 Your pickup request has been successfully submitted.
             </p>
+
 
             <div class="important">
 
                 <strong>
                     IMPORTANT
                 </strong>
+
 
                 <p>
                     Write the confirmation code below on the package
@@ -528,16 +803,19 @@
 
             </div>
 
+
             <div
                 class="confirmation-code"
                 id="confirmationCode"
             ></div>
 
+
             <p>
                 Please provide this confirmation code to the carrier
-                and ensure it is passed along to the driver. This code
-                helps ensure the correct package is picked up.
+                and ensure it is passed along to the driver.
+                This code helps ensure the correct package is picked up.
             </p>
+
 
             <button
                 type="button"
@@ -552,8 +830,9 @@
     </div>
 
 
+
     <!-- =========================================================
-         SUPABASE JAVASCRIPT
+         SUPABASE
          ONLY ONE COPY
     ========================================================= -->
 
@@ -562,6 +841,7 @@
 
     <script>
 
+
         /* =========================================================
            SUPABASE SETTINGS
         ========================================================= */
@@ -569,12 +849,14 @@
         const SUPABASE_URL =
             "https://erttykaeyvhbzignpysr.supabase.co";
 
+
         const SUPABASE_KEY =
             "sb_publishable_lY2qbi-Q-lyiTW58m-_oQg_mio84a3L";
 
 
+
         /* =========================================================
-           CREATE ONE SUPABASE CLIENT
+           CREATE SUPABASE CLIENT
         ========================================================= */
 
         const supabaseClient =
@@ -589,6 +871,7 @@
                     }
                 }
             );
+
 
 
         /* =========================================================
@@ -608,6 +891,7 @@
         }
 
 
+
         /* =========================================================
            ELEMENTS
         ========================================================= */
@@ -615,325 +899,474 @@
         const pickupForm =
             document.getElementById("pickupForm");
 
+
         const submitButton =
             document.getElementById("submitButton");
+
 
         const carrierSelect =
             document.getElementById("carrier");
 
+
         const otherCarrierGroup =
             document.getElementById("otherCarrierGroup");
+
 
         const otherCarrierInput =
             document.getElementById("otherCarrier");
 
+
         const photoPreviewContainer =
             document.getElementById("photoPreviewContainer");
+
 
         const photoPreview =
             document.getElementById("photoPreview");
 
+
         const removePhotoButton =
             document.getElementById("removePhoto");
+
 
         const confirmationCard =
             document.getElementById("confirmationCard");
 
+
         const requestCard =
             document.getElementById("requestCard");
+
 
         const confirmationCodeElement =
             document.getElementById("confirmationCode");
 
+
         const newRequestButton =
             document.getElementById("newRequestButton");
-/* =========================================================
-   SHIPPING HOURS
-========================================================= */
 
-const dateInput =
-    document.getElementById("date");
 
-const timeInput =
-    document.getElementById("time");
+        const dateInput =
+            document.getElementById("date");
 
 
-/* =========================================================
-   UPDATE ALLOWED TIME BASED ON SELECTED DATE
-========================================================= */
+        const timeInput =
+            document.getElementById("time");
 
-function updateShippingHours() {
 
-    if (!dateInput.value) {
 
-        timeInput.min = "";
-        timeInput.max = "";
+        /* =========================================================
+           PREVENT PAST DATES
+        ========================================================= */
 
-        return;
+        const today =
+            new Date();
 
-    }
 
+        const todayYear =
+            today.getFullYear();
 
-    /* JavaScript date parsing using date parts
-       prevents timezone problems. */
 
-    const parts =
-        dateInput.value.split("-");
+        const todayMonth =
+            String(
+                today.getMonth() + 1
+            ).padStart(2, "0");
 
-    const year =
-        Number(parts[0]);
 
-    const month =
-        Number(parts[1]) - 1;
+        const todayDay =
+            String(
+                today.getDate()
+            ).padStart(2, "0");
 
-    const day =
-        Number(parts[2]);
 
+        dateInput.min =
+            `${todayYear}-${todayMonth}-${todayDay}`;
 
-    const selectedDate =
-        new Date(
-            year,
-            month,
-            day
-        );
 
 
-    const dayOfWeek =
-        selectedDate.getDay();
+        /* =========================================================
+           CREATE TIME OPTIONS
+           
+           15-minute intervals
+        ========================================================= */
 
-
-    /* Sunday = 0
-       Monday = 1
-       Tuesday = 2
-       Wednesday = 3
-       Thursday = 4
-       Friday = 5
-       Saturday = 6 */
-
-
-    /* Saturday / Sunday */
-
-    if (
-        dayOfWeek === 0 ||
-        dayOfWeek === 6
-    ) {
-
-        alert(
-            "Shipping pickups are only available Monday through Friday."
-        );
-
-        dateInput.value = "";
-
-        timeInput.min = "";
-        timeInput.max = "";
-
-        return;
-
-    }
-
-
-    /* Monday - Thursday */
-
-    if (
-        dayOfWeek >= 1 &&
-        dayOfWeek <= 4
-    ) {
-
-        timeInput.min =
-            "08:30";
-
-        timeInput.max =
-            "15:30";
-
-        timeInput.value =
-            "";
-
-        return;
-
-    }
-
-
-    /* Friday */
-
-    if (dayOfWeek === 5) {
-
-        timeInput.min =
-            "08:30";
-
-        timeInput.max =
-            "14:30";
-
-        timeInput.value =
-            "";
-
-        return;
-
-    }
-
-}
-
-
-/* =========================================================
-   DATE CHANGE
-========================================================= */
-
-dateInput.addEventListener(
-    "change",
-    updateShippingHours
-);
-
-
-/* =========================================================
-   VALIDATE SHIPPING HOURS BEFORE SUBMIT
-========================================================= */
-
-function validateShippingHours() {
-
-    if (!dateInput.value) {
-
-        alert(
-            "Please select a pickup date."
-        );
-
-        return false;
-
-    }
-
-
-    if (!timeInput.value) {
-
-        alert(
-            "Please select a pickup time."
-        );
-
-        return false;
-
-    }
-
-
-    const parts =
-        dateInput.value.split("-");
-
-    const year =
-        Number(parts[0]);
-
-    const month =
-        Number(parts[1]) - 1;
-
-    const day =
-        Number(parts[2]);
-
-
-    const selectedDate =
-        new Date(
-            year,
-            month,
-            day
-        );
-
-
-    const dayOfWeek =
-        selectedDate.getDay();
-
-
-    /* No Saturday or Sunday */
-
-    if (
-        dayOfWeek === 0 ||
-        dayOfWeek === 6
-    ) {
-
-        alert(
-            "Shipping pickups are not available on Saturday or Sunday."
-        );
-
-        return false;
-
-    }
-
-
-    /* Convert selected time to minutes */
-
-    const timeParts =
-        timeInput.value.split(":");
-
-    const hours =
-        Number(timeParts[0]);
-
-    const minutes =
-        Number(timeParts[1]);
-
-    const selectedMinutes =
-        hours * 60 +
-        minutes;
-
-
-    const openingTime =
-        8 * 60 + 30;
-
-
-    let closingTime;
-
-
-    /* Monday - Thursday */
-
-    if (
-        dayOfWeek >= 1 &&
-        dayOfWeek <= 4
-    ) {
-
-        closingTime =
-            15 * 60 + 30;
-
-    }
-
-
-    /* Friday */
-
-    else {
-
-        closingTime =
-            14 * 60 + 30;
-
-    }
-
-
-    if (
-        selectedMinutes < openingTime ||
-        selectedMinutes > closingTime
-    ) {
-
-        if (
-            dayOfWeek >= 1 &&
-            dayOfWeek <= 4
+        function createTimeOptions(
+            startHour,
+            startMinute,
+            endHour,
+            endMinute
         ) {
 
-            alert(
-                "Pickup times Monday through Thursday must be between 8:30 AM and 3:30 PM."
+            timeInput.innerHTML = "";
+
+
+            const firstOption =
+                document.createElement("option");
+
+            firstOption.value = "";
+
+            firstOption.textContent =
+                "Select a pickup time";
+
+            timeInput.appendChild(
+                firstOption
             );
 
-        } else {
 
-            alert(
-                "Pickup times on Friday must be between 8:30 AM and 2:30 PM."
-            );
+            let currentMinutes =
+                startHour * 60 +
+                startMinute;
+
+
+            const finalMinutes =
+                endHour * 60 +
+                endMinute;
+
+
+            while (
+                currentMinutes <=
+                finalMinutes
+            ) {
+
+                const hours =
+                    Math.floor(
+                        currentMinutes / 60
+                    );
+
+
+                const minutes =
+                    currentMinutes % 60;
+
+
+                const value =
+                    String(hours)
+                        .padStart(2, "0")
+                    +
+                    ":"
+                    +
+                    String(minutes)
+                        .padStart(2, "0");
+
+
+                const displayHour =
+                    hours === 0
+                        ? 12
+                        : hours > 12
+                            ? hours - 12
+                            : hours;
+
+
+                const amPm =
+                    hours >= 12
+                        ? "PM"
+                        : "AM";
+
+
+                const displayTime =
+                    `${displayHour}:${String(minutes).padStart(2, "0")} ${amPm}`;
+
+
+                const option =
+                    document.createElement("option");
+
+
+                option.value =
+                    value;
+
+
+                option.textContent =
+                    displayTime;
+
+
+                timeInput.appendChild(
+                    option
+                );
+
+
+                currentMinutes += 15;
+
+            }
 
         }
 
-        return false;
-
-    }
 
 
-    return true;
+        /* =========================================================
+           UPDATE TIMES WHEN DATE CHANGES
+        ========================================================= */
 
-}
+        function updateShippingHours() {
 
-        let locationPhotoInput =
-            document.getElementById("locationPhoto");
+            timeInput.innerHTML = "";
 
-        let currentPhotoPreviewUrl =
-            null;
+
+            const defaultOption =
+                document.createElement("option");
+
+
+            defaultOption.value = "";
+
+
+            defaultOption.textContent =
+                "Select a pickup time";
+
+
+            timeInput.appendChild(
+                defaultOption
+            );
+
+
+            if (!dateInput.value) {
+
+                return;
+
+            }
+
+
+            const parts =
+                dateInput.value.split("-");
+
+
+            const year =
+                Number(parts[0]);
+
+
+            const month =
+                Number(parts[1]) - 1;
+
+
+            const day =
+                Number(parts[2]);
+
+
+            const selectedDate =
+                new Date(
+                    year,
+                    month,
+                    day
+                );
+
+
+            const dayOfWeek =
+                selectedDate.getDay();
+
+
+
+            /* =====================================================
+               SATURDAY / SUNDAY
+            ===================================================== */
+
+            if (
+                dayOfWeek === 0 ||
+                dayOfWeek === 6
+            ) {
+
+                alert(
+                    "Shipping pickups are only available Monday through Friday."
+                );
+
+
+                dateInput.value = "";
+
+
+                return;
+
+            }
+
+
+
+            /* =====================================================
+               MONDAY - THURSDAY
+               
+               8:30 AM - 3:30 PM
+            ===================================================== */
+
+            if (
+                dayOfWeek >= 1 &&
+                dayOfWeek <= 4
+            ) {
+
+                createTimeOptions(
+                    8,
+                    30,
+                    15,
+                    30
+                );
+
+                return;
+
+            }
+
+
+
+            /* =====================================================
+               FRIDAY
+               
+               8:30 AM - 2:30 PM
+            ===================================================== */
+
+            if (
+                dayOfWeek === 5
+            ) {
+
+                createTimeOptions(
+                    8,
+                    30,
+                    14,
+                    30
+                );
+
+                return;
+
+            }
+
+        }
+
+
+
+        dateInput.addEventListener(
+            "change",
+            updateShippingHours
+        );
+
+
+
+        /* =========================================================
+           VALIDATE SHIPPING HOURS
+           
+           This is a second layer of protection.
+        ========================================================= */
+
+        function validateShippingHours() {
+
+            if (!dateInput.value) {
+
+                alert(
+                    "Please select a pickup date."
+                );
+
+                return false;
+
+            }
+
+
+            if (!timeInput.value) {
+
+                alert(
+                    "Please select a pickup time."
+                );
+
+                return false;
+
+            }
+
+
+            const parts =
+                dateInput.value.split("-");
+
+
+            const year =
+                Number(parts[0]);
+
+
+            const month =
+                Number(parts[1]) - 1;
+
+
+            const day =
+                Number(parts[2]);
+
+
+            const selectedDate =
+                new Date(
+                    year,
+                    month,
+                    day
+                );
+
+
+            const dayOfWeek =
+                selectedDate.getDay();
+
+
+            /* Weekend */
+
+            if (
+                dayOfWeek === 0 ||
+                dayOfWeek === 6
+            ) {
+
+                alert(
+                    "Shipping pickups are not available on Saturday or Sunday."
+                );
+
+                return false;
+
+            }
+
+
+            const timeParts =
+                timeInput.value.split(":");
+
+
+            const hours =
+                Number(timeParts[0]);
+
+
+            const minutes =
+                Number(timeParts[1]);
+
+
+            const selectedMinutes =
+                hours * 60 +
+                minutes;
+
+
+            const openingTime =
+                8 * 60 +
+                30;
+
+
+            let closingTime;
+
+
+            if (
+                dayOfWeek >= 1 &&
+                dayOfWeek <= 4
+            ) {
+
+                closingTime =
+                    15 * 60 +
+                    30;
+
+            } else {
+
+                closingTime =
+                    14 * 60 +
+                    30;
+
+            }
+
+
+            if (
+                selectedMinutes <
+                    openingTime
+                ||
+                selectedMinutes >
+                    closingTime
+            ) {
+
+                alert(
+                    "The selected pickup time is outside of Shipping & Receiving hours."
+                );
+
+                return false;
+
+            }
+
+
+            return true;
+
+        }
+
 
 
         /* =========================================================
@@ -944,10 +1377,13 @@ function validateShippingHours() {
             "change",
             function() {
 
-                if (this.value === "Other") {
+                if (
+                    this.value === "Other"
+                ) {
 
                     otherCarrierGroup.style.display =
                         "block";
+
 
                     otherCarrierInput.required =
                         true;
@@ -957,8 +1393,10 @@ function validateShippingHours() {
                     otherCarrierGroup.style.display =
                         "none";
 
+
                     otherCarrierInput.required =
                         false;
+
 
                     otherCarrierInput.value =
                         "";
@@ -969,9 +1407,21 @@ function validateShippingHours() {
         );
 
 
+
         /* =========================================================
            PHOTO INPUT
         ========================================================= */
+
+        let locationPhotoInput =
+            document.getElementById(
+                "locationPhoto"
+            );
+
+
+        let currentPhotoPreviewUrl =
+            null;
+
+
 
         function setupPhotoInput() {
 
@@ -981,6 +1431,7 @@ function validateShippingHours() {
 
                     const file =
                         this.files[0];
+
 
                     if (!file) {
 
@@ -992,20 +1443,28 @@ function validateShippingHours() {
                     }
 
 
-                    if (!file.type.startsWith("image/")) {
+                    if (
+                        !file.type.startsWith(
+                            "image/"
+                        )
+                    ) {
 
                         alert(
                             "Please select an image file."
                         );
 
+
                         resetPhotoInput();
+
 
                         return;
 
                     }
 
 
-                    if (currentPhotoPreviewUrl) {
+                    if (
+                        currentPhotoPreviewUrl
+                    ) {
 
                         URL.revokeObjectURL(
                             currentPhotoPreviewUrl
@@ -1015,10 +1474,14 @@ function validateShippingHours() {
 
 
                     currentPhotoPreviewUrl =
-                        URL.createObjectURL(file);
+                        URL.createObjectURL(
+                            file
+                        );
+
 
                     photoPreview.src =
                         currentPhotoPreviewUrl;
+
 
                     photoPreviewContainer.style.display =
                         "block";
@@ -1027,6 +1490,7 @@ function validateShippingHours() {
             );
 
         }
+
 
 
         /* =========================================================
@@ -1038,15 +1502,19 @@ function validateShippingHours() {
             photoPreview.src =
                 "";
 
+
             photoPreviewContainer.style.display =
                 "none";
 
 
-            if (currentPhotoPreviewUrl) {
+            if (
+                currentPhotoPreviewUrl
+            ) {
 
                 URL.revokeObjectURL(
                     currentPhotoPreviewUrl
                 );
+
 
                 currentPhotoPreviewUrl =
                     null;
@@ -1055,16 +1523,22 @@ function validateShippingHours() {
 
 
             const newInput =
-                document.createElement("input");
+                document.createElement(
+                    "input"
+                );
+
 
             newInput.type =
                 "file";
 
+
             newInput.id =
                 "locationPhoto";
 
+
             newInput.accept =
                 "image/*";
+
 
             newInput.capture =
                 "environment";
@@ -1088,6 +1562,7 @@ function validateShippingHours() {
         setupPhotoInput();
 
 
+
         /* =========================================================
            REMOVE PHOTO
         ========================================================= */
@@ -1102,6 +1577,7 @@ function validateShippingHours() {
         );
 
 
+
         /* =========================================================
            SUBMIT PICKUP
         ========================================================= */
@@ -1113,46 +1589,58 @@ function validateShippingHours() {
                 event.preventDefault();
 
 
-/* Check shipping date and time */
 
-if (!validateShippingHours()) {
+                /* ================================================
+                   VALIDATE SHIPPING DATE / TIME
+                ================================================= */
 
-    return;
+                if (
+                    !validateShippingHours()
+                ) {
 
-}
+                    return;
+
+                }
 
 
-submitButton.disabled =
-    true;
+
+                submitButton.disabled =
+                    true;
+
 
                 submitButton.textContent =
                     "Submitting...";
 
 
+
                 try {
 
-                    /* =============================================
+
+                    /* ============================================
                        GENERATE CONFIRMATION CODE
-                    ============================================= */
+                    ============================================ */
 
                     const confirmationCode =
                         generateCode();
 
 
-                    /* =============================================
+
+                    /* ============================================
                        GET PHOTO
-                    ============================================= */
+                    ============================================ */
 
                     const photoFile =
                         locationPhotoInput.files[0];
+
 
                     let photoFileName =
                         null;
 
 
-                    /* =============================================
+
+                    /* ============================================
                        UPLOAD PHOTO
-                    ============================================= */
+                    ============================================ */
 
                     if (photoFile) {
 
@@ -1164,10 +1652,14 @@ submitButton.disabled =
 
 
                         photoFileName =
-                            confirmationCode +
-                            "-" +
-                            Date.now() +
-                            "." +
+                            confirmationCode
+                            +
+                            "-"
+                            +
+                            Date.now()
+                            +
+                            "."
+                            +
                             fileExtension;
 
 
@@ -1196,16 +1688,20 @@ submitButton.disabled =
                                 );
 
 
-                        if (uploadResult.error) {
+                        if (
+                            uploadResult.error
+                        ) {
 
                             console.error(
                                 "Photo upload error:",
                                 uploadResult.error
                             );
 
+
                             alert(
                                 "The photo could not be uploaded. Please try again."
                             );
+
 
                             return;
 
@@ -1220,15 +1716,18 @@ submitButton.disabled =
                     }
 
 
-                    /* =============================================
+
+                    /* ============================================
                        GET CARRIER
-                    ============================================= */
+                    ============================================ */
 
                     let carrier =
                         carrierSelect.value;
 
 
-                    if (carrier === "Other") {
+                    if (
+                        carrier === "Other"
+                    ) {
 
                         carrier =
                             otherCarrierInput
@@ -1238,84 +1737,111 @@ submitButton.disabled =
                     }
 
 
-                    /* =============================================
+
+                    /* ============================================
                        CREATE PICKUP
-                    ============================================= */
+                    ============================================ */
 
                     const pickup = {
 
                         confirmation_code:
                             confirmationCode,
 
+
                         requester_name:
                             document
-                                .getElementById("name")
+                                .getElementById(
+                                    "name"
+                                )
                                 .value
                                 .trim(),
+
 
                         company:
                             document
-                                .getElementById("company")
+                                .getElementById(
+                                    "company"
+                                )
                                 .value
                                 .trim(),
+
 
                         email:
                             document
-                                .getElementById("email")
+                                .getElementById(
+                                    "email"
+                                )
                                 .value
                                 .trim(),
 
+
                         phone:
                             document
-                                .getElementById("phone")
+                                .getElementById(
+                                    "phone"
+                                )
                                 .value
                                 .trim(),
+
 
                         carrier:
                             carrier,
 
+
                         pickup_date:
-                            document
-                                .getElementById("date")
-                                .value,
+                            dateInput.value,
+
 
                         pickup_time:
-                            document
-                                .getElementById("time")
-                                .value,
+                            timeInput.value,
+
 
                         package_count:
                             Number(
                                 document
-                                    .getElementById("packages")
+                                    .getElementById(
+                                        "packages"
+                                    )
                                     .value
                             ),
 
+
                         package_location:
                             document
-                                .getElementById("location")
+                                .getElementById(
+                                    "location"
+                                )
                                 .value
                                 .trim(),
+
 
                         package_location_image:
                             photoFileName,
 
+
                         package_description:
                             document
-                                .getElementById("description")
+                                .getElementById(
+                                    "description"
+                                )
                                 .value
                                 .trim(),
 
+
                         special_instructions:
                             document
-                                .getElementById("instructions")
+                                .getElementById(
+                                    "instructions"
+                                )
                                 .value
                                 .trim(),
+
 
                         status:
                             "READY"
 
                     };
+
 
 
                     console.log(
@@ -1324,30 +1850,35 @@ submitButton.disabled =
                     );
 
 
-                    /* =============================================
+
+                    /* ============================================
                        INSERT INTO SUPABASE
                        
-                       IMPORTANT:
                        No .select()
-                       No data variable
-                       ============================================= */
+                    ============================================ */
 
                     const insertResult =
                         await supabaseClient
                             .from("pickups")
-                            .insert([pickup]);
+                            .insert([
+                                pickup
+                            ]);
 
 
-                    if (insertResult.error) {
+                    if (
+                        insertResult.error
+                    ) {
 
                         console.error(
                             "Pickup submission error:",
                             insertResult.error
                         );
 
+
                         alert(
                             "There was an error submitting the pickup. Please try again."
                         );
+
 
                         return;
 
@@ -1359,9 +1890,10 @@ submitButton.disabled =
                     );
 
 
-                    /* =============================================
+
+                    /* ============================================
                        SHOW CONFIRMATION
-                    ============================================= */
+                    ============================================ */
 
                     confirmationCodeElement.textContent =
                         confirmationCode;
@@ -1370,8 +1902,10 @@ submitButton.disabled =
                     requestCard.style.display =
                         "none";
 
+
                     confirmationCard.style.display =
                         "block";
+
 
 
                 } catch (error) {
@@ -1381,14 +1915,18 @@ submitButton.disabled =
                         error
                     );
 
+
                     alert(
                         "Could not connect to the pickup system. Please try again."
                     );
+
+
 
                 } finally {
 
                     submitButton.disabled =
                         false;
+
 
                     submitButton.textContent =
                         "Submit Pickup Request";
@@ -1397,6 +1935,7 @@ submitButton.disabled =
 
             }
         );
+
 
 
         /* =========================================================
@@ -1410,24 +1949,44 @@ submitButton.disabled =
                 pickupForm.reset();
 
 
+                /* Reset time dropdown */
+
+                timeInput.innerHTML =
+                    `
+                    <option value="">
+                        Select a date first
+                    </option>
+                    `;
+
+
+                /* Reset carrier */
+
                 carrierSelect.value =
                     "";
+
 
                 otherCarrierGroup.style.display =
                     "none";
 
+
                 otherCarrierInput.required =
                     false;
+
 
                 otherCarrierInput.value =
                     "";
 
 
+                /* Reset photo */
+
                 resetPhotoInput();
 
 
+                /* Reset cards */
+
                 confirmationCard.style.display =
                     "none";
+
 
                 requestCard.style.display =
                     "block";
