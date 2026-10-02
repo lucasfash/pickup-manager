@@ -1059,127 +1059,34 @@ async function viewLocationPhoto(fileName) {
             }
         );
 
-
-        /* Check if Supabase returned an error */
-
         if (!response.ok) {
 
-            const error =
-                await response.text();
+            const error = await response.text();
 
-            console.error(
-                "Photo sign error:",
-                error
-            );
+            console.error(error);
 
-            alert(
-                "Could not create a link for the package location photo."
-            );
+            alert("Could not open the package location photo.");
 
             return;
         }
 
-
-        /* Get Supabase response */
-
-        const data =
-            await response.json();
-
-
-        console.log(
-            "Supabase signed URL:",
-            data.signedURL
-        );
-
-
-        if (!data.signedURL) {
-
-            console.error(
-                "No signed URL returned:",
-                data
-            );
-
-            alert(
-                "Supabase did not return a photo link."
-            );
-
-            return;
-        }
-
-
-        /* 
-           Supabase may return either:
-           
-           /storage/v1/...
-           
-           /object/sign/...
-           
-           or a complete https:// URL.
-           
-           This handles all three.
-        */
-
-        let photoUrl;
-
-
-        if (
-            data.signedURL.startsWith("http://") ||
-            data.signedURL.startsWith("https://")
-        ) {
-
-            photoUrl =
-                data.signedURL;
-
-        }
-
-        else if (
-            data.signedURL.startsWith("/storage/v1")
-        ) {
-
-            photoUrl =
-                SUPABASE_URL +
-                data.signedURL;
-
-        }
-
-        else {
-
-            photoUrl =
-                SUPABASE_URL +
-                "/storage/v1" +
-                data.signedURL;
-
-        }
-
-
-        console.log(
-            "Opening photo:",
-            photoUrl
-        );
-
-
-        /* Open the actual photo */
+        const data = await response.json();
 
         window.open(
-            photoUrl,
+            SUPABASE_URL +
+            "/storage/v1" +
+            data.signedURL,
             "_blank"
         );
 
-
     } catch (error) {
 
-        console.error(
-            "Photo viewing error:",
-            error
-        );
+        console.error(error);
 
-        alert(
-            "Could not load the package location photo."
-        );
+        alert("Could not load the photo.");
 
     }
 
-}
 }
 /* ================================
    COMPLETE PICKUP
