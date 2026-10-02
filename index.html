@@ -1032,11 +1032,10 @@
                        Uses Supabase JS instead of manual fetch.
                     ========================================= */
 
-                    const { data, error } =
-                        await supabaseClient
-                            .from("pickups")
-                            .insert([pickup])
-                            .select();
+                   const { error } =
+    await supabaseClient
+        .from("pickups")
+        .insert([pickup]);
 
 
                     if (error) {
