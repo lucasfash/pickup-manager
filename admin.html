@@ -719,17 +719,21 @@
         }
 
 
+        /*
+         * Picked Up button is intentionally gray.
+         */
+
         .complete-button {
 
-            background: #dcfce7;
+            background: #e5e7eb;
 
-            color: #166534;
+            color: #374151;
         }
 
 
         .complete-button:hover {
 
-            background: #bbf7d0;
+            background: #d1d5db;
         }
 
 
@@ -749,15 +753,15 @@
 
         .photo-button {
 
-            background: #fef3c7;
+            background: #f3f4f6;
 
-            color: #92400e;
+            color: #374151;
         }
 
 
         .photo-button:hover {
 
-            background: #fde68a;
+            background: #e5e7eb;
         }
 
 
@@ -1066,7 +1070,7 @@
 
 
         /* =====================================================
-           PHOTO MODAL
+           PHOTO
         ===================================================== */
 
         .photo-modal-content {
@@ -1296,7 +1300,7 @@
 
 
 <!-- =========================================================
-     LOGIN SCREEN
+     LOGIN
 ========================================================= -->
 
 <div id="loginScreen">
@@ -1379,7 +1383,7 @@
 
 
 <!-- =========================================================
-     MAIN APP
+     APP
 ========================================================= -->
 
 <div id="app">
@@ -1422,10 +1426,6 @@
 
     <main class="container">
 
-
-        <!-- =================================================
-             STATS
-        ================================================= -->
 
         <div class="stats-grid">
 
@@ -1498,10 +1498,6 @@
 
 
 
-        <!-- =================================================
-             TOOLBAR
-        ================================================= -->
-
         <div class="toolbar">
 
 
@@ -1523,7 +1519,7 @@
                     class="secondary-button"
                     onclick="openArchiveModal()"
                 >
-                    📦 Picked Up
+                    Picked Up
                 </button>
 
 
@@ -1531,7 +1527,7 @@
                     class="primary-button"
                     onclick="openCreateModal()"
                 >
-                    + New Pickup
+                    New Pickup
                 </button>
 
             </div>
@@ -1539,10 +1535,6 @@
         </div>
 
 
-
-        <!-- =================================================
-             ACTIVE PICKUPS
-        ================================================= -->
 
         <div class="table-card">
 
@@ -1556,7 +1548,7 @@
                     class="secondary-button"
                     onclick="loadPickups()"
                 >
-                    ↻ Refresh
+                    Refresh
                 </button>
 
             </div>
@@ -1742,7 +1734,6 @@
 
 
         <form id="createPickupForm">
-
 
             <div class="modal-body">
 
@@ -1973,7 +1964,6 @@
 
             </div>
 
-
         </form>
 
     </div>
@@ -2011,7 +2001,6 @@
 
         <div class="modal-body">
 
-
             <div class="form-group">
 
                 <input
@@ -2025,7 +2014,6 @@
 
 
             <div id="archiveContent"></div>
-
 
         </div>
 
@@ -2093,34 +2081,26 @@ document
 
             const email =
                 document
-                    .getElementById(
-                        "loginEmail"
-                    )
+                    .getElementById("loginEmail")
                     .value
                     .trim();
 
 
             const password =
                 document
-                    .getElementById(
-                        "loginPassword"
-                    )
+                    .getElementById("loginPassword")
                     .value;
 
 
             const remember =
                 document
-                    .getElementById(
-                        "rememberMe"
-                    )
+                    .getElementById("rememberMe")
                     .checked;
 
 
             const errorBox =
                 document
-                    .getElementById(
-                        "loginError"
-                    );
+                    .getElementById("loginError");
 
 
             errorBox.style.display =
@@ -2245,25 +2225,19 @@ supabaseClient
 function showApp(user) {
 
     document
-        .getElementById(
-            "loginScreen"
-        )
+        .getElementById("loginScreen")
         .style.display =
         "none";
 
 
     document
-        .getElementById(
-            "app"
-        )
+        .getElementById("app")
         .style.display =
         "block";
 
 
     document
-        .getElementById(
-            "currentUserEmail"
-        )
+        .getElementById("currentUserEmail")
         .textContent =
         user.email || "";
 
@@ -2277,17 +2251,13 @@ function showApp(user) {
 function showLogin() {
 
     document
-        .getElementById(
-            "loginScreen"
-        )
+        .getElementById("loginScreen")
         .style.display =
         "flex";
 
 
     document
-        .getElementById(
-            "app"
-        )
+        .getElementById("app")
         .style.display =
         "none";
 
@@ -2398,10 +2368,8 @@ function updateStats() {
             function(pickup) {
 
                 return (
-                    pickup.status ===
-                        "READY" ||
-                    pickup.status ===
-                        "COMPLETED"
+                    pickup.status === "READY" ||
+                    pickup.status === "COMPLETED"
                 );
 
             }
@@ -2426,8 +2394,7 @@ function updateStats() {
             function(pickup) {
 
                 return (
-                    pickup.status ===
-                    "READY"
+                    pickup.status === "READY"
                 );
 
             }
@@ -2439,8 +2406,7 @@ function updateStats() {
             function(pickup) {
 
                 return (
-                    pickup.status ===
-                    "COMPLETED"
+                    pickup.status === "COMPLETED"
                 );
 
             }
@@ -2454,8 +2420,7 @@ function updateStats() {
                 return (
                     total +
                     Number(
-                        pickup.package_count ||
-                        0
+                        pickup.package_count || 0
                     )
                 );
 
@@ -2465,33 +2430,25 @@ function updateStats() {
 
 
     document
-        .getElementById(
-            "todayCount"
-        )
+        .getElementById("todayCount")
         .textContent =
         todayPickups.length;
 
 
     document
-        .getElementById(
-            "readyCount"
-        )
+        .getElementById("readyCount")
         .textContent =
         ready.length;
 
 
     document
-        .getElementById(
-            "completedCount"
-        )
+        .getElementById("completedCount")
         .textContent =
         completed.length;
 
 
     document
-        .getElementById(
-            "packageCount"
-        )
+        .getElementById("packageCount")
         .textContent =
         totalPackages;
 
@@ -2500,7 +2457,7 @@ function updateStats() {
 
 
 /* =========================================================
-   DISPLAY ACTIVE PICKUPS
+   DISPLAY PICKUPS
 ========================================================= */
 
 function displayPickups() {
@@ -2527,10 +2484,8 @@ function displayPickups() {
             function(pickup) {
 
                 return (
-                    pickup.status ===
-                        "READY" ||
-                    pickup.status ===
-                        "COMPLETED"
+                    pickup.status === "READY" ||
+                    pickup.status === "COMPLETED"
                 );
 
             }
@@ -2551,21 +2506,13 @@ function displayPickups() {
                 const searchable = [
 
                     pickup.confirmation_code,
-
                     pickup.requester_name,
-
                     pickup.company,
-
                     pickup.email,
-
                     pickup.phone,
-
                     pickup.carrier,
-
                     pickup.package_location,
-
                     pickup.package_description,
-
                     pickup.special_instructions
 
                 ]
@@ -2583,19 +2530,22 @@ function displayPickups() {
 
 
     if (
-        filtered.length ===
-        0
+        filtered.length === 0
     ) {
 
         tbody.innerHTML = `
+
             <tr>
+
                 <td
                     colspan="7"
                     class="empty-state"
                 >
                     No active pickups found.
                 </td>
+
             </tr>
+
         `;
 
         return;
@@ -2609,32 +2559,34 @@ function displayPickups() {
                 function(pickup) {
 
                     const statusClass =
-                        pickup.status ===
-                        "READY"
+                        pickup.status === "READY"
                             ? "status-ready"
                             : "status-completed";
 
 
                     const actionButton =
-                        pickup.status ===
-                        "READY"
+                        pickup.status === "READY"
 
                             ? `
+
                                 <button
                                     class="small-button complete-button"
                                     onclick="completePickup('${escapeJs(pickup.confirmation_code)}')"
                                 >
-                                    ✓ Picked Up
+                                    Picked Up
                                 </button>
+
                             `
 
                             : `
+
                                 <button
                                     class="small-button archive-button"
                                     onclick="archivePickup('${escapeJs(pickup.confirmation_code)}')"
                                 >
-                                    📦 Archive
+                                    Archive
                                 </button>
+
                             `;
 
 
@@ -2643,20 +2595,26 @@ function displayPickups() {
                         <tr>
 
                             <td>
+
                                 <span class="confirmation-code">
+
                                     ${escapeHtml(
                                         pickup.confirmation_code
                                     )}
+
                                 </span>
+
                             </td>
 
 
                             <td>
 
                                 <strong>
+
                                     ${escapeHtml(
                                         pickup.requester_name
                                     )}
+
                                 </strong>
 
                                 <br>
@@ -2667,32 +2625,40 @@ function displayPickups() {
                                         font-size:12px;
                                     "
                                 >
+
                                     ${escapeHtml(
                                         pickup.company
                                     )}
+
                                 </span>
 
                             </td>
 
 
                             <td>
+
                                 ${escapeHtml(
                                     pickup.carrier
                                 )}
+
                             </td>
 
 
                             <td>
+
                                 ${escapeHtml(
                                     pickup.package_count
                                 )}
+
                             </td>
 
 
                             <td>
+
                                 ${escapeHtml(
                                     pickup.package_location
                                 )}
+
                             </td>
 
 
@@ -2701,9 +2667,11 @@ function displayPickups() {
                                 <span
                                     class="status ${statusClass}"
                                 >
+
                                     ${escapeHtml(
                                         pickup.status
                                     )}
+
                                 </span>
 
                             </td>
@@ -2719,7 +2687,7 @@ function displayPickups() {
                                         class="small-button details-button"
                                         onclick="viewPickupDetails('${escapeJs(pickup.confirmation_code)}')"
                                     >
-                                        👁️ Details
+                                        View
                                     </button>
 
 
@@ -2742,7 +2710,7 @@ function displayPickups() {
 
 
 /* =========================================================
-   VIEW PICKUP DETAILS
+   VIEW DETAILS
 ========================================================= */
 
 function viewPickupDetails(code) {
@@ -2772,16 +2740,10 @@ function viewPickupDetails(code) {
 
 
     const statusClass =
-        pickup.status ===
-        "READY"
-
+        pickup.status === "READY"
             ? "status-ready"
-
-            : pickup.status ===
-              "COMPLETED"
-
+            : pickup.status === "COMPLETED"
                 ? "status-completed"
-
                 : "status-archived";
 
 
@@ -2789,12 +2751,18 @@ function viewPickupDetails(code) {
         pickup.email
 
             ? `
+
                 <a
                     class="details-link"
                     href="mailto:${escapeHtml(pickup.email)}"
                 >
-                    ${escapeHtml(pickup.email)}
+
+                    ${escapeHtml(
+                        pickup.email
+                    )}
+
                 </a>
+
             `
 
             : "Not provided";
@@ -2804,12 +2772,18 @@ function viewPickupDetails(code) {
         pickup.phone
 
             ? `
+
                 <a
                     class="details-link"
                     href="tel:${escapeHtml(pickup.phone)}"
                 >
-                    ${escapeHtml(pickup.phone)}
+
+                    ${escapeHtml(
+                        pickup.phone
+                    )}
+
                 </a>
+
             `
 
             : "Not provided";
@@ -2819,15 +2793,18 @@ function viewPickupDetails(code) {
         pickup.package_location_image
 
             ? `
+
                 <button
                     class="small-button photo-button"
                     onclick="viewLocationPhoto('${escapeJs(pickup.confirmation_code)}')"
                 >
-                    📷 View Package Location Photo
+                    View Photo
                 </button>
+
             `
 
             : `
+
                 <span
                     style="
                         color:#6b7280;
@@ -2836,6 +2813,7 @@ function viewPickupDetails(code) {
                 >
                     No photo uploaded.
                 </span>
+
             `;
 
 
@@ -2866,35 +2844,33 @@ function viewPickupDetails(code) {
 
         <div
             style="
-                display:flex;
-                justify-content:space-between;
-                align-items:flex-start;
-                gap:15px;
                 margin-bottom:25px;
             "
         >
 
-            <div>
+            <div
+                class="details-code"
+            >
 
-                <div
-                    class="details-code"
-                >
-                    ${escapeHtml(
-                        pickup.confirmation_code
-                    )}
-                </div>
-
-                <span
-                    class="status ${statusClass} details-status"
-                >
-                    ${escapeHtml(
-                        pickup.status
-                    )}
-                </span>
+                ${escapeHtml(
+                    pickup.confirmation_code
+                )}
 
             </div>
 
+
+            <span
+                class="status ${statusClass} details-status"
+            >
+
+                ${escapeHtml(
+                    pickup.status
+                )}
+
+            </span>
+
         </div>
+
 
 
         <div class="details-section">
@@ -2914,9 +2890,11 @@ function viewPickupDetails(code) {
                     </div>
 
                     <div class="details-value">
+
                         ${escapeHtml(
                             pickup.requester_name
                         )}
+
                     </div>
 
                 </div>
@@ -2929,9 +2907,11 @@ function viewPickupDetails(code) {
                     </div>
 
                     <div class="details-value">
+
                         ${escapeHtml(
                             pickup.company
                         )}
+
                     </div>
 
                 </div>
@@ -2944,7 +2924,9 @@ function viewPickupDetails(code) {
                     </div>
 
                     <div class="details-value">
+
                         ${emailHtml}
+
                     </div>
 
                 </div>
@@ -2957,7 +2939,9 @@ function viewPickupDetails(code) {
                     </div>
 
                     <div class="details-value">
+
                         ${phoneHtml}
+
                     </div>
 
                 </div>
@@ -2986,9 +2970,11 @@ function viewPickupDetails(code) {
                     </div>
 
                     <div class="details-value">
+
                         ${escapeHtml(
                             pickup.carrier
                         )}
+
                     </div>
 
                 </div>
@@ -3001,9 +2987,11 @@ function viewPickupDetails(code) {
                     </div>
 
                     <div class="details-value">
+
                         ${escapeHtml(
                             pickup.package_count
                         )}
+
                     </div>
 
                 </div>
@@ -3016,9 +3004,11 @@ function viewPickupDetails(code) {
                     </div>
 
                     <div class="details-value">
+
                         ${formatDate(
                             pickup.pickup_date
                         )}
+
                     </div>
 
                 </div>
@@ -3031,11 +3021,11 @@ function viewPickupDetails(code) {
                     </div>
 
                     <div class="details-value">
-                        ${escapeHtml(
-                            formatTime(
-                                pickup.pickup_time
-                            )
+
+                        ${formatTime(
+                            pickup.pickup_time
                         )}
+
                     </div>
 
                 </div>
@@ -3048,9 +3038,11 @@ function viewPickupDetails(code) {
                     </div>
 
                     <div class="details-value">
+
                         ${escapeHtml(
                             pickup.package_location
                         )}
+
                     </div>
 
                 </div>
@@ -3063,10 +3055,12 @@ function viewPickupDetails(code) {
                     </div>
 
                     <div class="details-value">
+
                         ${escapeHtml(
                             pickup.package_description ||
                             "None provided."
                         )}
+
                     </div>
 
                 </div>
@@ -3079,10 +3073,12 @@ function viewPickupDetails(code) {
                     </div>
 
                     <div class="details-value">
+
                         ${escapeHtml(
                             pickup.special_instructions ||
                             "None provided."
                         )}
+
                     </div>
 
                 </div>
@@ -3126,7 +3122,9 @@ function viewPickupDetails(code) {
                     </div>
 
                     <div class="details-value">
+
                         ${createdAt}
+
                     </div>
 
                 </div>
@@ -3139,7 +3137,9 @@ function viewPickupDetails(code) {
                     </div>
 
                     <div class="details-value">
+
                         ${pickedUpAt}
+
                     </div>
 
                 </div>
@@ -3155,7 +3155,7 @@ function viewPickupDetails(code) {
 
             <div class="delete-warning">
 
-                ⚠️ <strong>Danger Zone:</strong>
+                <strong>Warning:</strong>
                 Deleting this pickup permanently removes
                 the shipment request from the system.
 
@@ -3166,7 +3166,7 @@ function viewPickupDetails(code) {
                 class="delete-button"
                 onclick="deletePickup('${escapeJs(pickup.confirmation_code)}')"
             >
-                🗑️ Delete Pickup
+                Delete Pickup
             </button>
 
         </div>
@@ -3217,7 +3217,7 @@ async function deletePickup(code) {
 
     const confirmed =
         confirm(
-            "DELETE PICKUP " +
+            "Delete pickup " +
             code +
             "?\n\n" +
             "This will permanently delete the shipment request.\n\n" +
@@ -3234,9 +3234,98 @@ async function deletePickup(code) {
 
     try {
 
+        /*
+         * Delete the database row first.
+         *
+         * This is the important part.
+         * We check the returned data so we know
+         * whether Supabase actually removed the row.
+         */
+
+        const {
+            data: deletedRows,
+            error: deleteError
+        } =
+            await supabaseClient
+                .from("pickups")
+                .delete()
+                .eq(
+                    "confirmation_code",
+                    code
+                )
+                .select();
+
+
+        if (deleteError) {
+
+            console.error(
+                "Database delete error:",
+                deleteError
+            );
+
+
+            alert(
+                "The pickup was NOT deleted.\n\n" +
+                deleteError.message +
+                "\n\n" +
+                "Make sure the authenticated DELETE policy has been added in Supabase."
+            );
+
+
+            return;
+
+        }
+
 
         /*
-         * Delete associated photo first.
+         * Make absolutely sure a row was deleted.
+         */
+
+        if (
+            !deletedRows ||
+            deletedRows.length === 0
+        ) {
+
+            console.error(
+                "No database row was deleted."
+            );
+
+
+            alert(
+                "The pickup was NOT deleted.\n\n" +
+                "Supabase did not delete the record. " +
+                "Check the DELETE policy in Supabase."
+            );
+
+
+            return;
+
+        }
+
+
+        /*
+         * Remove it from the local list immediately.
+         */
+
+        pickups =
+            pickups.filter(
+                function(item) {
+
+                    return (
+                        item.confirmation_code !==
+                        code
+                    );
+
+                }
+            );
+
+
+        /*
+         * Delete the associated photo.
+         *
+         * If this fails, the pickup itself is still
+         * successfully deleted. The photo can be
+         * cleaned up later.
          */
 
         if (
@@ -3259,18 +3348,9 @@ async function deletePickup(code) {
             if (photoError) {
 
                 console.error(
-                    "Photo delete error:",
+                    "Photo deletion error:",
                     photoError
                 );
-
-
-                alert(
-                    "The package location photo could not be deleted.\n\n" +
-                    "The pickup was NOT deleted."
-                );
-
-
-                return;
 
             }
 
@@ -3278,49 +3358,25 @@ async function deletePickup(code) {
 
 
         /*
-         * Delete database record.
-         */
-
-        const {
-            error
-        } =
-            await supabaseClient
-                .from("pickups")
-                .delete()
-                .eq(
-                    "confirmation_code",
-                    code
-                );
-
-
-        if (error) {
-
-            console.error(
-                "Pickup delete error:",
-                error
-            );
-
-
-            alert(
-                "Could not delete pickup:\n\n" +
-                error.message
-            );
-
-
-            return;
-
-        }
-
-
-        /*
-         * Close details modal.
+         * Close details.
          */
 
         closeDetailsModal();
 
 
         /*
-         * Reload dashboard.
+         * Refresh the dashboard using the
+         * updated local list immediately.
+         */
+
+        updateStats();
+
+        displayPickups();
+
+
+        /*
+         * Reload from Supabase to verify that
+         * the record is really gone.
          */
 
         await loadPickups();
@@ -3336,13 +3392,14 @@ async function deletePickup(code) {
     } catch (error) {
 
         console.error(
-            "Delete error:",
+            "Delete pickup error:",
             error
         );
 
 
         alert(
-            "Something went wrong while deleting the pickup."
+            "Something went wrong while deleting the pickup.\n\n" +
+            error.message
         );
 
     }
@@ -3380,12 +3437,14 @@ async function completePickup(code) {
             await supabaseClient
                 .from("pickups")
                 .update({
+
                     status:
                         "COMPLETED",
 
                     picked_up_at:
                         new Date()
                             .toISOString()
+
                 })
                 .eq(
                     "confirmation_code",
@@ -3405,11 +3464,14 @@ async function completePickup(code) {
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Complete pickup error:",
+            error
+        );
 
 
         alert(
-            "Could not mark pickup as completed:\n\n" +
+            "Could not mark pickup as picked up:\n\n" +
             error.message
         );
 
@@ -3448,8 +3510,10 @@ async function archivePickup(code) {
             await supabaseClient
                 .from("pickups")
                 .update({
+
                     status:
                         "ARCHIVED"
+
                 })
                 .eq(
                     "confirmation_code",
@@ -3469,7 +3533,10 @@ async function archivePickup(code) {
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Archive pickup error:",
+            error
+        );
 
 
         alert(
@@ -3535,9 +3602,11 @@ async function viewLocationPhoto(code) {
 
 
     photoContainer.innerHTML = `
+
         <div class="photo-loading">
             Loading photo...
         </div>
+
     `;
 
 
@@ -3575,9 +3644,6 @@ async function viewLocationPhoto(code) {
             <img
                 src="${imageUrl}"
                 alt="Package location"
-                onload="
-                    this.dataset.objectUrl='${imageUrl}'
-                "
             >
 
         `;
@@ -3779,7 +3845,6 @@ document
 
             try {
 
-
                 const confirmationCode =
                     await generateConfirmationCode();
 
@@ -3941,7 +4006,7 @@ async function generateConfirmationCode() {
 
 
 /* =========================================================
-   ADMIN TIME OPTIONS
+   ADMIN TIMES
 ========================================================= */
 
 function populateAdminTimes() {
@@ -3967,7 +4032,6 @@ function populateAdminTimes() {
         minutes <= 15 * 60 + 30;
         minutes += 15
     ) {
-
 
         const hour =
             Math.floor(
@@ -4044,7 +4108,7 @@ function populateAdminTimes() {
 
 
 /* =========================================================
-   ARCHIVE MODAL
+   ARCHIVE
 ========================================================= */
 
 function openArchiveModal() {
@@ -4128,21 +4192,13 @@ function displayArchive() {
                     const searchable = [
 
                         pickup.confirmation_code,
-
                         pickup.requester_name,
-
                         pickup.company,
-
                         pickup.email,
-
                         pickup.phone,
-
                         pickup.carrier,
-
                         pickup.package_location,
-
                         pickup.package_description,
-
                         pickup.special_instructions
 
                     ]
@@ -4183,9 +4239,7 @@ function displayArchive() {
         container.innerHTML = `
 
             <div class="empty-state">
-
                 No archived pickups found.
-
             </div>
 
         `;
@@ -4275,9 +4329,11 @@ function displayArchive() {
                                                         <span
                                                             class="confirmation-code"
                                                         >
+
                                                             ${escapeHtml(
                                                                 pickup.confirmation_code
                                                             )}
+
                                                         </span>
 
                                                         —
@@ -4293,14 +4349,19 @@ function displayArchive() {
                                                         ${escapeHtml(
                                                             pickup.company
                                                         )}
+
                                                         ·
+
                                                         ${escapeHtml(
                                                             pickup.carrier
                                                         )}
+
                                                         ·
+
                                                         ${escapeHtml(
                                                             pickup.package_count
                                                         )}
+
                                                         package(s)
 
                                                     </div>
@@ -4308,15 +4369,13 @@ function displayArchive() {
                                                 </div>
 
 
-                                                <div
-                                                    class="action-buttons"
-                                                >
+                                                <div class="action-buttons">
 
                                                     <button
                                                         class="small-button details-button"
                                                         onclick="viewPickupDetails('${escapeJs(pickup.confirmation_code)}')"
                                                     >
-                                                        👁️ Details
+                                                        View
                                                     </button>
 
 
@@ -4329,7 +4388,7 @@ function displayArchive() {
                                                                     class="small-button photo-button"
                                                                     onclick="viewLocationPhoto('${escapeJs(pickup.confirmation_code)}')"
                                                                 >
-                                                                    📷 Photo
+                                                                    Photo
                                                                 </button>
 
                                                             `
@@ -4360,7 +4419,7 @@ function displayArchive() {
 
 
 /* =========================================================
-   MODAL CLOSE FUNCTIONS
+   CLOSE MODALS
 ========================================================= */
 
 function closeDetailsModal() {
@@ -4386,25 +4445,24 @@ function closePhotoModal() {
         "none";
 
 
-    const container =
-        document
-            .getElementById(
-                "photoContainer"
-            );
+    document
+        .getElementById(
+            "photoContainer"
+        )
+        .innerHTML = `
 
+            <div class="photo-loading">
+                Loading photo...
+            </div>
 
-    container.innerHTML = `
-        <div class="photo-loading">
-            Loading photo...
-        </div>
-    `;
+        `;
 
 }
 
 
 
 /* =========================================================
-   DATE / TIME FORMATTING
+   FORMATTING
 ========================================================= */
 
 function formatDate(dateString) {
@@ -4421,8 +4479,7 @@ function formatDate(dateString) {
 
 
     if (
-        parts.length !==
-        3
+        parts.length !== 3
     ) {
 
         return dateString;
@@ -4456,8 +4513,7 @@ function formatTime(timeString) {
 
 
     if (
-        parts.length <
-        2
+        parts.length < 2
     ) {
 
         return timeString;
@@ -4539,16 +4595,14 @@ function formatDateTime(
 
 
 /* =========================================================
-   HTML ESCAPING
+   ESCAPING
 ========================================================= */
 
 function escapeHtml(value) {
 
     if (
-        value ===
-        null ||
-        value ===
-        undefined
+        value === null ||
+        value === undefined
     ) {
 
         return "";
@@ -4557,22 +4611,27 @@ function escapeHtml(value) {
 
 
     return String(value)
+
         .replace(
             /&/g,
             "&amp;"
         )
+
         .replace(
             /</g,
             "&lt;"
         )
+
         .replace(
             />/g,
             "&gt;"
         )
+
         .replace(
             /"/g,
             "&quot;"
         )
+
         .replace(
             /'/g,
             "&#039;"
@@ -4582,17 +4641,11 @@ function escapeHtml(value) {
 
 
 
-/* =========================================================
-   JAVASCRIPT STRING ESCAPING
-========================================================= */
-
 function escapeJs(value) {
 
     if (
-        value ===
-        null ||
-        value ===
-        undefined
+        value === null ||
+        value === undefined
     ) {
 
         return "";
@@ -4601,18 +4654,22 @@ function escapeJs(value) {
 
 
     return String(value)
+
         .replace(
             /\\/g,
             "\\\\"
         )
+
         .replace(
             /'/g,
             "\\'"
         )
+
         .replace(
             /\r/g,
             "\\r"
         )
+
         .replace(
             /\n/g,
             "\\n"
@@ -4631,31 +4688,27 @@ window.addEventListener(
     function(event) {
 
         const detailsModal =
-            document
-                .getElementById(
-                    "detailsModal"
-                );
+            document.getElementById(
+                "detailsModal"
+            );
 
 
         const photoModal =
-            document
-                .getElementById(
-                    "photoModal"
-                );
+            document.getElementById(
+                "photoModal"
+            );
 
 
         const createModal =
-            document
-                .getElementById(
-                    "createModal"
-                );
+            document.getElementById(
+                "createModal"
+            );
 
 
         const archiveModal =
-            document
-                .getElementById(
-                    "archiveModal"
-                );
+            document.getElementById(
+                "archiveModal"
+            );
 
 
         if (
