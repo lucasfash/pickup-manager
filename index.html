@@ -1888,7 +1888,71 @@ if (
 console.log(
     "Pickup submitted successfully."
 );
+                    
+/* =========================================================
+   SEND CONFIRMATION EMAIL
+========================================================= */
 
+console.log(
+    "Sending confirmation email..."
+);
+
+const emailResult =
+    await supabaseClient.functions.invoke(
+        "send-pickup-email",
+        {
+            body: {
+
+                email:
+                    pickup.email,
+
+                requesterName:
+                    pickup.requester_name,
+
+                confirmationCode:
+                    pickup.confirmation_code,
+
+                company:
+                    pickup.company,
+
+                carrier:
+                    pickup.carrier,
+
+                pickupDate:
+                    pickup.pickup_date,
+
+                pickupTime:
+                    pickup.pickup_time,
+
+                packageCount:
+                    pickup.package_count,
+
+                packageLocation:
+                    pickup.package_location
+
+            }
+        }
+    );
+
+
+if (emailResult.error) {
+
+    console.error(
+        "Email error:",
+        emailResult.error
+    );
+
+    console.warn(
+        "Pickup was saved, but the confirmation email could not be sent."
+    );
+
+} else {
+
+    console.log(
+        "Confirmation email sent successfully."
+    );
+
+}
 
 
 /* =========================================================
