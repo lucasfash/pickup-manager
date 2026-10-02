@@ -10,7 +10,12 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Pickup Manager</title>
+    <title>Pickup Manager - Admin</title>
+
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
 
 
     <style>
@@ -23,759 +28,30 @@
 
 
         body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f3f4f6;
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0f172a,
+                    #1e3a5f,
+                    #2563eb
+                );
+
+            min-height: 100vh;
+
             color: #1f2937;
         }
 
 
-        /* =====================================================
-           HEADER
-        ===================================================== */
-
-        header {
-            background: #172554;
-            color: white;
-
-            padding: 20px 30px;
-
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-
-        header h1 {
-            font-size: 24px;
-        }
-
-
-        header span {
-            font-size: 14px;
-            opacity: 0.8;
-        }
-
-
-        /* =====================================================
-           MAIN CONTAINER
-        ===================================================== */
-
-        .container {
-            max-width: 1200px;
-
-            margin: 30px auto;
-
-            padding: 0 20px;
-        }
-
-
-        .top-bar {
-            display: flex;
-
-            justify-content: space-between;
-            align-items: center;
-
-            margin-bottom: 25px;
-
-            gap: 15px;
-        }
-
-
-        .top-bar h2 {
-            font-size: 26px;
-        }
-
-
-        .top-buttons {
-            display: flex;
-
-            align-items: center;
-
-            gap: 8px;
-
-            flex-wrap: wrap;
-        }
-
-
-        /* =====================================================
-           BUTTONS
-        ===================================================== */
-
-        button {
-            border: none;
-
-            border-radius: 7px;
-
-            padding: 11px 18px;
-
-            font-size: 14px;
-
-            font-weight: bold;
-
-            cursor: pointer;
-        }
-
-
-        button:disabled {
-            opacity: 0.6;
-
-            cursor: not-allowed;
-        }
-
-
-        .primary {
-            background: #2563eb;
-
-            color: white;
-        }
-
-
-        .primary:hover {
-            background: #1d4ed8;
-        }
-
-
-        .secondary {
-            background: #e5e7eb;
-
-            color: #111827;
-        }
-
-
-        .secondary:hover {
-            background: #d1d5db;
-        }
-
-
-        .archive-button {
-            background: #7c3aed;
-
-            color: white;
-        }
-
-
-        .archive-button:hover {
-            background: #6d28d9;
-        }
-
-
-        .logout-button {
-            background: #dc2626;
-
-            color: white;
-
-            padding: 8px 13px;
-
-            font-size: 13px;
-
-            margin-left: 5px;
-        }
-
-
-        .logout-button:hover {
-            background: #b91c1c;
-        }
-
-
-        /* =====================================================
-           SEARCH
-        ===================================================== */
-
-        .search-box {
-            background: white;
-
-            padding: 20px;
-
-            border-radius: 10px;
-
-            margin-bottom: 20px;
-
-            box-shadow:
-                0 2px 8px rgba(0,0,0,0.05);
-        }
-
-
-        .search-box input {
-            width: 100%;
-
-            padding: 12px;
-
-            border:
-                1px solid #d1d5db;
-
-            border-radius: 6px;
-
-            font-size: 15px;
-        }
-
-
-        /* =====================================================
-           DASHBOARD
-        ===================================================== */
-
-        .dashboard {
-            display: grid;
-
-            grid-template-columns:
-                repeat(4, 1fr);
-
-            gap: 15px;
-
-            margin-bottom: 25px;
-        }
-
-
-        .stat {
-            background: white;
-
-            padding: 20px;
-
-            border-radius: 10px;
-
-            box-shadow:
-                0 2px 8px rgba(0,0,0,0.05);
-        }
-
-
-        .stat-title {
-            font-size: 13px;
-
-            color: #6b7280;
-
-            margin-bottom: 8px;
-        }
-
-
-        .stat-number {
-            font-size: 28px;
-
-            font-weight: bold;
-        }
-
-
-        /* =====================================================
-           TABLE
-        ===================================================== */
-
-        .table-container {
-            background: white;
-
-            border-radius: 10px;
-
-            overflow: hidden;
-
-            box-shadow:
-                0 2px 8px rgba(0,0,0,0.05);
-        }
-
-
-        table {
-            width: 100%;
-
-            border-collapse: collapse;
-        }
-
-
-        th {
-            background: #f9fafb;
-
-            text-align: left;
-
-            padding: 14px;
-
-            font-size: 13px;
-
-            color: #6b7280;
-
-            border-bottom:
-                1px solid #e5e7eb;
-        }
-
-
-        td {
-            padding: 15px 14px;
-
-            border-bottom:
-                1px solid #e5e7eb;
-
-            font-size: 14px;
-
-            vertical-align: top;
-        }
-
-
-        tr:hover {
-            background: #f9fafb;
-        }
-
-
-        /* =====================================================
-           STATUS
-        ===================================================== */
-
-        .status {
-            display: inline-block;
-
-            padding: 5px 9px;
-
-            border-radius: 20px;
-
-            font-size: 12px;
-
-            font-weight: bold;
-        }
-
-
-        .ready {
-            background: #dcfce7;
-
-            color: #166534;
-        }
-
-
-        .completed {
-            background: #e5e7eb;
-
-            color: #374151;
-        }
-
-
-        .archived {
-            background: #ede9fe;
-
-            color: #5b21b6;
-        }
-
-
-        /* =====================================================
-           MODALS
-        ===================================================== */
-
-        .modal {
-            display: none;
-
-            position: fixed;
-
-            inset: 0;
-
-            background:
-                rgba(0,0,0,0.5);
-
-            justify-content: center;
-
-            align-items: center;
-
-            padding: 20px;
-
-            z-index: 1000;
-        }
-
-
-        .modal-content {
-            background: white;
-
-            width: 100%;
-
-            max-width: 650px;
-
-            max-height: 90vh;
-
-            overflow-y: auto;
-
-            border-radius: 12px;
-
-            padding: 30px;
-        }
-
-
-        .modal-header {
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-            margin-bottom: 25px;
-        }
-
-
-        .modal-header h2 {
-            font-size: 22px;
-        }
-
-
-        .close {
-            background: none;
-
-            font-size: 28px;
-
-            cursor: pointer;
-
-            padding: 0 8px;
-
-            color: #374151;
-        }
-
-
-        .close:hover {
-            color: #dc2626;
-        }
-
-
-        /* =====================================================
-           PICKUP DETAILS
-        ===================================================== */
-
-        .details-section {
-            margin-bottom: 24px;
-        }
-
-
-        .details-section-title {
-            font-size: 14px;
-
-            font-weight: bold;
-
-            color: #172554;
-
-            padding-bottom: 8px;
-
-            border-bottom:
-                1px solid #e5e7eb;
-
-            margin-bottom: 12px;
-        }
-
-
-        .details-grid {
-            display: grid;
-
-            grid-template-columns:
-                1fr 1fr;
-
-            gap: 14px;
-        }
-
-
-        .details-item {
-            background: #f9fafb;
-
-            border:
-                1px solid #e5e7eb;
-
-            border-radius: 7px;
-
-            padding: 11px 12px;
-        }
-
-
-        .details-label {
-            font-size: 11px;
-
-            color: #6b7280;
-
-            text-transform: uppercase;
-
-            margin-bottom: 4px;
-        }
-
-
-        .details-value {
-            font-size: 14px;
-
-            color: #111827;
-
-            word-break: break-word;
-        }
-
-
-        .details-value a {
-            color: #2563eb;
-
-            text-decoration: none;
-        }
-
-
-        .details-value a:hover {
-            text-decoration: underline;
-        }
-
-
-        .details-full {
-            grid-column: 1 / -1;
-        }
-
-
-        .details-code {
-            text-align: center;
-
-            font-size: 28px;
-
-            font-weight: bold;
-
-            letter-spacing: 2px;
-
-            color: #172554;
-
-            margin-bottom: 10px;
-        }
-
-
-        .details-status {
-            text-align: center;
-
-            margin-bottom: 25px;
-        }
-
-
-        /* =====================================================
-           PHOTO VIEWER
-        ===================================================== */
-
-        #photoModal {
-            z-index: 2000;
-        }
-
-
-        .photo-modal-content {
-            max-width: 950px;
-
-            text-align: center;
-        }
-
-
-        #locationPhotoViewer {
-            display: none;
-
-            max-width: 100%;
-
-            max-height: 70vh;
-
-            object-fit: contain;
-
-            margin: 0 auto;
-
-            border-radius: 8px;
-        }
-
-
-        #photoLoading {
-            text-align: center;
-
-            padding: 40px;
-
-            color: #6b7280;
-
-            font-size: 16px;
-        }
-
-
-        /* =====================================================
-           ARCHIVE
-        ===================================================== */
-
-        .archive-modal-content {
-            max-width: 1000px;
-        }
-
-
-        .archive-search {
-            margin-bottom: 20px;
-        }
-
-
-        .archive-search input {
-            width: 100%;
-
-            padding: 12px;
-
-            border:
-                1px solid #d1d5db;
-
-            border-radius: 6px;
-
-            font-size: 15px;
-        }
-
-
-        .archive-date {
-            margin-bottom: 25px;
-
-            border:
-                1px solid #e5e7eb;
-
-            border-radius: 10px;
-
-            overflow: hidden;
-        }
-
-
-        .archive-date-header {
-            background: #f3f4f6;
-
-            padding: 14px 16px;
-
-            font-size: 16px;
-
-            font-weight: bold;
-
-            color: #172554;
-
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-        }
-
-
-        .archive-date-count {
-            font-size: 12px;
-
-            background: #e5e7eb;
-
-            padding: 5px 9px;
-
-            border-radius: 20px;
-
-            color: #374151;
-        }
-
-
-        .archive-ticket {
-            padding: 15px 16px;
-
-            border-top:
-                1px solid #e5e7eb;
-
-            display: grid;
-
-            grid-template-columns:
-                1fr 1fr 1fr 1fr;
-
-            gap: 15px;
-
-            align-items: center;
-        }
-
-
-        .archive-ticket:hover {
-            background: #f9fafb;
-        }
-
-
-        .archive-ticket-title {
-            font-weight: bold;
-
-            color: #172554;
-
-            margin-bottom: 4px;
-        }
-
-
-        .archive-ticket-label {
-            font-size: 11px;
-
-            color: #6b7280;
-
-            text-transform: uppercase;
-
-            margin-bottom: 3px;
-        }
-
-
-        .archive-empty {
-            text-align: center;
-
-            padding: 50px 20px;
-
-            color: #6b7280;
-        }
-
-
-        /* =====================================================
-           FORM
-        ===================================================== */
-
-        .form-group {
-            margin-bottom: 17px;
-        }
-
-
-        .form-group label {
-            display: block;
-
-            margin-bottom: 6px;
-
-            font-size: 13px;
-
-            font-weight: bold;
-        }
-
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-
-            padding: 11px;
-
-            border:
-                1px solid #d1d5db;
-
-            border-radius: 6px;
-
-            font-size: 14px;
-        }
-
-
-        .form-group textarea {
-            min-height: 80px;
-
-            resize: vertical;
-        }
-
-
-        .form-row {
-            display: grid;
-
-            grid-template-columns:
-                1fr 1fr;
-
-            gap: 15px;
-        }
-
-
-        /* =====================================================
-           CONFIRMATION
-        ===================================================== */
-
-        .confirmation {
-            text-align: center;
-
-            padding: 25px;
-        }
-
-
-        .confirmation-code {
-            font-size: 36px;
-
-            font-weight: bold;
-
-            letter-spacing: 3px;
-
-            margin: 20px 0;
-
-            color: #172554;
-        }
-
-
-        .success {
-            color: #166534;
-
-            font-weight: bold;
-
-            margin-bottom: 10px;
+        button,
+        input,
+        select,
+        textarea {
+            font-family: inherit;
         }
 
 
@@ -784,11 +60,8 @@
         ===================================================== */
 
         #loginScreen {
-            position: fixed;
 
-            inset: 0;
-
-            background: #f3f4f6;
+            min-height: 100vh;
 
             display: flex;
 
@@ -796,161 +69,1163 @@
 
             align-items: center;
 
-            z-index: 9999;
-
             padding: 20px;
         }
 
 
-        .login-box {
+        .login-card {
+
             background: white;
 
             width: 100%;
 
             max-width: 420px;
 
-            padding: 35px;
+            padding: 40px;
 
-            border-radius: 12px;
+            border-radius: 18px;
 
             box-shadow:
-                0 4px 20px rgba(0,0,0,0.12);
+                0 20px 50px
+                rgba(0, 0, 0, 0.25);
         }
 
 
-        .login-box h1 {
-            color: #172554;
+        .login-title {
+
+            text-align: center;
+
+            font-size: 28px;
+
+            font-weight: 700;
 
             margin-bottom: 8px;
+
+            color: #111827;
         }
 
 
         .login-subtitle {
+
+            text-align: center;
+
             color: #6b7280;
 
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
 
 
-        .login-label {
-            display: block;
-
-            font-weight: bold;
-
-            margin-bottom: 6px;
-        }
-
-
-        .login-input {
-            width: 100%;
-
-            padding: 12px;
-
-            margin-bottom: 15px;
-
-            border:
-                1px solid #d1d5db;
-
-            border-radius: 6px;
-
-            font-size: 15px;
-        }
-
-
-        .remember-row {
-            display: flex;
-
-            align-items: center;
-
-            gap: 8px;
+        .form-group {
 
             margin-bottom: 18px;
+        }
 
-            font-size: 14px;
+
+        .form-group label {
+
+            display: block;
+
+            font-weight: 600;
+
+            margin-bottom: 7px;
 
             color: #374151;
         }
 
 
-        .remember-row input {
-            width: 16px;
+        input,
+        select,
+        textarea {
 
-            height: 16px;
+            width: 100%;
 
-            cursor: pointer;
+            padding: 12px 14px;
+
+            border:
+                1px solid
+                #d1d5db;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            outline: none;
+
+            transition:
+                border-color 0.2s,
+                box-shadow 0.2s;
+        }
+
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(37, 99, 235, 0.12);
+        }
+
+
+        textarea {
+
+            min-height: 100px;
+
+            resize: vertical;
         }
 
 
         .login-button {
+
             width: 100%;
 
-            padding: 13px;
+            border: none;
 
             background: #2563eb;
 
             color: white;
 
-            border: none;
+            padding: 13px;
 
-            border-radius: 6px;
+            border-radius: 8px;
 
-            font-weight: bold;
+            font-size: 16px;
+
+            font-weight: 700;
 
             cursor: pointer;
         }
 
 
         .login-button:hover {
+
             background: #1d4ed8;
         }
 
 
-        .login-error {
+        .remember-row {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-bottom: 20px;
+
+            font-size: 14px;
+
+            color: #4b5563;
+        }
+
+
+        .remember-row input {
+
+            width: auto;
+        }
+
+
+        #loginError {
+
             color: #dc2626;
 
-            margin-top: 15px;
+            background: #fef2f2;
+
+            border:
+                1px solid
+                #fecaca;
+
+            padding: 10px;
+
+            border-radius: 8px;
+
+            margin-bottom: 15px;
+
+            display: none;
 
             font-size: 14px;
         }
 
 
         /* =====================================================
-           MOBILE
+           MAIN APP
         ===================================================== */
 
-        @media (max-width: 800px) {
+        #app {
 
-            .dashboard {
+            display: none;
+
+            min-height: 100vh;
+
+            background: #f3f4f6;
+        }
+
+
+        .header {
+
+            background: white;
+
+            border-bottom:
+                1px solid
+                #e5e7eb;
+
+            padding:
+                18px 30px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 50;
+        }
+
+
+        .header-left h1 {
+
+            font-size: 23px;
+
+            color: #111827;
+        }
+
+
+        .header-left p {
+
+            color: #6b7280;
+
+            font-size: 13px;
+
+            margin-top: 3px;
+        }
+
+
+        .header-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+
+        .header-email {
+
+            color: #6b7280;
+
+            font-size: 13px;
+        }
+
+
+        .logout-button {
+
+            border: none;
+
+            background: #f3f4f6;
+
+            color: #374151;
+
+            padding:
+                9px 14px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-weight: 600;
+        }
+
+
+        .logout-button:hover {
+
+            background: #e5e7eb;
+        }
+
+
+        .container {
+
+            max-width: 1500px;
+
+            margin: 0 auto;
+
+            padding: 30px;
+        }
+
+
+        /* =====================================================
+           STATS
+        ===================================================== */
+
+        .stats-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .stat-card {
+
+            background: white;
+
+            border-radius: 12px;
+
+            padding: 22px;
+
+            border:
+                1px solid
+                #e5e7eb;
+
+            box-shadow:
+                0 2px 5px
+                rgba(0, 0, 0, 0.04);
+        }
+
+
+        .stat-label {
+
+            color: #6b7280;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            margin-bottom: 8px;
+        }
+
+
+        .stat-number {
+
+            font-size: 30px;
+
+            font-weight: 800;
+
+            color: #111827;
+        }
+
+
+        /* =====================================================
+           TOOLBAR
+        ===================================================== */
+
+        .toolbar {
+
+            background: white;
+
+            border:
+                1px solid
+                #e5e7eb;
+
+            border-radius: 12px;
+
+            padding: 18px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .search-box {
+
+            flex: 1;
+
+            max-width: 550px;
+        }
+
+
+        .toolbar-buttons {
+
+            display: flex;
+
+            gap: 10px;
+        }
+
+
+        .primary-button {
+
+            border: none;
+
+            background: #2563eb;
+
+            color: white;
+
+            padding:
+                11px 16px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-weight: 700;
+        }
+
+
+        .primary-button:hover {
+
+            background: #1d4ed8;
+        }
+
+
+        .secondary-button {
+
+            border:
+                1px solid
+                #d1d5db;
+
+            background: white;
+
+            color: #374151;
+
+            padding:
+                11px 16px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-weight: 700;
+        }
+
+
+        .secondary-button:hover {
+
+            background: #f9fafb;
+        }
+
+
+        /* =====================================================
+           TABLE
+        ===================================================== */
+
+        .table-card {
+
+            background: white;
+
+            border:
+                1px solid
+                #e5e7eb;
+
+            border-radius: 12px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 2px 5px
+                rgba(0, 0, 0, 0.04);
+        }
+
+
+        .table-header {
+
+            padding: 18px 20px;
+
+            border-bottom:
+                1px solid
+                #e5e7eb;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+
+        .table-header h2 {
+
+            font-size: 18px;
+
+            color: #111827;
+        }
+
+
+        .table-wrapper {
+
+            overflow-x: auto;
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 950px;
+        }
+
+
+        th {
+
+            background: #f9fafb;
+
+            color: #6b7280;
+
+            font-size: 12px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.04em;
+
+            text-align: left;
+
+            padding:
+                13px 16px;
+
+            border-bottom:
+                1px solid
+                #e5e7eb;
+        }
+
+
+        td {
+
+            padding:
+                15px 16px;
+
+            border-bottom:
+                1px solid
+                #f0f0f0;
+
+            vertical-align: middle;
+
+            font-size: 14px;
+        }
+
+
+        tr:last-child td {
+
+            border-bottom: none;
+        }
+
+
+        tr:hover td {
+
+            background: #fafafa;
+        }
+
+
+        .confirmation-code {
+
+            font-weight: 800;
+
+            color: #2563eb;
+
+            font-family:
+                monospace;
+
+            font-size: 15px;
+        }
+
+
+        .status {
+
+            display: inline-block;
+
+            padding:
+                5px 9px;
+
+            border-radius: 999px;
+
+            font-size: 11px;
+
+            font-weight: 800;
+        }
+
+
+        .status-ready {
+
+            background: #dcfce7;
+
+            color: #166534;
+        }
+
+
+        .status-completed {
+
+            background: #dbeafe;
+
+            color: #1e40af;
+        }
+
+
+        .status-archived {
+
+            background: #f3f4f6;
+
+            color: #4b5563;
+        }
+
+
+        .action-buttons {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 7px;
+        }
+
+
+        .small-button {
+
+            border: none;
+
+            padding:
+                7px 10px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+
+        .details-button {
+
+            background: #eff6ff;
+
+            color: #1d4ed8;
+        }
+
+
+        .details-button:hover {
+
+            background: #dbeafe;
+        }
+
+
+        .complete-button {
+
+            background: #dcfce7;
+
+            color: #166534;
+        }
+
+
+        .complete-button:hover {
+
+            background: #bbf7d0;
+        }
+
+
+        .archive-button {
+
+            background: #f3f4f6;
+
+            color: #374151;
+        }
+
+
+        .archive-button:hover {
+
+            background: #e5e7eb;
+        }
+
+
+        .photo-button {
+
+            background: #fef3c7;
+
+            color: #92400e;
+        }
+
+
+        .photo-button:hover {
+
+            background: #fde68a;
+        }
+
+
+        .delete-button {
+
+            background: #dc2626;
+
+            color: white;
+
+            border: none;
+
+            padding:
+                11px 16px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-weight: 800;
+
+            font-size: 14px;
+        }
+
+
+        .delete-button:hover {
+
+            background: #b91c1c;
+        }
+
+
+        .empty-state {
+
+            text-align: center;
+
+            padding: 60px 20px;
+
+            color: #6b7280;
+        }
+
+
+        /* =====================================================
+           MODALS
+        ===================================================== */
+
+        .modal {
+
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            background:
+                rgba(15, 23, 42, 0.65);
+
+            z-index: 100;
+
+            padding: 20px;
+
+            overflow-y: auto;
+        }
+
+
+        .modal-content {
+
+            background: white;
+
+            width: 100%;
+
+            max-width: 700px;
+
+            margin:
+                40px auto;
+
+            border-radius: 14px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 25px 60px
+                rgba(0, 0, 0, 0.3);
+        }
+
+
+        .modal-header {
+
+            padding:
+                20px 24px;
+
+            border-bottom:
+                1px solid
+                #e5e7eb;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+
+        .modal-header h2 {
+
+            font-size: 20px;
+
+            color: #111827;
+        }
+
+
+        .close-button {
+
+            border: none;
+
+            background: transparent;
+
+            font-size: 26px;
+
+            line-height: 1;
+
+            cursor: pointer;
+
+            color: #6b7280;
+        }
+
+
+        .close-button:hover {
+
+            color: #111827;
+        }
+
+
+        .modal-body {
+
+            padding: 24px;
+        }
+
+
+        .modal-footer {
+
+            padding:
+                16px 24px;
+
+            border-top:
+                1px solid
+                #e5e7eb;
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 10px;
+        }
+
+
+        /* =====================================================
+           DETAILS
+        ===================================================== */
+
+        .details-section {
+
+            margin-bottom: 25px;
+        }
+
+
+        .details-section:last-child {
+
+            margin-bottom: 0;
+        }
+
+
+        .details-section h3 {
+
+            font-size: 14px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.04em;
+
+            color: #6b7280;
+
+            margin-bottom: 14px;
+        }
+
+
+        .details-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 15px;
+        }
+
+
+        .details-item {
+
+            background: #f9fafb;
+
+            border-radius: 8px;
+
+            padding: 12px;
+        }
+
+
+        .details-full {
+
+            grid-column:
+                1 / -1;
+        }
+
+
+        .details-label {
+
+            font-size: 11px;
+
+            color: #6b7280;
+
+            text-transform: uppercase;
+
+            font-weight: 700;
+
+            margin-bottom: 5px;
+        }
+
+
+        .details-value {
+
+            font-size: 14px;
+
+            color: #111827;
+
+            word-break: break-word;
+        }
+
+
+        .details-code {
+
+            font-size: 22px;
+
+            font-weight: 900;
+
+            color: #2563eb;
+
+            font-family:
+                monospace;
+        }
+
+
+        .details-status {
+
+            display: inline-block;
+
+            margin-top: 5px;
+        }
+
+
+        .details-link {
+
+            color: #2563eb;
+
+            text-decoration: none;
+
+            font-weight: 600;
+        }
+
+
+        .details-link:hover {
+
+            text-decoration: underline;
+        }
+
+
+        .delete-area {
+
+            border-top:
+                1px solid
+                #e5e7eb;
+
+            margin-top: 25px;
+
+            padding-top: 20px;
+        }
+
+
+        .delete-warning {
+
+            color: #991b1b;
+
+            background: #fef2f2;
+
+            border:
+                1px solid
+                #fecaca;
+
+            padding: 12px;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            margin-bottom: 12px;
+        }
+
+
+        /* =====================================================
+           PHOTO MODAL
+        ===================================================== */
+
+        .photo-modal-content {
+
+            max-width: 900px;
+        }
+
+
+        .photo-container {
+
+            text-align: center;
+
+            background: #111827;
+
+            padding: 20px;
+
+            min-height: 300px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+        }
+
+
+        .photo-container img {
+
+            max-width: 100%;
+
+            max-height: 70vh;
+
+            object-fit: contain;
+
+            border-radius: 6px;
+        }
+
+
+        .photo-loading {
+
+            color: white;
+
+            font-size: 15px;
+        }
+
+
+        /* =====================================================
+           ARCHIVE
+        ===================================================== */
+
+        .archive-group {
+
+            margin-bottom: 25px;
+        }
+
+
+        .archive-date {
+
+            background: #f3f4f6;
+
+            padding:
+                12px 15px;
+
+            border-radius:
+                8px 8px 0 0;
+
+            font-weight: 800;
+
+            color: #374151;
+
+            border:
+                1px solid
+                #e5e7eb;
+
+            border-bottom: none;
+        }
+
+
+        .archive-item {
+
+            background: white;
+
+            border:
+                1px solid
+                #e5e7eb;
+
+            padding:
+                15px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+
+        .archive-item:last-child {
+
+            border-radius:
+                0 0 8px 8px;
+        }
+
+
+        .archive-main {
+
+            min-width: 0;
+        }
+
+
+        .archive-name {
+
+            font-weight: 700;
+
+            color: #111827;
+
+            margin-bottom: 4px;
+        }
+
+
+        .archive-meta {
+
+            font-size: 13px;
+
+            color: #6b7280;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 900px) {
+
+            .stats-grid {
+
                 grid-template-columns:
                     repeat(2, 1fr);
             }
 
 
-            .table-container {
-                overflow-x: auto;
+            .header {
+
+                padding:
+                    15px 20px;
             }
 
 
-            table {
-                min-width: 950px;
+            .header-email {
+
+                display: none;
             }
 
 
-            .form-row {
-                grid-template-columns: 1fr;
+            .container {
 
-                gap: 0;
-            }
-
-
-            .archive-ticket {
-                grid-template-columns:
-                    1fr 1fr;
-            }
-
-
-            header {
-                padding: 15px 20px;
+                padding: 20px;
             }
 
         }
@@ -958,47 +1233,56 @@
 
         @media (max-width: 600px) {
 
-            .details-grid {
-                grid-template-columns: 1fr;
+            .stats-grid {
+
+                grid-template-columns:
+                    1fr;
             }
 
 
-            .details-full {
-                grid-column: auto;
-            }
+            .toolbar {
 
-        }
-
-
-        @media (max-width: 500px) {
-
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
-
-
-            .container {
-                padding: 0 12px;
-            }
-
-
-            .top-bar {
                 flex-direction: column;
 
-                align-items: flex-start;
-
-                gap: 15px;
+                align-items: stretch;
             }
 
 
-            .top-buttons {
+            .search-box {
+
+                max-width: none;
+            }
+
+
+            .toolbar-buttons {
+
                 width: 100%;
             }
 
 
-            .archive-ticket {
+            .toolbar-buttons button {
+
+                flex: 1;
+            }
+
+
+            .details-grid {
+
                 grid-template-columns:
                     1fr;
+            }
+
+
+            .details-full {
+
+                grid-column:
+                    auto;
+            }
+
+
+            .login-card {
+
+                padding: 25px;
             }
 
         }
@@ -1012,52 +1296,116 @@
 
 
 <!-- =========================================================
-     HEADER
+     LOGIN SCREEN
 ========================================================= -->
 
-<header>
+<div id="loginScreen">
 
-    <h1>
-        Pickup Manager
-    </h1>
+    <div class="login-card">
 
-    <span>
-        Shipping & Receiving
-    </span>
+        <div class="login-title">
+            Pickup Manager
+        </div>
 
-</header>
+        <div class="login-subtitle">
+            Shipping & Receiving Admin
+        </div>
+
+
+        <div id="loginError"></div>
+
+
+        <form id="loginForm">
+
+            <div class="form-group">
+
+                <label for="loginEmail">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="loginEmail"
+                    required
+                    autocomplete="email"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="loginPassword">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    required
+                    autocomplete="current-password"
+                >
+
+            </div>
+
+
+            <div class="remember-row">
+
+                <input
+                    type="checkbox"
+                    id="rememberMe"
+                >
+
+                <label for="rememberMe">
+                    Keep me signed in
+                </label>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="login-button"
+            >
+                Sign In
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
 
 
 <!-- =========================================================
-     MAIN DASHBOARD
+     MAIN APP
 ========================================================= -->
 
-<div class="container">
-
-    <div class="top-bar">
-
-        <h2>
-            Pickup Dashboard
-        </h2>
+<div id="app">
 
 
-        <div class="top-buttons">
+    <header class="header">
 
-            <button
-                class="archive-button"
-                onclick="openArchive()"
-            >
-                📁 Picked Up
-            </button>
+        <div class="header-left">
+
+            <h1>
+                Pickup Manager
+            </h1>
+
+            <p>
+                Shipping & Receiving
+            </p>
+
+        </div>
 
 
-            <button
-                class="primary"
-                onclick="openModal()"
-            >
-                + New Pickup
-            </button>
+        <div class="header-right">
 
+            <span
+                class="header-email"
+                id="currentUserEmail"
+            ></span>
 
             <button
                 class="logout-button"
@@ -1068,166 +1416,220 @@
 
         </div>
 
-    </div>
+    </header>
 
 
-    <!-- =====================================================
-         DASHBOARD STATS
-    ===================================================== -->
 
-    <div class="dashboard">
+    <main class="container">
 
-        <div class="stat">
 
-            <div class="stat-title">
-                Today's Pickups
+        <!-- =================================================
+             STATS
+        ================================================= -->
+
+        <div class="stats-grid">
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Today's Pickups
+                </div>
+
+                <div
+                    class="stat-number"
+                    id="todayCount"
+                >
+                    0
+                </div>
+
             </div>
 
-            <div
-                class="stat-number"
-                id="todayCount"
-            >
-                0
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Ready for Pickup
+                </div>
+
+                <div
+                    class="stat-number"
+                    id="readyCount"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Completed
+                </div>
+
+                <div
+                    class="stat-number"
+                    id="completedCount"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Total Packages
+                </div>
+
+                <div
+                    class="stat-number"
+                    id="packageCount"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             TOOLBAR
+        ================================================= -->
+
+        <div class="toolbar">
+
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search confirmation, name, company, email, phone, carrier..."
+                    oninput="displayPickups()"
+                >
+
+            </div>
+
+
+            <div class="toolbar-buttons">
+
+                <button
+                    class="secondary-button"
+                    onclick="openArchiveModal()"
+                >
+                    📦 Picked Up
+                </button>
+
+
+                <button
+                    class="primary-button"
+                    onclick="openCreateModal()"
+                >
+                    + New Pickup
+                </button>
+
             </div>
 
         </div>
 
 
-        <div class="stat">
 
-            <div class="stat-title">
-                Ready for Pickup
+        <!-- =================================================
+             ACTIVE PICKUPS
+        ================================================= -->
+
+        <div class="table-card">
+
+            <div class="table-header">
+
+                <h2>
+                    Active Pickups
+                </h2>
+
+                <button
+                    class="secondary-button"
+                    onclick="loadPickups()"
+                >
+                    ↻ Refresh
+                </button>
+
             </div>
 
-            <div
-                class="stat-number"
-                id="readyCount"
-            >
-                0
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Confirmation
+                            </th>
+
+                            <th>
+                                Requester
+                            </th>
+
+                            <th>
+                                Carrier
+                            </th>
+
+                            <th>
+                                Packages
+                            </th>
+
+                            <th>
+                                Location
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody
+                        id="pickupTableBody"
+                    ></tbody>
+
+                </table>
+
             </div>
 
         </div>
 
 
-        <div class="stat">
-
-            <div class="stat-title">
-                Completed
-            </div>
-
-            <div
-                class="stat-number"
-                id="completedCount"
-            >
-                0
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-title">
-                Total Packages
-            </div>
-
-            <div
-                class="stat-number"
-                id="packageCount"
-            >
-                0
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- =====================================================
-         SEARCH
-    ===================================================== -->
-
-    <div class="search-box">
-
-        <input
-            type="text"
-            id="search"
-            placeholder="Search confirmation code, requester, company, email, phone, carrier..."
-        >
-
-    </div>
-
-
-    <!-- =====================================================
-         TABLE
-    ===================================================== -->
-
-    <div class="table-container">
-
-        <table>
-
-            <thead>
-
-                <tr>
-
-                    <th>
-                        Confirmation
-                    </th>
-
-                    <th>
-                        Requester
-                    </th>
-
-                    <th>
-                        Carrier
-                    </th>
-
-                    <th>
-                        Packages
-                    </th>
-
-                    <th>
-                        Location
-                    </th>
-
-                    <th>
-                        Status
-                    </th>
-
-                    <th>
-                        Action
-                    </th>
-
-                </tr>
-
-            </thead>
-
-
-            <tbody id="pickupTable">
-
-            </tbody>
-
-        </table>
-
-    </div>
+    </main>
 
 </div>
 
 
+
 <!-- =========================================================
-     PICKUP DETAILS MODAL
+     DETAILS MODAL
 ========================================================= -->
 
 <div
     class="modal"
     id="detailsModal"
-    onclick="closeDetailsModal(event)"
 >
 
-    <div
-        class="modal-content"
-        onclick="event.stopPropagation()"
-    >
+    <div class="modal-content">
 
         <div class="modal-header">
 
@@ -1235,9 +1637,8 @@
                 Pickup Details
             </h2>
 
-
             <button
-                class="close"
+                class="close-button"
                 onclick="closeDetailsModal()"
             >
                 ×
@@ -1246,7 +1647,20 @@
         </div>
 
 
-        <div id="pickupDetailsContent">
+        <div
+            class="modal-body"
+            id="detailsContent"
+        ></div>
+
+
+        <div class="modal-footer">
+
+            <button
+                class="secondary-button"
+                onclick="closeDetailsModal()"
+            >
+                Close
+            </button>
 
         </div>
 
@@ -1255,20 +1669,17 @@
 </div>
 
 
+
 <!-- =========================================================
-     PHOTO VIEWER
+     PHOTO MODAL
 ========================================================= -->
 
 <div
     class="modal"
     id="photoModal"
-    onclick="closePhotoModal(event)"
 >
 
-    <div
-        class="modal-content photo-modal-content"
-        onclick="event.stopPropagation()"
-    >
+    <div class="modal-content photo-modal-content">
 
         <div class="modal-header">
 
@@ -1276,9 +1687,8 @@
                 Package Location Photo
             </h2>
 
-
             <button
-                class="close"
+                class="close-button"
                 onclick="closePhotoModal()"
             >
                 ×
@@ -1288,63 +1698,13 @@
 
 
         <div
-            id="photoLoading"
-        >
-            Loading photo...
-        </div>
-
-
-        <img
-            id="locationPhotoViewer"
-            src=""
-            alt="Package location photo"
+            class="photo-container"
+            id="photoContainer"
         >
 
-    </div>
-
-</div>
-
-
-<!-- =========================================================
-     PICKED UP ARCHIVE
-========================================================= -->
-
-<div
-    class="modal"
-    id="archiveModal"
->
-
-    <div class="modal-content archive-modal-content">
-
-        <div class="modal-header">
-
-            <h2>
-                📁 Picked Up
-            </h2>
-
-
-            <button
-                class="close"
-                onclick="closeArchive()"
-            >
-                ×
-            </button>
-
-        </div>
-
-
-        <div class="archive-search">
-
-            <input
-                type="text"
-                id="archiveSearch"
-                placeholder="Search old pickups..."
-            >
-
-        </div>
-
-
-        <div id="archiveContent">
+            <div class="photo-loading">
+                Loading photo...
+            </div>
 
         </div>
 
@@ -1353,13 +1713,14 @@
 </div>
 
 
+
 <!-- =========================================================
-     NEW PICKUP MODAL
+     CREATE PICKUP MODAL
 ========================================================= -->
 
 <div
     class="modal"
-    id="pickupModal"
+    id="createModal"
 >
 
     <div class="modal-content">
@@ -1367,13 +1728,12 @@
         <div class="modal-header">
 
             <h2>
-                Create Pickup
+                Create New Pickup
             </h2>
 
-
             <button
-                class="close"
-                onclick="closeModal()"
+                class="close-button"
+                onclick="closeCreateModal()"
             >
                 ×
             </button>
@@ -1381,19 +1741,21 @@
         </div>
 
 
-        <form id="pickupForm">
+        <form id="createPickupForm">
 
-            <div class="form-row">
+
+            <div class="modal-body">
+
 
                 <div class="form-group">
 
-                    <label>
-                        Requester Name
+                    <label for="adminName">
+                        Requester Name *
                     </label>
 
                     <input
                         type="text"
-                        id="requester"
+                        id="adminName"
                         required
                     >
 
@@ -1402,32 +1764,29 @@
 
                 <div class="form-group">
 
-                    <label>
-                        Company
+                    <label for="adminCompany">
+                        Company *
                     </label>
 
                     <input
                         type="text"
-                        id="company"
+                        id="adminCompany"
                         required
                     >
 
                 </div>
 
-            </div>
-
-
-            <div class="form-row">
 
                 <div class="form-group">
 
-                    <label>
-                        Email
+                    <label for="adminEmail">
+                        Email *
                     </label>
 
                     <input
                         type="email"
                         id="adminEmail"
+                        required
                     >
 
                 </div>
@@ -1435,55 +1794,58 @@
 
                 <div class="form-group">
 
-                    <label>
-                        Phone / Contact
+                    <label for="adminPhone">
+                        Phone
                     </label>
 
                     <input
-                        type="text"
-                        id="phone"
+                        type="tel"
+                        id="adminPhone"
                     >
 
                 </div>
 
-            </div>
-
-
-            <div class="form-row">
 
                 <div class="form-group">
 
-                    <label>
-                        Carrier
+                    <label for="adminCarrier">
+                        Carrier *
                     </label>
 
-                    <select id="carrier">
+                    <select
+                        id="adminCarrier"
+                        required
+                    >
 
-                        <option value="FedEx">
+                        <option value="">
+                            Select carrier
+                        </option>
+
+                        <option>
                             FedEx
                         </option>
 
-                        <option value="UPS">
+                        <option>
                             UPS
                         </option>
 
-                        <option value="Dayton Freight">
+                        <option>
                             Dayton Freight
                         </option>
 
-                        <option value="R+L Carriers">
-                            R+L Carriers
-                        </option>
-
-                        <option value="Estes">
+                        <option>
                             Estes
                         </option>
 
-                        <option value="Customer Pickup">
-                            Customer Pickup
+                        <option>
+                            XPO
                         </option>
 
-                        <option value="Other">
+                        <option>
+                            Old Dominion
+                        </option>
+
+                        <option>
                             Other
                         </option>
 
@@ -1494,108 +1856,123 @@
 
                 <div class="form-group">
 
-                    <label>
-                        Pickup Date
+                    <label for="adminDate">
+                        Pickup Date *
                     </label>
 
                     <input
                         type="date"
-                        id="pickupDate"
+                        id="adminDate"
                         required
                     >
 
                 </div>
 
-            </div>
-
-
-            <div class="form-row">
 
                 <div class="form-group">
 
-                    <label>
-                        Pickup Time
+                    <label for="adminTime">
+                        Pickup Time *
                     </label>
 
-                    <input
-                        type="time"
-                        id="pickupTime"
+                    <select
+                        id="adminTime"
                         required
                     >
+
+                        <option value="">
+                            Select pickup time
+                        </option>
+
+                    </select>
 
                 </div>
 
 
                 <div class="form-group">
 
-                    <label>
-                        Number of Packages
+                    <label for="adminPackageCount">
+                        Number of Packages *
                     </label>
 
                     <input
                         type="number"
-                        id="packages"
+                        id="adminPackageCount"
                         min="1"
-                        value="1"
                         required
                     >
 
                 </div>
 
+
+                <div class="form-group">
+
+                    <label for="adminLocation">
+                        Package Location *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="adminLocation"
+                        required
+                        placeholder="Example: Dock 3, rack B"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="adminDescription">
+                        Package Description *
+                    </label>
+
+                    <textarea
+                        id="adminDescription"
+                        required
+                        placeholder="Describe the packages..."
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="adminInstructions">
+                        Special Instructions
+                    </label>
+
+                    <textarea
+                        id="adminInstructions"
+                        placeholder="Any special instructions..."
+                    ></textarea>
+
+                </div>
+
+
             </div>
 
 
-            <div class="form-group">
+            <div class="modal-footer">
 
-                <label>
-                    Package Location
-                </label>
-
-                <input
-                    type="text"
-                    id="location"
-                    placeholder="Example: Dock 2"
-                    required
+                <button
+                    type="button"
+                    class="secondary-button"
+                    onclick="closeCreateModal()"
                 >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="primary-button"
+                >
+                    Create Pickup
+                </button>
 
             </div>
 
-
-            <div class="form-group">
-
-                <label>
-                    Package Description
-                </label>
-
-                <textarea
-                    id="description"
-                    placeholder="What is being picked up?"
-                    required
-                ></textarea>
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    Special Instructions
-                </label>
-
-                <textarea
-                    id="instructions"
-                    placeholder="Anything the driver needs to know?"
-                ></textarea>
-
-            </div>
-
-
-            <button
-                type="submit"
-                class="primary"
-            >
-                Create Pickup
-            </button>
 
         </form>
 
@@ -1604,64 +1981,77 @@
 </div>
 
 
+
 <!-- =========================================================
-     CONFIRMATION MODAL
+     ARCHIVE MODAL
 ========================================================= -->
 
 <div
     class="modal"
-    id="confirmationModal"
+    id="archiveModal"
 >
 
-    <div class="modal-content confirmation">
+    <div class="modal-content">
 
-        <div class="success">
-            Pickup Created Successfully
+        <div class="modal-header">
+
+            <h2>
+                Picked Up / Archived
+            </h2>
+
+            <button
+                class="close-button"
+                onclick="closeArchiveModal()"
+            >
+                ×
+            </button>
+
         </div>
 
 
-        <p>
-            Your confirmation code is:
-        </p>
+        <div class="modal-body">
 
 
-        <div
-            class="confirmation-code"
-            id="confirmationCode"
-        ></div>
+            <div class="form-group">
+
+                <input
+                    type="text"
+                    id="archiveSearch"
+                    placeholder="Search archived pickups..."
+                    oninput="displayArchive()"
+                >
+
+            </div>
 
 
-        <p>
-            Give this code to the driver and place it on the package.
-        </p>
+            <div id="archiveContent"></div>
 
 
-        <br>
+        </div>
 
 
-        <button
-            class="primary"
-            onclick="closeConfirmation()"
-        >
-            Done
-        </button>
+        <div class="modal-footer">
+
+            <button
+                class="secondary-button"
+                onclick="closeArchiveModal()"
+            >
+                Close
+            </button>
+
+        </div>
 
     </div>
 
 </div>
 
 
-<!-- =========================================================
-     SUPABASE
-========================================================= -->
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 
 <script>
 
+
 /* =========================================================
-   SUPABASE CONFIGURATION
+   SUPABASE
 ========================================================= */
 
 const SUPABASE_URL =
@@ -1675,481 +2065,234 @@ const SUPABASE_KEY =
 const supabaseClient =
     window.supabase.createClient(
         SUPABASE_URL,
-        SUPABASE_KEY,
-        {
-            auth: {
-                persistSession: true,
-                autoRefreshToken: true,
-                detectSessionInUrl: true
-            }
-        }
+        SUPABASE_KEY
     );
 
 
+
 /* =========================================================
-   VARIABLES
+   GLOBAL DATA
 ========================================================= */
 
 let pickups = [];
 
-let accessToken = null;
-
-let currentPhotoUrl = null;
 
 
 /* =========================================================
-   GENERATE CONFIRMATION CODE
+   LOGIN
 ========================================================= */
 
-function generateCode() {
+document
+    .getElementById("loginForm")
+    .addEventListener(
+        "submit",
+        async function(event) {
 
-    const number =
-        Math.floor(
-            10000 +
-            Math.random() * 90000
-        );
-
-
-    return "BS-" + number;
-
-}
+            event.preventDefault();
 
 
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function escapeHtml(value) {
-
-    return String(
-        value ?? ""
-    )
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-    .replace(
-        /</g,
-        "&lt;"
-    )
-    .replace(
-        />/g,
-        "&gt;"
-    )
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-    .replace(
-        /'/g,
-        "&#039;"
-    );
-
-}
+            const email =
+                document
+                    .getElementById(
+                        "loginEmail"
+                    )
+                    .value
+                    .trim();
 
 
-/* =========================================================
-   LOGIN SCREEN
-========================================================= */
-
-function createLoginScreen() {
-
-    const existing =
-        document.getElementById(
-            "loginScreen"
-        );
+            const password =
+                document
+                    .getElementById(
+                        "loginPassword"
+                    )
+                    .value;
 
 
-    if (existing) {
-
-        existing.remove();
-
-    }
-
-
-    const login =
-        document.createElement(
-            "div"
-        );
+            const remember =
+                document
+                    .getElementById(
+                        "rememberMe"
+                    )
+                    .checked;
 
 
-    login.id =
-        "loginScreen";
+            const errorBox =
+                document
+                    .getElementById(
+                        "loginError"
+                    );
 
 
-    login.innerHTML = `
-
-        <div class="login-box">
-
-            <h1>
-                Pickup Manager
-            </h1>
+            errorBox.style.display =
+                "none";
 
 
-            <p class="login-subtitle">
-                Shipping & Receiving Admin
-            </p>
+            try {
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabaseClient
+                        .auth
+                        .signInWithPassword({
+                            email: email,
+                            password: password
+                        });
 
 
-            <label class="login-label">
-                Email
-            </label>
+                if (error) {
 
-
-            <input
-                id="loginEmail"
-                class="login-input"
-                type="email"
-                placeholder="Your email"
-                autocomplete="username"
-            >
-
-
-            <label class="login-label">
-                Password
-            </label>
-
-
-            <input
-                id="loginPassword"
-                class="login-input"
-                type="password"
-                placeholder="Your password"
-                autocomplete="current-password"
-            >
-
-
-            <label class="remember-row">
-
-                <input
-                    type="checkbox"
-                    id="rememberMe"
-                >
-
-                <span>
-                    Keep me signed in
-                </span>
-
-            </label>
-
-
-            <button
-                id="loginButton"
-                class="login-button"
-            >
-                Sign In
-            </button>
-
-
-            <p
-                id="loginError"
-                class="login-error"
-            ></p>
-
-        </div>
-
-    `;
-
-
-    document.body.appendChild(
-        login
-    );
-
-
-    document
-        .getElementById(
-            "loginButton"
-        )
-        .addEventListener(
-            "click",
-            adminLogin
-        );
-
-
-    document
-        .getElementById(
-            "loginPassword"
-        )
-        .addEventListener(
-            "keydown",
-            function(event) {
-
-                if (
-                    event.key === "Enter"
-                ) {
-
-                    adminLogin();
+                    throw error;
 
                 }
 
-            }
-        );
 
+                if (remember) {
 
-    const remembered =
-        localStorage.getItem(
-            "pickupManagerRememberMe"
-        );
+                    localStorage.setItem(
+                        "pickupRemember",
+                        "true"
+                    );
 
+                } else {
 
-    if (
-        remembered === "true"
-    ) {
+                    localStorage.removeItem(
+                        "pickupRemember"
+                    );
 
-        document
-            .getElementById(
-                "rememberMe"
-            )
-            .checked = true;
+                }
 
-    }
 
-}
-
-
-/* =========================================================
-   ADMIN LOGIN
-========================================================= */
-
-async function adminLogin() {
-
-    const email =
-        document
-            .getElementById(
-                "loginEmail"
-            )
-            .value
-            .trim();
-
-
-    const password =
-        document
-            .getElementById(
-                "loginPassword"
-            )
-            .value;
-
-
-    const rememberMe =
-        document
-            .getElementById(
-                "rememberMe"
-            )
-            .checked;
-
-
-    const errorBox =
-        document
-            .getElementById(
-                "loginError"
-            );
-
-
-    const loginButton =
-        document
-            .getElementById(
-                "loginButton"
-            );
-
-
-    errorBox.textContent =
-        "";
-
-
-    if (
-        !email ||
-        !password
-    ) {
-
-        errorBox.textContent =
-            "Please enter your email and password.";
-
-        return;
-
-    }
-
-
-    loginButton.disabled =
-        true;
-
-
-    loginButton.textContent =
-        "Signing In...";
-
-
-    try {
-
-        const {
-            data,
-            error
-        } =
-            await supabaseClient
-                .auth
-                .signInWithPassword({
-                    email: email,
-                    password: password
-                });
-
-
-        if (error) {
-
-            console.error(
-                "Login error:",
-                error
-            );
-
-
-            errorBox.textContent =
-                error.message ||
-                "Login failed.";
-
-            return;
-
-        }
-
-
-        if (
-            !data ||
-            !data.session
-        ) {
-
-            errorBox.textContent =
-                "Login succeeded, but no session was created.";
-
-            return;
-
-        }
-
-
-        accessToken =
-            data.session.access_token;
-
-
-        if (rememberMe) {
-
-            localStorage.setItem(
-                "pickupManagerRememberMe",
-                "true"
-            );
-
-        } else {
-
-            localStorage.removeItem(
-                "pickupManagerRememberMe"
-            );
-
-        }
-
-
-        const loginScreen =
-            document.getElementById(
-                "loginScreen"
-            );
-
-
-        if (loginScreen) {
-
-            loginScreen.remove();
-
-        }
-
-
-        await loadPickups();
-
-
-    } catch (error) {
-
-        console.error(
-            "Login error:",
-            error
-        );
-
-
-        errorBox.textContent =
-            "Could not connect to the server.";
-
-
-    } finally {
-
-        loginButton.disabled =
-            false;
-
-        loginButton.textContent =
-            "Sign In";
-
-    }
-
-}
-
-
-/* =========================================================
-   CHECK EXISTING SESSION
-========================================================= */
-
-async function checkExistingSession() {
-
-    try {
-
-        const {
-            data,
-            error
-        } =
-            await supabaseClient
-                .auth
-                .getSession();
-
-
-        if (error) {
-
-            console.error(
-                "Session error:",
-                error
-            );
-
-        }
-
-
-        if (
-            data &&
-            data.session
-        ) {
-
-            accessToken =
-                data.session.access_token;
-
-
-            const loginScreen =
-                document.getElementById(
-                    "loginScreen"
+                showApp(
+                    data.user
                 );
 
 
-            if (loginScreen) {
+            } catch (error) {
 
-                loginScreen.remove();
+                console.error(error);
+
+
+                errorBox.textContent =
+                    error.message ||
+                    "Login failed.";
+
+
+                errorBox.style.display =
+                    "block";
 
             }
 
-
-            await loadPickups();
-
-            return;
-
         }
+    );
 
-    } catch (error) {
 
-        console.error(
-            "Session check error:",
-            error
+
+/* =========================================================
+   AUTH CHECK
+========================================================= */
+
+async function checkAuth() {
+
+    const {
+        data
+    } =
+        await supabaseClient
+            .auth
+            .getSession();
+
+
+    if (
+        data &&
+        data.session &&
+        data.session.user
+    ) {
+
+        showApp(
+            data.session.user
         );
 
     }
 
+}
 
-    createLoginScreen();
+
+
+supabaseClient
+    .auth
+    .onAuthStateChange(
+        function(event, session) {
+
+            if (
+                event ===
+                "SIGNED_OUT"
+            ) {
+
+                showLogin();
+
+            }
+
+        }
+    );
+
+
+
+/* =========================================================
+   SHOW APP
+========================================================= */
+
+function showApp(user) {
+
+    document
+        .getElementById(
+            "loginScreen"
+        )
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById(
+            "app"
+        )
+        .style.display =
+        "block";
+
+
+    document
+        .getElementById(
+            "currentUserEmail"
+        )
+        .textContent =
+        user.email || "";
+
+
+    loadPickups();
 
 }
+
+
+
+function showLogin() {
+
+    document
+        .getElementById(
+            "loginScreen"
+        )
+        .style.display =
+        "flex";
+
+
+    document
+        .getElementById(
+            "app"
+        )
+        .style.display =
+        "none";
+
+}
+
 
 
 /* =========================================================
@@ -2158,45 +2301,20 @@ async function checkExistingSession() {
 
 async function logout() {
 
-    try {
-
-        await supabaseClient
-            .auth
-            .signOut();
-
-    } catch (error) {
-
-        console.error(
-            "Logout error:",
-            error
-        );
-
-    }
-
-
-    accessToken =
-        null;
-
-
-    pickups =
-        [];
+    await supabaseClient
+        .auth
+        .signOut();
 
 
     localStorage.removeItem(
-        "pickupManagerRememberMe"
+        "pickupRemember"
     );
 
 
-    document
-        .getElementById(
-            "pickupTable"
-        )
-        .innerHTML = "";
-
-
-    createLoginScreen();
+    showLogin();
 
 }
+
 
 
 /* =========================================================
@@ -2230,19 +2348,7 @@ async function loadPickups() {
 
         if (error) {
 
-            console.error(
-                "Load pickups error:",
-                error
-            );
-
-
-            alert(
-                "Could not load pickups: " +
-                error.message
-            );
-
-
-            return;
+            throw error;
 
         }
 
@@ -2250,6 +2356,8 @@ async function loadPickups() {
         pickups =
             data || [];
 
+
+        updateStats();
 
         displayPickups();
 
@@ -2263,7 +2371,8 @@ async function loadPickups() {
 
 
         alert(
-            "Could not connect to the database."
+            "Could not load pickups:\n\n" +
+            error.message
         );
 
     }
@@ -2271,1747 +2380,9 @@ async function loadPickups() {
 }
 
 
-/* =========================================================
-   DISPLAY ACTIVE PICKUPS
-========================================================= */
-
-function displayPickups() {
-
-    const table =
-        document.getElementById(
-            "pickupTable"
-        );
-
-
-    const searchInput =
-        document.getElementById(
-            "search"
-        );
-
-
-    const search =
-        searchInput
-            ? searchInput.value
-                .toLowerCase()
-                .trim()
-            : "";
-
-
-    const activePickups =
-        pickups.filter(
-            function(pickup) {
-
-                return (
-                    pickup.status === "READY" ||
-                    pickup.status === "COMPLETED"
-                );
-
-            }
-        );
-
-
-    const filtered =
-        activePickups.filter(
-            function(pickup) {
-
-                const searchable =
-                    [
-
-                        pickup.confirmation_code,
-
-                        pickup.requester_name,
-
-                        pickup.company,
-
-                        pickup.email,
-
-                        pickup.phone,
-
-                        pickup.carrier,
-
-                        pickup.package_location,
-
-                        pickup.package_description,
-
-                        pickup.special_instructions
-
-                    ]
-                    .join(" ")
-                    .toLowerCase();
-
-
-                return searchable.includes(
-                    search
-                );
-
-            }
-        );
-
-
-    table.innerHTML =
-        "";
-
-
-    if (
-        filtered.length === 0
-    ) {
-
-        table.innerHTML = `
-
-            <tr>
-
-                <td
-                    colspan="7"
-                    style="
-                        text-align:center;
-                        padding:40px;
-                        color:#6b7280;
-                    "
-                >
-                    No pickup requests found.
-                </td>
-
-            </tr>
-
-        `;
-
-
-        updateStats();
-
-        return;
-
-    }
-
-
-    filtered.forEach(
-        function(pickup) {
-
-            const row =
-                document.createElement(
-                    "tr"
-                );
-
-
-            let photoButton =
-                "";
-
-
-            if (
-                pickup.package_location_image
-            ) {
-
-                const safeFileName =
-                    String(
-                        pickup.package_location_image
-                    )
-                    .replace(
-                        /\\/g,
-                        "\\\\"
-                    )
-                    .replace(
-                        /'/g,
-                        "\\'"
-                    );
-
-
-                photoButton = `
-
-                    <br>
-
-                    <button
-                        class="secondary"
-                        style="margin-top:8px;"
-                        onclick="viewLocationPhoto('${safeFileName}')"
-                    >
-                        📷 View Photo
-                    </button>
-
-                `;
-
-            }
-
-
-            const safeCode =
-                String(
-                    pickup.confirmation_code
-                )
-                .replace(
-                    /\\/g,
-                    "\\\\"
-                )
-                .replace(
-                    /'/g,
-                    "\\'"
-                );
-
-
-            let actionButton =
-                `
-
-                    <button
-                        class="secondary"
-                        onclick="viewPickupDetails('${safeCode}')"
-                    >
-                        👁️ Details
-                    </button>
-
-                `;
-
-
-            if (
-                pickup.status === "READY"
-            ) {
-
-                actionButton += `
-
-                    <button
-                        class="primary"
-                        style="margin-top:6px;"
-                        onclick="completePickup('${safeCode}')"
-                    >
-                        Picked Up
-                    </button>
-
-                `;
-
-            } else if (
-                pickup.status === "COMPLETED"
-            ) {
-
-                actionButton += `
-
-                    <button
-                        class="archive-button"
-                        style="margin-top:6px;"
-                        onclick="archivePickup('${safeCode}')"
-                    >
-                        📁 Archive
-                    </button>
-
-                `;
-
-            }
-
-
-            row.innerHTML = `
-
-                <td>
-
-                    <strong>
-                        ${escapeHtml(
-                            pickup.confirmation_code
-                        )}
-                    </strong>
-
-                </td>
-
-
-                <td>
-
-                    ${escapeHtml(
-                        pickup.requester_name
-                    )}
-
-                    <br>
-
-                    <span
-                        style="
-                            font-size:12px;
-                            color:#6b7280;
-                        "
-                    >
-                        ${escapeHtml(
-                            pickup.company
-                        )}
-                    </span>
-
-                </td>
-
-
-                <td>
-
-                    ${escapeHtml(
-                        pickup.carrier
-                    )}
-
-                </td>
-
-
-                <td>
-
-                    ${Number(
-                        pickup.package_count || 0
-                    )}
-
-                </td>
-
-
-                <td>
-
-                    ${escapeHtml(
-                        pickup.package_location
-                    )}
-
-                    ${photoButton}
-
-                </td>
-
-
-                <td>
-
-                    <span
-                        class="status ${
-                            pickup.status === "READY"
-                                ? "ready"
-                                : "completed"
-                        }"
-                    >
-
-                        ${escapeHtml(
-                            pickup.status
-                        )}
-
-                    </span>
-
-                </td>
-
-
-                <td>
-
-                    ${actionButton}
-
-                </td>
-
-            `;
-
-
-            table.appendChild(
-                row
-            );
-
-        }
-    );
-
-
-    updateStats();
-
-}
-
 
 /* =========================================================
-   VIEW PICKUP DETAILS
-========================================================= */
-
-function viewPickupDetails(code) {
-
-    const pickup =
-        pickups.find(
-            function(item) {
-
-                return (
-                    item.confirmation_code ===
-                    code
-                );
-
-            }
-        );
-
-
-    if (!pickup) {
-
-        alert(
-            "Pickup could not be found."
-        );
-
-        return;
-
-    }
-
-
-    const container =
-        document.getElementById(
-            "pickupDetailsContent"
-        );
-
-
-    const statusClass =
-        pickup.status === "READY"
-            ? "ready"
-            : pickup.status === "COMPLETED"
-                ? "completed"
-                : "archived";
-
-
-    const pickupDate =
-        pickup.pickup_date
-            ? new Date(
-                pickup.pickup_date +
-                "T00:00:00"
-            ).toLocaleDateString(
-                "en-US",
-                {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric"
-                }
-            )
-            : "Not provided";
-
-
-    let pickupTime =
-        pickup.pickup_time || "";
-
-
-    if (pickupTime) {
-
-        const timeParts =
-            pickupTime.split(":");
-
-
-        const hours =
-            Number(
-                timeParts[0]
-            );
-
-
-        const minutes =
-            timeParts[1] || "00";
-
-
-        const displayHour =
-            hours === 0
-                ? 12
-                : hours > 12
-                    ? hours - 12
-                    : hours;
-
-
-        const amPm =
-            hours >= 12
-                ? "PM"
-                : "AM";
-
-
-        pickupTime =
-            `${displayHour}:${minutes} ${amPm}`;
-
-    } else {
-
-        pickupTime =
-            "Not provided";
-
-    }
-
-
-    const submittedDate =
-        pickup.created_at
-            ? new Date(
-                pickup.created_at
-            ).toLocaleString(
-                "en-US",
-                {
-                    dateStyle: "medium",
-                    timeStyle: "short"
-                }
-            )
-            : "Not available";
-
-
-    const pickedUpDate =
-        pickup.picked_up_at
-            ? new Date(
-                pickup.picked_up_at
-            ).toLocaleString(
-                "en-US",
-                {
-                    dateStyle: "medium",
-                    timeStyle: "short"
-                }
-            )
-            : "Not picked up yet";
-
-
-    let photoButton =
-        "";
-
-
-    if (
-        pickup.package_location_image
-    ) {
-
-        const safeFileName =
-            String(
-                pickup.package_location_image
-            )
-            .replace(
-                /\\/g,
-                "\\\\"
-            )
-            .replace(
-                /'/g,
-                "\\'"
-            );
-
-
-        photoButton = `
-
-            <button
-                class="secondary"
-                onclick="viewLocationPhoto('${safeFileName}')"
-            >
-                📷 View Package Location Photo
-            </button>
-
-        `;
-
-    } else {
-
-        photoButton = `
-
-            <span
-                style="color:#6b7280;"
-            >
-                No photo attached.
-            </span>
-
-        `;
-
-    }
-
-
-    container.innerHTML = `
-
-        <div class="details-code">
-
-            ${escapeHtml(
-                pickup.confirmation_code
-            )}
-
-        </div>
-
-
-        <div class="details-status">
-
-            <span
-                class="status ${statusClass}"
-            >
-                ${escapeHtml(
-                    pickup.status
-                )}
-            </span>
-
-        </div>
-
-
-        <!-- REQUESTER -->
-
-        <div class="details-section">
-
-            <div class="details-section-title">
-                Requester Information
-            </div>
-
-
-            <div class="details-grid">
-
-                <div class="details-item">
-
-                    <div class="details-label">
-                        Name
-                    </div>
-
-                    <div class="details-value">
-
-                        ${escapeHtml(
-                            pickup.requester_name
-                        )}
-
-                    </div>
-
-                </div>
-
-
-                <div class="details-item">
-
-                    <div class="details-label">
-                        Company
-                    </div>
-
-                    <div class="details-value">
-
-                        ${escapeHtml(
-                            pickup.company
-                        )}
-
-                    </div>
-
-                </div>
-
-
-                <div class="details-item">
-
-                    <div class="details-label">
-                        Email
-                    </div>
-
-                    <div class="details-value">
-
-                        ${
-                            pickup.email
-                                ? `
-                                    <a
-                                        href="mailto:${escapeHtml(
-                                            pickup.email
-                                        )}"
-                                    >
-                                        ${escapeHtml(
-                                            pickup.email
-                                        )}
-                                    </a>
-                                `
-                                : "Not provided"
-                        }
-
-                    </div>
-
-                </div>
-
-
-                <div class="details-item">
-
-                    <div class="details-label">
-                        Phone
-                    </div>
-
-                    <div class="details-value">
-
-                        ${
-                            pickup.phone
-                                ? `
-                                    <a
-                                        href="tel:${escapeHtml(
-                                            pickup.phone
-                                        )}"
-                                    >
-                                        ${escapeHtml(
-                                            pickup.phone
-                                        )}
-                                    </a>
-                                `
-                                : "Not provided"
-                        }
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- PICKUP -->
-
-        <div class="details-section">
-
-            <div class="details-section-title">
-                Pickup Information
-            </div>
-
-
-            <div class="details-grid">
-
-                <div class="details-item">
-
-                    <div class="details-label">
-                        Carrier
-                    </div>
-
-                    <div class="details-value">
-
-                        ${escapeHtml(
-                            pickup.carrier
-                        )}
-
-                    </div>
-
-                </div>
-
-
-                <div class="details-item">
-
-                    <div class="details-label">
-                        Pickup Date
-                    </div>
-
-                    <div class="details-value">
-
-                        ${escapeHtml(
-                            pickupDate
-                        )}
-
-                    </div>
-
-                </div>
-
-
-                <div class="details-item">
-
-                    <div class="details-label">
-                        Pickup Time
-                    </div>
-
-                    <div class="details-value">
-
-                        ${escapeHtml(
-                            pickupTime
-                        )}
-
-                    </div>
-
-                </div>
-
-
-                <div class="details-item">
-
-                    <div class="details-label">
-                        Number of Packages
-                    </div>
-
-                    <div class="details-value">
-
-                        ${Number(
-                            pickup.package_count || 0
-                        )}
-
-                    </div>
-
-                </div>
-
-
-                <div class="details-item details-full">
-
-                    <div class="details-label">
-                        Package Location
-                    </div>
-
-                    <div class="details-value">
-
-                        ${escapeHtml(
-                            pickup.package_location
-                        )}
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- PACKAGE -->
-
-        <div class="details-section">
-
-            <div class="details-section-title">
-                Package Information
-            </div>
-
-
-            <div class="details-grid">
-
-                <div class="details-item details-full">
-
-                    <div class="details-label">
-                        Package Description
-                    </div>
-
-                    <div class="details-value">
-
-                        ${escapeHtml(
-                            pickup.package_description
-                        )}
-
-                    </div>
-
-                </div>
-
-
-                <div class="details-item details-full">
-
-                    <div class="details-label">
-                        Special Instructions
-                    </div>
-
-                    <div class="details-value">
-
-                        ${
-                            pickup.special_instructions
-                                ? escapeHtml(
-                                    pickup.special_instructions
-                                )
-                                : "None"
-                        }
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- PHOTO -->
-
-        <div class="details-section">
-
-            <div class="details-section-title">
-                Package Location Photo
-            </div>
-
-            ${photoButton}
-
-        </div>
-
-
-        <!-- RECORD INFORMATION -->
-
-        <div class="details-section">
-
-            <div class="details-section-title">
-                Record Information
-            </div>
-
-
-            <div class="details-grid">
-
-                <div class="details-item">
-
-                    <div class="details-label">
-                        Submitted
-                    </div>
-
-                    <div class="details-value">
-
-                        ${escapeHtml(
-                            submittedDate
-                        )}
-
-                    </div>
-
-                </div>
-
-
-                <div class="details-item">
-
-                    <div class="details-label">
-                        Picked Up
-                    </div>
-
-                    <div class="details-value">
-
-                        ${escapeHtml(
-                            pickedUpDate
-                        )}
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    `;
-
-
-    document
-        .getElementById(
-            "detailsModal"
-        )
-        .style.display =
-        "flex";
-
-}
-
-
-/* =========================================================
-   CLOSE DETAILS MODAL
-========================================================= */
-
-function closeDetailsModal(event) {
-
-    if (
-        event &&
-        event.target !== event.currentTarget
-    ) {
-
-        return;
-
-    }
-
-
-    document
-        .getElementById(
-            "detailsModal"
-        )
-        .style.display =
-        "none";
-
-}
-
-
-/* =========================================================
-   VIEW LOCATION PHOTO
-========================================================= */
-
-async function viewLocationPhoto(
-    fileName
-) {
-
-    const photoModal =
-        document.getElementById(
-            "photoModal"
-        );
-
-
-    const photoViewer =
-        document.getElementById(
-            "locationPhotoViewer"
-        );
-
-
-    const photoLoading =
-        document.getElementById(
-            "photoLoading"
-        );
-
-
-    try {
-
-        if (!fileName) {
-
-            alert(
-                "No photo was attached to this pickup."
-            );
-
-            return;
-
-        }
-
-
-        photoModal.style.display =
-            "flex";
-
-
-        photoViewer.style.display =
-            "none";
-
-
-        photoViewer.src =
-            "";
-
-
-        photoLoading.style.display =
-            "block";
-
-
-        photoLoading.textContent =
-            "Loading photo...";
-
-
-        if (currentPhotoUrl) {
-
-            URL.revokeObjectURL(
-                currentPhotoUrl
-            );
-
-            currentPhotoUrl =
-                null;
-
-        }
-
-
-        const {
-            data,
-            error
-        } =
-            await supabaseClient
-                .storage
-                .from(
-                    "package-location-images"
-                )
-                .download(
-                    fileName
-                );
-
-
-        if (error) {
-
-            console.error(
-                "Photo download error:",
-                error
-            );
-
-
-            photoLoading.textContent =
-                "Could not load the photo: " +
-                error.message;
-
-
-            return;
-
-        }
-
-
-        if (!data) {
-
-            photoLoading.textContent =
-                "No photo data was returned.";
-
-            return;
-
-        }
-
-
-        currentPhotoUrl =
-            URL.createObjectURL(
-                data
-            );
-
-
-        photoViewer.src =
-            currentPhotoUrl;
-
-
-        photoViewer.style.display =
-            "block";
-
-
-        photoLoading.style.display =
-            "none";
-
-
-    } catch (error) {
-
-        console.error(
-            "Photo viewing error:",
-            error
-        );
-
-
-        photoLoading.textContent =
-            "Could not load the package location photo.";
-
-    }
-
-}
-
-
-/* =========================================================
-   CLOSE PHOTO VIEWER
-========================================================= */
-
-function closePhotoModal(event) {
-
-    if (
-        event &&
-        event.target !== event.currentTarget
-    ) {
-
-        return;
-
-    }
-
-
-    const photoModal =
-        document.getElementById(
-            "photoModal"
-        );
-
-
-    const photoViewer =
-        document.getElementById(
-            "locationPhotoViewer"
-        );
-
-
-    photoModal.style.display =
-        "none";
-
-
-    photoViewer.src =
-        "";
-
-
-    if (currentPhotoUrl) {
-
-        URL.revokeObjectURL(
-            currentPhotoUrl
-        );
-
-        currentPhotoUrl =
-            null;
-
-    }
-
-}
-
-
-/* =========================================================
-   COMPLETE PICKUP
-========================================================= */
-
-async function completePickup(code) {
-
-    const confirmed =
-        confirm(
-            "Mark pickup " +
-            code +
-            " as picked up?"
-        );
-
-
-    if (!confirmed) {
-
-        return;
-
-    }
-
-
-    try {
-
-        const {
-            error
-        } =
-            await supabaseClient
-                .from("pickups")
-                .update({
-
-                    status:
-                        "COMPLETED",
-
-                    picked_up_at:
-                        new Date()
-                            .toISOString()
-
-                })
-                .eq(
-                    "confirmation_code",
-                    code
-                );
-
-
-        if (error) {
-
-            console.error(
-                "Complete pickup error:",
-                error
-            );
-
-
-            alert(
-                "Could not update the pickup: " +
-                error.message
-            );
-
-
-            return;
-
-        }
-
-
-        await loadPickups();
-
-
-    } catch (error) {
-
-        console.error(
-            "Complete pickup error:",
-            error
-        );
-
-
-        alert(
-            "Could not connect to the database."
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   ARCHIVE PICKUP
-========================================================= */
-
-async function archivePickup(code) {
-
-    const confirmed =
-        confirm(
-            "Move pickup " +
-            code +
-            " to the Picked Up folder?"
-        );
-
-
-    if (!confirmed) {
-
-        return;
-
-    }
-
-
-    try {
-
-        const {
-            error
-        } =
-            await supabaseClient
-                .from("pickups")
-                .update({
-
-                    status:
-                        "ARCHIVED"
-
-                })
-                .eq(
-                    "confirmation_code",
-                    code
-                );
-
-
-        if (error) {
-
-            console.error(
-                "Archive pickup error:",
-                error
-            );
-
-
-            alert(
-                "Could not archive the pickup: " +
-                error.message
-            );
-
-
-            return;
-
-        }
-
-
-        await loadPickups();
-
-
-    } catch (error) {
-
-        console.error(
-            "Archive pickup error:",
-            error
-        );
-
-
-        alert(
-            "Could not connect to the database."
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   OPEN ARCHIVE
-========================================================= */
-
-function openArchive() {
-
-    document
-        .getElementById(
-            "archiveModal"
-        )
-        .style.display =
-        "flex";
-
-
-    document
-        .getElementById(
-            "archiveSearch"
-        )
-        .value =
-        "";
-
-
-    displayArchive();
-
-}
-
-
-/* =========================================================
-   CLOSE ARCHIVE
-========================================================= */
-
-function closeArchive() {
-
-    document
-        .getElementById(
-            "archiveModal"
-        )
-        .style.display =
-        "none";
-
-}
-
-
-/* =========================================================
-   DISPLAY ARCHIVE
-========================================================= */
-
-function displayArchive() {
-
-    const container =
-        document.getElementById(
-            "archiveContent"
-        );
-
-
-    const search =
-        document
-            .getElementById(
-                "archiveSearch"
-            )
-            .value
-            .toLowerCase()
-            .trim();
-
-
-    const archived =
-        pickups.filter(
-            function(pickup) {
-
-                return (
-                    pickup.status ===
-                    "ARCHIVED"
-                );
-
-            }
-        );
-
-
-    const filtered =
-        archived.filter(
-            function(pickup) {
-
-                const searchable =
-                    [
-
-                        pickup.confirmation_code,
-
-                        pickup.requester_name,
-
-                        pickup.company,
-
-                        pickup.email,
-
-                        pickup.phone,
-
-                        pickup.carrier,
-
-                        pickup.package_location,
-
-                        pickup.package_description,
-
-                        pickup.special_instructions
-
-                    ]
-                    .join(" ")
-                    .toLowerCase();
-
-
-                return searchable.includes(
-                    search
-                );
-
-            }
-        );
-
-
-    if (
-        filtered.length === 0
-    ) {
-
-        container.innerHTML = `
-
-            <div class="archive-empty">
-
-                <div style="font-size:40px;">
-                    📁
-                </div>
-
-                <br>
-
-                No picked up tickets found.
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    filtered.sort(
-        function(a, b) {
-
-            return (
-                new Date(
-                    b.picked_up_at || 0
-                ) -
-                new Date(
-                    a.picked_up_at || 0
-                )
-            );
-
-        }
-    );
-
-
-    const groups = {};
-
-
-    filtered.forEach(
-        function(pickup) {
-
-            const date =
-                pickup.picked_up_at
-                    ? new Date(
-                        pickup.picked_up_at
-                    )
-                    : null;
-
-
-            let dateKey =
-                "Unknown Date";
-
-
-            if (date) {
-
-                dateKey =
-                    date.toLocaleDateString(
-                        "en-US",
-                        {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric"
-                        }
-                    );
-
-            }
-
-
-            if (!groups[dateKey]) {
-
-                groups[dateKey] = [];
-
-            }
-
-
-            groups[dateKey].push(
-                pickup
-            );
-
-        }
-    );
-
-
-    container.innerHTML =
-        "";
-
-
-    Object.keys(groups).forEach(
-        function(dateKey) {
-
-            const tickets =
-                groups[dateKey];
-
-
-            const dateSection =
-                document.createElement(
-                    "div"
-                );
-
-
-            dateSection.className =
-                "archive-date";
-
-
-            dateSection.innerHTML = `
-
-                <div class="archive-date-header">
-
-                    <span>
-                        ${escapeHtml(
-                            dateKey
-                        )}
-                    </span>
-
-                    <span class="archive-date-count">
-
-                        ${tickets.length}
-
-                        ${
-                            tickets.length === 1
-                                ? "pickup"
-                                : "pickups"
-                        }
-
-                    </span>
-
-                </div>
-
-            `;
-
-
-            tickets.forEach(
-                function(pickup) {
-
-                    const ticket =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    ticket.className =
-                        "archive-ticket";
-
-
-                    const pickedDate =
-                        pickup.picked_up_at
-                            ? new Date(
-                                pickup.picked_up_at
-                            )
-                            : null;
-
-
-                    const pickedTime =
-                        pickedDate
-                            ? pickedDate.toLocaleTimeString(
-                                "en-US",
-                                {
-                                    hour: "numeric",
-                                    minute: "2-digit"
-                                }
-                            )
-                            : "Unknown";
-
-
-                    const safeCode =
-                        String(
-                            pickup.confirmation_code
-                        )
-                        .replace(
-                            /\\/g,
-                            "\\\\"
-                        )
-                        .replace(
-                            /'/g,
-                            "\\'"
-                        );
-
-
-                    let photoButton =
-                        "";
-
-
-                    if (
-                        pickup.package_location_image
-                    ) {
-
-                        const safeFileName =
-                            String(
-                                pickup.package_location_image
-                            )
-                            .replace(
-                                /\\/g,
-                                "\\\\"
-                            )
-                            .replace(
-                                /'/g,
-                                "\\'"
-                            );
-
-
-                        photoButton = `
-
-                            <button
-                                class="secondary"
-                                style="margin-top:8px;"
-                                onclick="viewLocationPhoto('${safeFileName}')"
-                            >
-                                📷 Photo
-                            </button>
-
-                        `;
-
-                    }
-
-
-                    ticket.innerHTML = `
-
-                        <div>
-
-                            <div class="archive-ticket-label">
-                                Confirmation
-                            </div>
-
-                            <div class="archive-ticket-title">
-
-                                ${escapeHtml(
-                                    pickup.confirmation_code
-                                )}
-
-                            </div>
-
-                        </div>
-
-
-                        <div>
-
-                            <div class="archive-ticket-label">
-                                Requester
-                            </div>
-
-                            <div>
-                                ${escapeHtml(
-                                    pickup.requester_name
-                                )}
-                            </div>
-
-                            <div
-                                style="
-                                    font-size:12px;
-                                    color:#6b7280;
-                                "
-                            >
-                                ${escapeHtml(
-                                    pickup.company
-                                )}
-                            </div>
-
-                        </div>
-
-
-                        <div>
-
-                            <div class="archive-ticket-label">
-                                Pickup
-                            </div>
-
-                            <div>
-                                ${escapeHtml(
-                                    pickup.carrier
-                                )}
-                            </div>
-
-                            <div
-                                style="
-                                    font-size:12px;
-                                    color:#6b7280;
-                                "
-                            >
-                                ${escapeHtml(
-                                    pickup.package_location
-                                )}
-                            </div>
-
-                        </div>
-
-
-                        <div>
-
-                            <div class="archive-ticket-label">
-                                Picked Up
-                            </div>
-
-                            <div>
-                                ${escapeHtml(
-                                    pickedTime
-                                )}
-                            </div>
-
-                            <div
-                                style="
-                                    font-size:12px;
-                                    color:#6b7280;
-                                "
-                            >
-                                ${Number(
-                                    pickup.package_count || 0
-                                )}
-
-                                ${
-                                    Number(
-                                        pickup.package_count || 0
-                                    ) === 1
-                                        ? "package"
-                                        : "packages"
-                                }
-                            </div>
-
-
-                            <button
-                                class="secondary"
-                                style="margin-top:8px;"
-                                onclick="viewPickupDetails('${safeCode}')"
-                            >
-                                👁️ Details
-                            </button>
-
-
-                            ${photoButton}
-
-                        </div>
-
-                    `;
-
-
-                    dateSection.appendChild(
-                        ticket
-                    );
-
-                }
-            );
-
-
-            container.appendChild(
-                dateSection
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   ARCHIVE SEARCH
-========================================================= */
-
-document
-    .getElementById(
-        "archiveSearch"
-    )
-    .addEventListener(
-        "input",
-        displayArchive
-    );
-
-
-/* =========================================================
-   STATISTICS
+   UPDATE STATS
 ========================================================= */
 
 function updateStats() {
@@ -4020,6 +2391,21 @@ function updateStats() {
         new Date()
             .toISOString()
             .split("T")[0];
+
+
+    const activePickups =
+        pickups.filter(
+            function(pickup) {
+
+                return (
+                    pickup.status ===
+                        "READY" ||
+                    pickup.status ===
+                        "COMPLETED"
+                );
+
+            }
+        );
 
 
     const todayPickups =
@@ -4061,31 +2447,21 @@ function updateStats() {
         );
 
 
-    const packages =
-        pickups
-            .filter(
-                function(pickup) {
+    const totalPackages =
+        activePickups.reduce(
+            function(total, pickup) {
 
-                    return (
-                        pickup.status !==
-                        "ARCHIVED"
-                    );
+                return (
+                    total +
+                    Number(
+                        pickup.package_count ||
+                        0
+                    )
+                );
 
-                }
-            )
-            .reduce(
-                function(total, pickup) {
-
-                    return (
-                        total +
-                        Number(
-                            pickup.package_count || 0
-                        )
-                    );
-
-                },
-                0
-            );
+            },
+            0
+        );
 
 
     document
@@ -4117,46 +2493,1174 @@ function updateStats() {
             "packageCount"
         )
         .textContent =
-        packages;
+        totalPackages;
 
 }
 
 
-/* =========================================================
-   SEARCH
-========================================================= */
-
-document
-    .getElementById(
-        "search"
-    )
-    .addEventListener(
-        "input",
-        displayPickups
-    );
-
 
 /* =========================================================
-   NEW PICKUP MODAL
+   DISPLAY ACTIVE PICKUPS
 ========================================================= */
 
-function openModal() {
+function displayPickups() {
+
+    const tbody =
+        document
+            .getElementById(
+                "pickupTableBody"
+            );
+
+
+    const search =
+        document
+            .getElementById(
+                "searchInput"
+            )
+            .value
+            .trim()
+            .toLowerCase();
+
+
+    const active =
+        pickups.filter(
+            function(pickup) {
+
+                return (
+                    pickup.status ===
+                        "READY" ||
+                    pickup.status ===
+                        "COMPLETED"
+                );
+
+            }
+        );
+
+
+    const filtered =
+        active.filter(
+            function(pickup) {
+
+                if (!search) {
+
+                    return true;
+
+                }
+
+
+                const searchable = [
+
+                    pickup.confirmation_code,
+
+                    pickup.requester_name,
+
+                    pickup.company,
+
+                    pickup.email,
+
+                    pickup.phone,
+
+                    pickup.carrier,
+
+                    pickup.package_location,
+
+                    pickup.package_description,
+
+                    pickup.special_instructions
+
+                ]
+                    .filter(Boolean)
+                    .join(" ")
+                    .toLowerCase();
+
+
+                return searchable.includes(
+                    search
+                );
+
+            }
+        );
+
+
+    if (
+        filtered.length ===
+        0
+    ) {
+
+        tbody.innerHTML = `
+            <tr>
+                <td
+                    colspan="7"
+                    class="empty-state"
+                >
+                    No active pickups found.
+                </td>
+            </tr>
+        `;
+
+        return;
+
+    }
+
+
+    tbody.innerHTML =
+        filtered
+            .map(
+                function(pickup) {
+
+                    const statusClass =
+                        pickup.status ===
+                        "READY"
+                            ? "status-ready"
+                            : "status-completed";
+
+
+                    const actionButton =
+                        pickup.status ===
+                        "READY"
+
+                            ? `
+                                <button
+                                    class="small-button complete-button"
+                                    onclick="completePickup('${escapeJs(pickup.confirmation_code)}')"
+                                >
+                                    ✓ Picked Up
+                                </button>
+                            `
+
+                            : `
+                                <button
+                                    class="small-button archive-button"
+                                    onclick="archivePickup('${escapeJs(pickup.confirmation_code)}')"
+                                >
+                                    📦 Archive
+                                </button>
+                            `;
+
+
+                    return `
+
+                        <tr>
+
+                            <td>
+                                <span class="confirmation-code">
+                                    ${escapeHtml(
+                                        pickup.confirmation_code
+                                    )}
+                                </span>
+                            </td>
+
+
+                            <td>
+
+                                <strong>
+                                    ${escapeHtml(
+                                        pickup.requester_name
+                                    )}
+                                </strong>
+
+                                <br>
+
+                                <span
+                                    style="
+                                        color:#6b7280;
+                                        font-size:12px;
+                                    "
+                                >
+                                    ${escapeHtml(
+                                        pickup.company
+                                    )}
+                                </span>
+
+                            </td>
+
+
+                            <td>
+                                ${escapeHtml(
+                                    pickup.carrier
+                                )}
+                            </td>
+
+
+                            <td>
+                                ${escapeHtml(
+                                    pickup.package_count
+                                )}
+                            </td>
+
+
+                            <td>
+                                ${escapeHtml(
+                                    pickup.package_location
+                                )}
+                            </td>
+
+
+                            <td>
+
+                                <span
+                                    class="status ${statusClass}"
+                                >
+                                    ${escapeHtml(
+                                        pickup.status
+                                    )}
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <div
+                                    class="action-buttons"
+                                >
+
+                                    <button
+                                        class="small-button details-button"
+                                        onclick="viewPickupDetails('${escapeJs(pickup.confirmation_code)}')"
+                                    >
+                                        👁️ Details
+                                    </button>
+
+
+                                    ${actionButton}
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+
+/* =========================================================
+   VIEW PICKUP DETAILS
+========================================================= */
+
+function viewPickupDetails(code) {
+
+    const pickup =
+        pickups.find(
+            function(item) {
+
+                return (
+                    item.confirmation_code ===
+                    code
+                );
+
+            }
+        );
+
+
+    if (!pickup) {
+
+        alert(
+            "Pickup not found."
+        );
+
+        return;
+
+    }
+
+
+    const statusClass =
+        pickup.status ===
+        "READY"
+
+            ? "status-ready"
+
+            : pickup.status ===
+              "COMPLETED"
+
+                ? "status-completed"
+
+                : "status-archived";
+
+
+    const emailHtml =
+        pickup.email
+
+            ? `
+                <a
+                    class="details-link"
+                    href="mailto:${escapeHtml(pickup.email)}"
+                >
+                    ${escapeHtml(pickup.email)}
+                </a>
+            `
+
+            : "Not provided";
+
+
+    const phoneHtml =
+        pickup.phone
+
+            ? `
+                <a
+                    class="details-link"
+                    href="tel:${escapeHtml(pickup.phone)}"
+                >
+                    ${escapeHtml(pickup.phone)}
+                </a>
+            `
+
+            : "Not provided";
+
+
+    const photoHtml =
+        pickup.package_location_image
+
+            ? `
+                <button
+                    class="small-button photo-button"
+                    onclick="viewLocationPhoto('${escapeJs(pickup.confirmation_code)}')"
+                >
+                    📷 View Package Location Photo
+                </button>
+            `
+
+            : `
+                <span
+                    style="
+                        color:#6b7280;
+                        font-size:13px;
+                    "
+                >
+                    No photo uploaded.
+                </span>
+            `;
+
+
+    const createdAt =
+        pickup.created_at
+            ? formatDateTime(
+                pickup.created_at
+            )
+            : "Not available";
+
+
+    const pickedUpAt =
+        pickup.picked_up_at
+            ? formatDateTime(
+                pickup.picked_up_at
+            )
+            : "Not picked up";
+
+
+    const container =
+        document
+            .getElementById(
+                "detailsContent"
+            );
+
+
+    container.innerHTML = `
+
+        <div
+            style="
+                display:flex;
+                justify-content:space-between;
+                align-items:flex-start;
+                gap:15px;
+                margin-bottom:25px;
+            "
+        >
+
+            <div>
+
+                <div
+                    class="details-code"
+                >
+                    ${escapeHtml(
+                        pickup.confirmation_code
+                    )}
+                </div>
+
+                <span
+                    class="status ${statusClass} details-status"
+                >
+                    ${escapeHtml(
+                        pickup.status
+                    )}
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="details-section">
+
+            <h3>
+                Requester Information
+            </h3>
+
+
+            <div class="details-grid">
+
+
+                <div class="details-item">
+
+                    <div class="details-label">
+                        Name
+                    </div>
+
+                    <div class="details-value">
+                        ${escapeHtml(
+                            pickup.requester_name
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="details-item">
+
+                    <div class="details-label">
+                        Company
+                    </div>
+
+                    <div class="details-value">
+                        ${escapeHtml(
+                            pickup.company
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="details-item">
+
+                    <div class="details-label">
+                        Email
+                    </div>
+
+                    <div class="details-value">
+                        ${emailHtml}
+                    </div>
+
+                </div>
+
+
+                <div class="details-item">
+
+                    <div class="details-label">
+                        Phone
+                    </div>
+
+                    <div class="details-value">
+                        ${phoneHtml}
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <div class="details-section">
+
+            <h3>
+                Pickup Information
+            </h3>
+
+
+            <div class="details-grid">
+
+
+                <div class="details-item">
+
+                    <div class="details-label">
+                        Carrier
+                    </div>
+
+                    <div class="details-value">
+                        ${escapeHtml(
+                            pickup.carrier
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="details-item">
+
+                    <div class="details-label">
+                        Package Count
+                    </div>
+
+                    <div class="details-value">
+                        ${escapeHtml(
+                            pickup.package_count
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="details-item">
+
+                    <div class="details-label">
+                        Pickup Date
+                    </div>
+
+                    <div class="details-value">
+                        ${formatDate(
+                            pickup.pickup_date
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="details-item">
+
+                    <div class="details-label">
+                        Pickup Time
+                    </div>
+
+                    <div class="details-value">
+                        ${escapeHtml(
+                            formatTime(
+                                pickup.pickup_time
+                            )
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="details-item details-full">
+
+                    <div class="details-label">
+                        Package Location
+                    </div>
+
+                    <div class="details-value">
+                        ${escapeHtml(
+                            pickup.package_location
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="details-item details-full">
+
+                    <div class="details-label">
+                        Package Description
+                    </div>
+
+                    <div class="details-value">
+                        ${escapeHtml(
+                            pickup.package_description ||
+                            "None provided."
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="details-item details-full">
+
+                    <div class="details-label">
+                        Special Instructions
+                    </div>
+
+                    <div class="details-value">
+                        ${escapeHtml(
+                            pickup.special_instructions ||
+                            "None provided."
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="details-item details-full">
+
+                    <div class="details-label">
+                        Package Location Photo
+                    </div>
+
+                    <div class="details-value">
+
+                        ${photoHtml}
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <div class="details-section">
+
+            <h3>
+                Timestamps
+            </h3>
+
+
+            <div class="details-grid">
+
+
+                <div class="details-item">
+
+                    <div class="details-label">
+                        Submitted
+                    </div>
+
+                    <div class="details-value">
+                        ${createdAt}
+                    </div>
+
+                </div>
+
+
+                <div class="details-item">
+
+                    <div class="details-label">
+                        Picked Up
+                    </div>
+
+                    <div class="details-value">
+                        ${pickedUpAt}
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <div class="delete-area">
+
+            <div class="delete-warning">
+
+                ⚠️ <strong>Danger Zone:</strong>
+                Deleting this pickup permanently removes
+                the shipment request from the system.
+
+            </div>
+
+
+            <button
+                class="delete-button"
+                onclick="deletePickup('${escapeJs(pickup.confirmation_code)}')"
+            >
+                🗑️ Delete Pickup
+            </button>
+
+        </div>
+
+    `;
+
 
     document
         .getElementById(
-            "pickupModal"
+            "detailsModal"
         )
         .style.display =
-        "flex";
+        "block";
 
 }
 
 
-function closeModal() {
+
+/* =========================================================
+   DELETE PICKUP
+========================================================= */
+
+async function deletePickup(code) {
+
+    const pickup =
+        pickups.find(
+            function(item) {
+
+                return (
+                    item.confirmation_code ===
+                    code
+                );
+
+            }
+        );
+
+
+    if (!pickup) {
+
+        alert(
+            "Pickup could not be found."
+        );
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+            "DELETE PICKUP " +
+            code +
+            "?\n\n" +
+            "This will permanently delete the shipment request.\n\n" +
+            "This action cannot be undone."
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    try {
+
+
+        /*
+         * Delete associated photo first.
+         */
+
+        if (
+            pickup.package_location_image
+        ) {
+
+            const {
+                error: photoError
+            } =
+                await supabaseClient
+                    .storage
+                    .from(
+                        "package-location-images"
+                    )
+                    .remove([
+                        pickup.package_location_image
+                    ]);
+
+
+            if (photoError) {
+
+                console.error(
+                    "Photo delete error:",
+                    photoError
+                );
+
+
+                alert(
+                    "The package location photo could not be deleted.\n\n" +
+                    "The pickup was NOT deleted."
+                );
+
+
+                return;
+
+            }
+
+        }
+
+
+        /*
+         * Delete database record.
+         */
+
+        const {
+            error
+        } =
+            await supabaseClient
+                .from("pickups")
+                .delete()
+                .eq(
+                    "confirmation_code",
+                    code
+                );
+
+
+        if (error) {
+
+            console.error(
+                "Pickup delete error:",
+                error
+            );
+
+
+            alert(
+                "Could not delete pickup:\n\n" +
+                error.message
+            );
+
+
+            return;
+
+        }
+
+
+        /*
+         * Close details modal.
+         */
+
+        closeDetailsModal();
+
+
+        /*
+         * Reload dashboard.
+         */
+
+        await loadPickups();
+
+
+        alert(
+            "Pickup " +
+            code +
+            " was deleted successfully."
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Delete error:",
+            error
+        );
+
+
+        alert(
+            "Something went wrong while deleting the pickup."
+        );
+
+    }
+
+}
+
+
+
+/* =========================================================
+   COMPLETE PICKUP
+========================================================= */
+
+async function completePickup(code) {
+
+    const confirmed =
+        confirm(
+            "Mark pickup " +
+            code +
+            " as picked up?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const {
+            error
+        } =
+            await supabaseClient
+                .from("pickups")
+                .update({
+                    status:
+                        "COMPLETED",
+
+                    picked_up_at:
+                        new Date()
+                            .toISOString()
+                })
+                .eq(
+                    "confirmation_code",
+                    code
+                );
+
+
+        if (error) {
+
+            throw error;
+
+        }
+
+
+        await loadPickups();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        alert(
+            "Could not mark pickup as completed:\n\n" +
+            error.message
+        );
+
+    }
+
+}
+
+
+
+/* =========================================================
+   ARCHIVE PICKUP
+========================================================= */
+
+async function archivePickup(code) {
+
+    const confirmed =
+        confirm(
+            "Archive pickup " +
+            code +
+            "?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const {
+            error
+        } =
+            await supabaseClient
+                .from("pickups")
+                .update({
+                    status:
+                        "ARCHIVED"
+                })
+                .eq(
+                    "confirmation_code",
+                    code
+                );
+
+
+        if (error) {
+
+            throw error;
+
+        }
+
+
+        await loadPickups();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        alert(
+            "Could not archive pickup:\n\n" +
+            error.message
+        );
+
+    }
+
+}
+
+
+
+/* =========================================================
+   VIEW LOCATION PHOTO
+========================================================= */
+
+async function viewLocationPhoto(code) {
+
+    const pickup =
+        pickups.find(
+            function(item) {
+
+                return (
+                    item.confirmation_code ===
+                    code
+                );
+
+            }
+        );
+
+
+    if (
+        !pickup ||
+        !pickup.package_location_image
+    ) {
+
+        alert(
+            "No photo is available."
+        );
+
+        return;
+
+    }
+
+
+    const photoModal =
+        document
+            .getElementById(
+                "photoModal"
+            );
+
+
+    const photoContainer =
+        document
+            .getElementById(
+                "photoContainer"
+            );
+
+
+    photoModal.style.display =
+        "block";
+
+
+    photoContainer.innerHTML = `
+        <div class="photo-loading">
+            Loading photo...
+        </div>
+    `;
+
+
+    try {
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .storage
+                .from(
+                    "package-location-images"
+                )
+                .download(
+                    pickup.package_location_image
+                );
+
+
+        if (error) {
+
+            throw error;
+
+        }
+
+
+        const imageUrl =
+            URL.createObjectURL(
+                data
+            );
+
+
+        photoContainer.innerHTML = `
+
+            <img
+                src="${imageUrl}"
+                alt="Package location"
+                onload="
+                    this.dataset.objectUrl='${imageUrl}'
+                "
+            >
+
+        `;
+
+
+    } catch (error) {
+
+        console.error(
+            "Photo loading error:",
+            error
+        );
+
+
+        photoContainer.innerHTML = `
+
+            <div
+                style="
+                    color:white;
+                    text-align:center;
+                    padding:30px;
+                "
+            >
+
+                Could not load the photo.
+
+                <br><br>
+
+                ${escapeHtml(
+                    error.message
+                )}
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+
+/* =========================================================
+   CREATE PICKUP
+========================================================= */
+
+function openCreateModal() {
+
+    populateAdminTimes();
+
+
+    const dateInput =
+        document
+            .getElementById(
+                "adminDate"
+            );
+
+
+    const today =
+        new Date()
+            .toISOString()
+            .split("T")[0];
+
+
+    dateInput.min =
+        today;
+
 
     document
         .getElementById(
-            "pickupModal"
+            "createModal"
+        )
+        .style.display =
+        "block";
+
+}
+
+
+
+function closeCreateModal() {
+
+    document
+        .getElementById(
+            "createModal"
         )
         .style.display =
         "none";
@@ -4164,32 +3668,10 @@ function closeModal() {
 }
 
 
-/* =========================================================
-   CONFIRMATION MODAL
-========================================================= */
-
-function closeConfirmation() {
-
-    document
-        .getElementById(
-            "confirmationModal"
-        )
-        .style.display =
-        "none";
-
-
-    loadPickups();
-
-}
-
-
-/* =========================================================
-   ADMIN CREATE PICKUP
-========================================================= */
 
 document
     .getElementById(
-        "pickupForm"
+        "createPickupForm"
     )
     .addEventListener(
         "submit",
@@ -4198,165 +3680,184 @@ document
             event.preventDefault();
 
 
-            const confirmationCode =
-                generateCode();
+            const requesterName =
+                document
+                    .getElementById(
+                        "adminName"
+                    )
+                    .value
+                    .trim();
 
 
-            const pickup = {
+            const company =
+                document
+                    .getElementById(
+                        "adminCompany"
+                    )
+                    .value
+                    .trim();
 
-                confirmation_code:
-                    confirmationCode,
 
-                requester_name:
+            const email =
+                document
+                    .getElementById(
+                        "adminEmail"
+                    )
+                    .value
+                    .trim();
+
+
+            const phone =
+                document
+                    .getElementById(
+                        "adminPhone"
+                    )
+                    .value
+                    .trim();
+
+
+            const carrier =
+                document
+                    .getElementById(
+                        "adminCarrier"
+                    )
+                    .value;
+
+
+            const pickupDate =
+                document
+                    .getElementById(
+                        "adminDate"
+                    )
+                    .value;
+
+
+            const pickupTime =
+                document
+                    .getElementById(
+                        "adminTime"
+                    )
+                    .value;
+
+
+            const packageCount =
+                Number(
                     document
                         .getElementById(
-                            "requester"
+                            "adminPackageCount"
                         )
                         .value
-                        .trim(),
+                );
 
-                company:
-                    document
-                        .getElementById(
-                            "company"
-                        )
-                        .value
-                        .trim(),
 
-                email:
-                    document
-                        .getElementById(
-                            "adminEmail"
-                        )
-                        .value
-                        .trim(),
+            const packageLocation =
+                document
+                    .getElementById(
+                        "adminLocation"
+                    )
+                    .value
+                    .trim();
 
-                phone:
-                    document
-                        .getElementById(
-                            "phone"
-                        )
-                        .value
-                        .trim(),
 
-                carrier:
-                    document
-                        .getElementById(
-                            "carrier"
-                        )
-                        .value,
+            const packageDescription =
+                document
+                    .getElementById(
+                        "adminDescription"
+                    )
+                    .value
+                    .trim();
 
-                pickup_date:
-                    document
-                        .getElementById(
-                            "pickupDate"
-                        )
-                        .value,
 
-                pickup_time:
-                    document
-                        .getElementById(
-                            "pickupTime"
-                        )
-                        .value,
-
-                package_count:
-                    Number(
-                        document
-                            .getElementById(
-                                "packages"
-                            )
-                            .value
-                    ),
-
-                package_location:
-                    document
-                        .getElementById(
-                            "location"
-                        )
-                        .value
-                        .trim(),
-
-                package_description:
-                    document
-                        .getElementById(
-                            "description"
-                        )
-                        .value
-                        .trim(),
-
-                special_instructions:
-                    document
-                        .getElementById(
-                            "instructions"
-                        )
-                        .value
-                        .trim(),
-
-                status:
-                    "READY"
-
-            };
+            const specialInstructions =
+                document
+                    .getElementById(
+                        "adminInstructions"
+                    )
+                    .value
+                    .trim();
 
 
             try {
+
+
+                const confirmationCode =
+                    await generateConfirmationCode();
+
 
                 const {
                     error
                 } =
                     await supabaseClient
                         .from("pickups")
-                        .insert(
-                            pickup
-                        );
+                        .insert({
+
+                            confirmation_code:
+                                confirmationCode,
+
+                            requester_name:
+                                requesterName,
+
+                            company:
+                                company,
+
+                            email:
+                                email,
+
+                            phone:
+                                phone,
+
+                            carrier:
+                                carrier,
+
+                            pickup_date:
+                                pickupDate,
+
+                            pickup_time:
+                                pickupTime,
+
+                            package_count:
+                                packageCount,
+
+                            package_location:
+                                packageLocation,
+
+                            package_description:
+                                packageDescription,
+
+                            special_instructions:
+                                specialInstructions,
+
+                            status:
+                                "READY"
+
+                        });
 
 
                 if (error) {
 
-                    console.error(
-                        "Create pickup error:",
-                        error
-                    );
-
-
-                    alert(
-                        "Could not create the pickup: " +
-                        error.message
-                    );
-
-
-                    return;
+                    throw error;
 
                 }
 
 
-                document
-                    .getElementById(
-                        "confirmationCode"
-                    )
-                    .textContent =
-                    confirmationCode;
-
-
-                closeModal();
+                closeCreateModal();
 
 
                 document
                     .getElementById(
-                        "confirmationModal"
-                    )
-                    .style.display =
-                    "flex";
-
-
-                document
-                    .getElementById(
-                        "pickupForm"
+                        "createPickupForm"
                     )
                     .reset();
 
 
                 await loadPickups();
+
+
+                alert(
+                    "Pickup created successfully.\n\n" +
+                    "Confirmation Code: " +
+                    confirmationCode
+                );
 
 
             } catch (error) {
@@ -4368,7 +3869,8 @@ document
 
 
                 alert(
-                    "Could not connect to the database."
+                    "Could not create pickup:\n\n" +
+                    error.message
                 );
 
             }
@@ -4377,81 +3879,838 @@ document
     );
 
 
+
 /* =========================================================
-   MODAL BACKGROUND CLICKS
+   GENERATE CONFIRMATION CODE
 ========================================================= */
 
-document
-    .getElementById(
-        "pickupModal"
-    )
-    .addEventListener(
-        "click",
-        function(event) {
+async function generateConfirmationCode() {
 
-            if (
-                event.target ===
-                event.currentTarget
-            ) {
+    let code;
 
-                closeModal();
-
-            }
-
-        }
-    );
+    let exists =
+        true;
 
 
-document
-    .getElementById(
-        "confirmationModal"
-    )
-    .addEventListener(
-        "click",
-        function(event) {
+    while (exists) {
 
-            if (
-                event.target ===
-                event.currentTarget
-            ) {
-
-                closeConfirmation();
-
-            }
-
-        }
-    );
+        const number =
+            Math.floor(
+                10000 +
+                Math.random() *
+                90000
+            );
 
 
-document
-    .getElementById(
-        "archiveModal"
-    )
-    .addEventListener(
-        "click",
-        function(event) {
+        code =
+            "BS-" +
+            number;
 
-            if (
-                event.target ===
-                event.currentTarget
-            ) {
 
-                closeArchive();
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .from("pickups")
+                .select("id")
+                .eq(
+                    "confirmation_code",
+                    code
+                )
+                .maybeSingle();
 
-            }
+
+        if (error) {
+
+            throw error;
 
         }
-    );
+
+
+        exists =
+            !!data;
+
+    }
+
+
+    return code;
+
+}
+
 
 
 /* =========================================================
-   START ADMIN
+   ADMIN TIME OPTIONS
 ========================================================= */
 
-checkExistingSession();
+function populateAdminTimes() {
+
+    const select =
+        document
+            .getElementById(
+                "adminTime"
+            );
+
+
+    select.innerHTML = `
+
+        <option value="">
+            Select pickup time
+        </option>
+
+    `;
+
+
+    for (
+        let minutes = 8 * 60 + 30;
+        minutes <= 15 * 60 + 30;
+        minutes += 15
+    ) {
+
+
+        const hour =
+            Math.floor(
+                minutes / 60
+            );
+
+
+        const minute =
+            minutes % 60;
+
+
+        const hour12 =
+            hour > 12
+                ? hour - 12
+                : hour;
+
+
+        const ampm =
+            hour >= 12
+                ? "PM"
+                : "AM";
+
+
+        const displayMinute =
+            String(
+                minute
+            ).padStart(
+                2,
+                "0"
+            );
+
+
+        const value =
+            String(
+                hour
+            ).padStart(
+                2,
+                "0"
+            ) +
+            ":" +
+            displayMinute;
+
+
+        const display =
+            hour12 +
+            ":" +
+            displayMinute +
+            " " +
+            ampm;
+
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+
+        option.value =
+            value;
+
+
+        option.textContent =
+            display;
+
+
+        select.appendChild(
+            option
+        );
+
+    }
+
+}
+
+
+
+/* =========================================================
+   ARCHIVE MODAL
+========================================================= */
+
+function openArchiveModal() {
+
+    document
+        .getElementById(
+            "archiveSearch"
+        )
+        .value =
+        "";
+
+
+    displayArchive();
+
+
+    document
+        .getElementById(
+            "archiveModal"
+        )
+        .style.display =
+        "block";
+
+}
+
+
+
+function closeArchiveModal() {
+
+    document
+        .getElementById(
+            "archiveModal"
+        )
+        .style.display =
+        "none";
+
+}
+
+
+
+function displayArchive() {
+
+    const container =
+        document
+            .getElementById(
+                "archiveContent"
+            );
+
+
+    const search =
+        document
+            .getElementById(
+                "archiveSearch"
+            )
+            .value
+            .trim()
+            .toLowerCase();
+
+
+    const archived =
+        pickups
+            .filter(
+                function(pickup) {
+
+                    return (
+                        pickup.status ===
+                        "ARCHIVED"
+                    );
+
+                }
+            )
+            .filter(
+                function(pickup) {
+
+                    if (!search) {
+
+                        return true;
+
+                    }
+
+
+                    const searchable = [
+
+                        pickup.confirmation_code,
+
+                        pickup.requester_name,
+
+                        pickup.company,
+
+                        pickup.email,
+
+                        pickup.phone,
+
+                        pickup.carrier,
+
+                        pickup.package_location,
+
+                        pickup.package_description,
+
+                        pickup.special_instructions
+
+                    ]
+                        .filter(Boolean)
+                        .join(" ")
+                        .toLowerCase();
+
+
+                    return searchable.includes(
+                        search
+                    );
+
+                }
+            )
+            .sort(
+                function(a, b) {
+
+                    return (
+                        new Date(
+                            b.picked_up_at ||
+                            b.created_at
+                        ) -
+                        new Date(
+                            a.picked_up_at ||
+                            a.created_at
+                        )
+                    );
+
+                }
+            );
+
+
+    if (
+        archived.length ===
+        0
+    ) {
+
+        container.innerHTML = `
+
+            <div class="empty-state">
+
+                No archived pickups found.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    const groups = {};
+
+
+    archived.forEach(
+        function(pickup) {
+
+            const date =
+                pickup.picked_up_at
+
+                    ? new Date(
+                        pickup.picked_up_at
+                    )
+                        .toISOString()
+                        .split("T")[0]
+
+                    : "Unknown Date";
+
+
+            if (!groups[date]) {
+
+                groups[date] =
+                    [];
+
+            }
+
+
+            groups[date].push(
+                pickup
+            );
+
+        }
+    );
+
+
+    const dates =
+        Object.keys(
+            groups
+        ).sort(
+            function(a, b) {
+
+                return (
+                    new Date(b) -
+                    new Date(a)
+                );
+
+            }
+        );
+
+
+    container.innerHTML =
+        dates
+            .map(
+                function(date) {
+
+                    return `
+
+                        <div class="archive-group">
+
+                            <div class="archive-date">
+
+                                ${formatDate(date)}
+
+                            </div>
+
+
+                            ${groups[date]
+                                .map(
+                                    function(pickup) {
+
+                                        return `
+
+                                            <div class="archive-item">
+
+                                                <div class="archive-main">
+
+                                                    <div class="archive-name">
+
+                                                        <span
+                                                            class="confirmation-code"
+                                                        >
+                                                            ${escapeHtml(
+                                                                pickup.confirmation_code
+                                                            )}
+                                                        </span>
+
+                                                        —
+                                                        ${escapeHtml(
+                                                            pickup.requester_name
+                                                        )}
+
+                                                    </div>
+
+
+                                                    <div class="archive-meta">
+
+                                                        ${escapeHtml(
+                                                            pickup.company
+                                                        )}
+                                                        ·
+                                                        ${escapeHtml(
+                                                            pickup.carrier
+                                                        )}
+                                                        ·
+                                                        ${escapeHtml(
+                                                            pickup.package_count
+                                                        )}
+                                                        package(s)
+
+                                                    </div>
+
+                                                </div>
+
+
+                                                <div
+                                                    class="action-buttons"
+                                                >
+
+                                                    <button
+                                                        class="small-button details-button"
+                                                        onclick="viewPickupDetails('${escapeJs(pickup.confirmation_code)}')"
+                                                    >
+                                                        👁️ Details
+                                                    </button>
+
+
+                                                    ${
+                                                        pickup.package_location_image
+
+                                                            ? `
+
+                                                                <button
+                                                                    class="small-button photo-button"
+                                                                    onclick="viewLocationPhoto('${escapeJs(pickup.confirmation_code)}')"
+                                                                >
+                                                                    📷 Photo
+                                                                </button>
+
+                                                            `
+
+                                                            : ""
+                                                    }
+
+                                                </div>
+
+                                            </div>
+
+                                        `;
+
+                                    }
+                                )
+                                .join("")}
+
+                        </div>
+
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+
+/* =========================================================
+   MODAL CLOSE FUNCTIONS
+========================================================= */
+
+function closeDetailsModal() {
+
+    document
+        .getElementById(
+            "detailsModal"
+        )
+        .style.display =
+        "none";
+
+}
+
+
+
+function closePhotoModal() {
+
+    document
+        .getElementById(
+            "photoModal"
+        )
+        .style.display =
+        "none";
+
+
+    const container =
+        document
+            .getElementById(
+                "photoContainer"
+            );
+
+
+    container.innerHTML = `
+        <div class="photo-loading">
+            Loading photo...
+        </div>
+    `;
+
+}
+
+
+
+/* =========================================================
+   DATE / TIME FORMATTING
+========================================================= */
+
+function formatDate(dateString) {
+
+    if (!dateString) {
+
+        return "";
+
+    }
+
+
+    const parts =
+        dateString.split("-");
+
+
+    if (
+        parts.length !==
+        3
+    ) {
+
+        return dateString;
+
+    }
+
+
+    return (
+        parts[1] +
+        "/" +
+        parts[2] +
+        "/" +
+        parts[0]
+    );
+
+}
+
+
+
+function formatTime(timeString) {
+
+    if (!timeString) {
+
+        return "";
+
+    }
+
+
+    const parts =
+        timeString.split(":");
+
+
+    if (
+        parts.length <
+        2
+    ) {
+
+        return timeString;
+
+    }
+
+
+    let hour =
+        Number(
+            parts[0]
+        );
+
+
+    const minute =
+        parts[1];
+
+
+    const ampm =
+        hour >= 12
+            ? "PM"
+            : "AM";
+
+
+    if (hour === 0) {
+
+        hour = 12;
+
+    } else if (
+        hour > 12
+    ) {
+
+        hour -= 12;
+
+    }
+
+
+    return (
+        hour +
+        ":" +
+        minute +
+        " " +
+        ampm
+    );
+
+}
+
+
+
+function formatDateTime(
+    timestamp
+) {
+
+    if (!timestamp) {
+
+        return "";
+
+    }
+
+
+    const date =
+        new Date(
+            timestamp
+        );
+
+
+    return date.toLocaleString(
+        "en-US",
+        {
+            month: "numeric",
+            day: "numeric",
+            year: "numeric",
+            hour: "numeric",
+            minute: "2-digit"
+        }
+    );
+
+}
+
+
+
+/* =========================================================
+   HTML ESCAPING
+========================================================= */
+
+function escapeHtml(value) {
+
+    if (
+        value ===
+        null ||
+        value ===
+        undefined
+    ) {
+
+        return "";
+
+    }
+
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+
+/* =========================================================
+   JAVASCRIPT STRING ESCAPING
+========================================================= */
+
+function escapeJs(value) {
+
+    if (
+        value ===
+        null ||
+        value ===
+        undefined
+    ) {
+
+        return "";
+
+    }
+
+
+    return String(value)
+        .replace(
+            /\\/g,
+            "\\\\"
+        )
+        .replace(
+            /'/g,
+            "\\'"
+        )
+        .replace(
+            /\r/g,
+            "\\r"
+        )
+        .replace(
+            /\n/g,
+            "\\n"
+        );
+
+}
+
+
+
+/* =========================================================
+   CLICK OUTSIDE MODALS
+========================================================= */
+
+window.addEventListener(
+    "click",
+    function(event) {
+
+        const detailsModal =
+            document
+                .getElementById(
+                    "detailsModal"
+                );
+
+
+        const photoModal =
+            document
+                .getElementById(
+                    "photoModal"
+                );
+
+
+        const createModal =
+            document
+                .getElementById(
+                    "createModal"
+                );
+
+
+        const archiveModal =
+            document
+                .getElementById(
+                    "archiveModal"
+                );
+
+
+        if (
+            event.target ===
+            detailsModal
+        ) {
+
+            closeDetailsModal();
+
+        }
+
+
+        if (
+            event.target ===
+            photoModal
+        ) {
+
+            closePhotoModal();
+
+        }
+
+
+        if (
+            event.target ===
+            createModal
+        ) {
+
+            closeCreateModal();
+
+        }
+
+
+        if (
+            event.target ===
+            archiveModal
+        ) {
+
+            closeArchiveModal();
+
+        }
+
+    }
+);
+
+
+
+/* =========================================================
+   START
+========================================================= */
+
+checkAuth();
 
 
 </script>
+
 
 </body>
 
