@@ -104,6 +104,11 @@
             cursor: pointer;
         }
 
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
         .primary {
             background: #1f4f82;
             color: white;
@@ -111,16 +116,6 @@
 
         .primary:hover {
             background: #173d64;
-        }
-
-        .secondary {
-            background: #e5e7eb;
-            color: #111827;
-            width: auto;
-        }
-
-        .secondary:hover {
-            background: #d1d5db;
         }
 
         .confirmation {
@@ -230,7 +225,6 @@
                 Submit your shipment information to notify Shipping & Receiving.
             </div>
 
-
             <form id="pickupForm">
 
                 <!-- NAME -->
@@ -275,7 +269,6 @@
                             required
                         >
                     </div>
-
 
                     <div class="form-group">
                         <label for="phone">
@@ -524,7 +517,6 @@
                 Your pickup request has been successfully submitted.
             </p>
 
-
             <div class="important">
 
                 <strong>
@@ -538,22 +530,21 @@
 
             </div>
 
-
             <div
                 class="confirmation-code"
                 id="confirmationCode"
             ></div>
 
-
             <p>
-                "Please provide this confirmation code to the carrier and ensure it is passed along to the driver. This code helps ensure the correct package is picked up.'
+                Please provide this confirmation code to the carrier
+                and ensure it is passed along to the driver. This code
+                helps ensure the correct package is picked up.
             </p>
-
 
             <button
                 type="button"
                 class="primary"
-                onclick="newRequest()"
+                id="newRequestButton"
             >
                 Submit Another Pickup
             </button>
@@ -562,272 +553,286 @@
 
     </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
 
-    /* =========================================================
-       SUPABASE SETTINGS
-    ========================================================= */
+    <!-- =========================================================
+         SUPABASE JAVASCRIPT
+         ONLY ONE COPY
+    ========================================================= -->
 
-    const SUPABASE_URL =
-        "https://erttykaeyvhbzignpysr.supabase.co";
-
-    const SUPABASE_KEY =
-        "sb_publishable_lY2qbi-Q-lyiTW58m-_oQg_mio84a3L";
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
-    /* =========================================================
-       CREATE ONE SUPABASE CLIENT
-       
-       persistSession: false makes this public page use
-       the anonymous role instead of inheriting an admin login.
-    ========================================================= */
+    <script>
 
-    const supabaseClient =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY,
-            {
-                auth: {
-                    persistSession: false,
-                    autoRefreshToken: false,
-                    detectSessionInUrl: false
+        /* =========================================================
+           SUPABASE SETTINGS
+        ========================================================= */
+
+        const SUPABASE_URL =
+            "https://erttykaeyvhbzignpysr.supabase.co";
+
+        const SUPABASE_KEY =
+            "sb_publishable_lY2qbi-Q-lyiTW58m-_oQg_mio84a3L";
+
+
+        /* =========================================================
+           CREATE ONE SUPABASE CLIENT
+        ========================================================= */
+
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY,
+                {
+                    auth: {
+                        persistSession: false,
+                        autoRefreshToken: false,
+                        detectSessionInUrl: false
+                    }
                 }
-            }
-        );
+            );
 
 
-    /* =========================================================
-       GENERATE CONFIRMATION CODE
-    ========================================================= */
+        /* =========================================================
+           GENERATE CONFIRMATION CODE
+        ========================================================= */
 
-    function generateCode() {
+        function generateCode() {
 
-        const number =
-            Math.floor(10000 + Math.random() * 90000);
+            const number =
+                Math.floor(
+                    10000 +
+                    Math.random() * 90000
+                );
 
-        return "BS-" + number;
-
-    }
-
-
-    /* =========================================================
-       CARRIER - OTHER FIELD
-    ========================================================= */
-
-    const carrierSelect =
-        document.getElementById("carrier");
-
-    const otherCarrierGroup =
-        document.getElementById("otherCarrierGroup");
-
-    const otherCarrierInput =
-        document.getElementById("otherCarrier");
-
-
-    carrierSelect.addEventListener(
-        "change",
-        function() {
-
-            if (this.value === "Other") {
-
-                otherCarrierGroup.style.display =
-                    "block";
-
-                otherCarrierInput.required =
-                    true;
-
-            } else {
-
-                otherCarrierGroup.style.display =
-                    "none";
-
-                otherCarrierInput.required =
-                    false;
-
-                otherCarrierInput.value =
-                    "";
-
-            }
+            return "BS-" + number;
 
         }
-    );
 
 
-    /* =========================================================
-       PHOTO VARIABLES
-    ========================================================= */
+        /* =========================================================
+           ELEMENTS
+        ========================================================= */
 
-    let locationPhotoInput =
-        document.getElementById("locationPhoto");
+        const pickupForm =
+            document.getElementById("pickupForm");
 
-    const photoPreviewContainer =
-        document.getElementById("photoPreviewContainer");
+        const submitButton =
+            document.getElementById("submitButton");
 
-    const photoPreview =
-        document.getElementById("photoPreview");
+        const carrierSelect =
+            document.getElementById("carrier");
 
-    const removePhotoButton =
-        document.getElementById("removePhoto");
+        const otherCarrierGroup =
+            document.getElementById("otherCarrierGroup");
 
-    let currentPhotoPreviewUrl =
-        null;
+        const otherCarrierInput =
+            document.getElementById("otherCarrier");
+
+        const photoPreviewContainer =
+            document.getElementById("photoPreviewContainer");
+
+        const photoPreview =
+            document.getElementById("photoPreview");
+
+        const removePhotoButton =
+            document.getElementById("removePhoto");
+
+        const confirmationCard =
+            document.getElementById("confirmationCard");
+
+        const requestCard =
+            document.getElementById("requestCard");
+
+        const confirmationCodeElement =
+            document.getElementById("confirmationCode");
+
+        const newRequestButton =
+            document.getElementById("newRequestButton");
 
 
-    /* =========================================================
-       SET UP PHOTO INPUT
-    ========================================================= */
+        let locationPhotoInput =
+            document.getElementById("locationPhoto");
 
-    function setupPhotoInput() {
+        let currentPhotoPreviewUrl =
+            null;
 
-        locationPhotoInput.addEventListener(
+
+        /* =========================================================
+           OTHER CARRIER
+        ========================================================= */
+
+        carrierSelect.addEventListener(
             "change",
             function() {
 
-                const file =
-                    this.files[0];
+                if (this.value === "Other") {
 
-                if (!file) {
+                    otherCarrierGroup.style.display =
+                        "block";
 
-                    photoPreviewContainer.style.display =
+                    otherCarrierInput.required =
+                        true;
+
+                } else {
+
+                    otherCarrierGroup.style.display =
                         "none";
 
-                    return;
+                    otherCarrierInput.required =
+                        false;
+
+                    otherCarrierInput.value =
+                        "";
 
                 }
-
-
-                if (!file.type.startsWith("image/")) {
-
-                    alert(
-                        "Please select an image file."
-                    );
-
-                    resetPhotoInput();
-
-                    return;
-
-                }
-
-
-                if (currentPhotoPreviewUrl) {
-
-                    URL.revokeObjectURL(
-                        currentPhotoPreviewUrl
-                    );
-
-                }
-
-
-                currentPhotoPreviewUrl =
-                    URL.createObjectURL(file);
-
-                photoPreview.src =
-                    currentPhotoPreviewUrl;
-
-                photoPreviewContainer.style.display =
-                    "block";
 
             }
         );
 
-    }
+
+        /* =========================================================
+           PHOTO INPUT
+        ========================================================= */
+
+        function setupPhotoInput() {
+
+            locationPhotoInput.addEventListener(
+                "change",
+                function() {
+
+                    const file =
+                        this.files[0];
+
+                    if (!file) {
+
+                        photoPreviewContainer.style.display =
+                            "none";
+
+                        return;
+
+                    }
 
 
-    /* =========================================================
-       RESET PHOTO INPUT
-    ========================================================= */
+                    if (!file.type.startsWith("image/")) {
 
-    function resetPhotoInput() {
+                        alert(
+                            "Please select an image file."
+                        );
 
-        photoPreview.src =
-            "";
+                        resetPhotoInput();
 
-        photoPreviewContainer.style.display =
-            "none";
+                        return;
+
+                    }
 
 
-        if (currentPhotoPreviewUrl) {
+                    if (currentPhotoPreviewUrl) {
 
-            URL.revokeObjectURL(
-                currentPhotoPreviewUrl
+                        URL.revokeObjectURL(
+                            currentPhotoPreviewUrl
+                        );
+
+                    }
+
+
+                    currentPhotoPreviewUrl =
+                        URL.createObjectURL(file);
+
+                    photoPreview.src =
+                        currentPhotoPreviewUrl;
+
+                    photoPreviewContainer.style.display =
+                        "block";
+
+                }
             );
-
-            currentPhotoPreviewUrl =
-                null;
 
         }
 
 
-        const newPhotoInput =
-            document.createElement("input");
+        /* =========================================================
+           RESET PHOTO
+        ========================================================= */
 
-        newPhotoInput.type =
-            "file";
+        function resetPhotoInput() {
 
-        newPhotoInput.id =
-            "locationPhoto";
+            photoPreview.src =
+                "";
 
-        newPhotoInput.accept =
-            "image/*";
-
-        newPhotoInput.capture =
-            "environment";
+            photoPreviewContainer.style.display =
+                "none";
 
 
-        locationPhotoInput.parentNode.replaceChild(
-            newPhotoInput,
-            locationPhotoInput
-        );
+            if (currentPhotoPreviewUrl) {
+
+                URL.revokeObjectURL(
+                    currentPhotoPreviewUrl
+                );
+
+                currentPhotoPreviewUrl =
+                    null;
+
+            }
 
 
-        locationPhotoInput =
-            newPhotoInput;
+            const newInput =
+                document.createElement("input");
+
+            newInput.type =
+                "file";
+
+            newInput.id =
+                "locationPhoto";
+
+            newInput.accept =
+                "image/*";
+
+            newInput.capture =
+                "environment";
+
+
+            locationPhotoInput.parentNode.replaceChild(
+                newInput,
+                locationPhotoInput
+            );
+
+
+            locationPhotoInput =
+                newInput;
+
+
+            setupPhotoInput();
+
+        }
 
 
         setupPhotoInput();
 
-    }
+
+        /* =========================================================
+           REMOVE PHOTO
+        ========================================================= */
+
+        removePhotoButton.addEventListener(
+            "click",
+            function() {
+
+                resetPhotoInput();
+
+            }
+        );
 
 
-    /* =========================================================
-       INITIAL PHOTO INPUT
-    ========================================================= */
+        /* =========================================================
+           SUBMIT PICKUP
+        ========================================================= */
 
-    setupPhotoInput();
-
-
-    /* =========================================================
-       REMOVE PHOTO
-    ========================================================= */
-
-    removePhotoButton.addEventListener(
-        "click",
-        function() {
-
-            resetPhotoInput();
-
-        }
-    );
-
-
-    /* =========================================================
-       SUBMIT FORM
-    ========================================================= */
-
-    document
-        .getElementById("pickupForm")
-        .addEventListener(
+        pickupForm.addEventListener(
             "submit",
             async function(event) {
 
                 event.preventDefault();
-
-
-                const submitButton =
-                    document.getElementById(
-                        "submitButton"
-                    );
 
 
                 submitButton.disabled =
@@ -839,17 +844,17 @@
 
                 try {
 
-                    /* =========================================
+                    /* =============================================
                        GENERATE CONFIRMATION CODE
-                    ========================================= */
+                    ============================================= */
 
                     const confirmationCode =
                         generateCode();
 
 
-                    /* =========================================
+                    /* =============================================
                        GET PHOTO
-                    ========================================= */
+                    ============================================= */
 
                     const photoFile =
                         locationPhotoInput.files[0];
@@ -858,9 +863,9 @@
                         null;
 
 
-                    /* =========================================
+                    /* =============================================
                        UPLOAD PHOTO
-                    ========================================= */
+                    ============================================= */
 
                     if (photoFile) {
 
@@ -885,7 +890,7 @@
                         );
 
 
-                        const { data, error } =
+                        const uploadResult =
                             await supabaseClient
                                 .storage
                                 .from(
@@ -904,11 +909,11 @@
                                 );
 
 
-                        if (error) {
+                        if (uploadResult.error) {
 
                             console.error(
                                 "Photo upload error:",
-                                error
+                                uploadResult.error
                             );
 
                             alert(
@@ -922,15 +927,15 @@
 
                         console.log(
                             "Photo uploaded successfully:",
-                            data.path
+                            photoFileName
                         );
 
                     }
 
 
-                    /* =========================================
+                    /* =============================================
                        GET CARRIER
-                    ========================================= */
+                    ============================================= */
 
                     let carrier =
                         carrierSelect.value;
@@ -946,9 +951,9 @@
                     }
 
 
-                    /* =========================================
-                       CREATE PICKUP OBJECT
-                    ========================================= */
+                    /* =============================================
+                       CREATE PICKUP
+                    ============================================= */
 
                     const pickup = {
 
@@ -1026,23 +1031,31 @@
                     };
 
 
-                    /* =========================================
-                       INSERT PICKUP INTO SUPABASE
+                    console.log(
+                        "Submitting pickup:",
+                        pickup
+                    );
+
+
+                    /* =============================================
+                       INSERT INTO SUPABASE
                        
-                       Uses Supabase JS instead of manual fetch.
-                    ========================================= */
+                       IMPORTANT:
+                       No .select()
+                       No data variable
+                       ============================================= */
 
-                   const { error } =
-    await supabaseClient
-        .from("pickups")
-        .insert([pickup]);
+                    const insertResult =
+                        await supabaseClient
+                            .from("pickups")
+                            .insert([pickup]);
 
 
-                    if (error) {
+                    if (insertResult.error) {
 
                         console.error(
                             "Pickup submission error:",
-                            error
+                            insertResult.error
                         );
 
                         alert(
@@ -1053,32 +1066,25 @@
 
                     }
 
-                    /* =========================================
+
+                    console.log(
+                        "Pickup submitted successfully."
+                    );
+
+
+                    /* =============================================
                        SHOW CONFIRMATION
-                    ========================================= */
+                    ============================================= */
 
-                    document
-                        .getElementById(
-                            "confirmationCode"
-                        )
-                        .textContent =
-                            confirmationCode;
+                    confirmationCodeElement.textContent =
+                        confirmationCode;
 
 
-                    document
-                        .getElementById(
-                            "requestCard"
-                        )
-                        .style.display =
-                            "none";
+                    requestCard.style.display =
+                        "none";
 
-
-                    document
-                        .getElementById(
-                            "confirmationCard"
-                        )
-                        .style.display =
-                            "block";
+                    confirmationCard.style.display =
+                        "block";
 
 
                 } catch (error) {
@@ -1106,45 +1112,43 @@
         );
 
 
-    /* =========================================================
-       NEW REQUEST
-    ========================================================= */
+        /* =========================================================
+           NEW REQUEST
+        ========================================================= */
 
-    function newRequest() {
+        newRequestButton.addEventListener(
+            "click",
+            function() {
 
-        document
-            .getElementById("pickupForm")
-            .reset();
-
-
-        otherCarrierGroup.style.display =
-            "none";
-
-        otherCarrierInput.required =
-            false;
+                pickupForm.reset();
 
 
-        resetPhotoInput();
+                carrierSelect.value =
+                    "";
+
+                otherCarrierGroup.style.display =
+                    "none";
+
+                otherCarrierInput.required =
+                    false;
+
+                otherCarrierInput.value =
+                    "";
 
 
-        document
-            .getElementById(
-                "confirmationCard"
-            )
-            .style.display =
-                "none";
+                resetPhotoInput();
 
 
-        document
-            .getElementById(
-                "requestCard"
-            )
-            .style.display =
-                "block";
+                confirmationCard.style.display =
+                    "none";
 
-    }
+                requestCard.style.display =
+                    "block";
 
-</script>
+            }
+        );
+
+    </script>
 
 </body>
 </html>
