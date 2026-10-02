@@ -565,7 +565,8 @@
 
 </div>
 
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
 <script>
 
 const SUPABASE_URL = "https://erttykaeyvhbzignpysr.supabase.co";
@@ -1036,27 +1037,80 @@ function displayPickups() {
    VIEW LOCATION PHOTO
 ================================ */
 
+/* ================================
+   VIEW LOCATION PHOTO
+================================ */
+
 async function viewLocationPhoto(fileName) {
 
     try {
 
-        const response = await fetch(
-            SUPABASE_URL +
-            "/storage/v1/object/sign/package-location-images/" +
-            encodeURIComponent(fileName),
-            {
-                method: "POST",
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
 
-                headers: {
-                    "apikey": SUPABASE_KEY,
-                    "Authorization": "Bearer " + accessToken,
-                    "Content-Type": "application/json"
-                },
 
-                body: JSON.stringify({
-                    expiresIn: 300
-                })
-            }
+        const { data, error } =
+            await supabaseClient
+                .storage
+                .from("package-location-images")
+                .createSignedUrl(
+                    fileName,
+                    300
+                );
+
+
+        if (error) {
+
+            console.error(
+                "Photo error:",
+                error
+            );
+
+            alert(
+                "Could not open the package location photo."
+            );
+
+            return;
+        }
+
+
+        if (!data || !data.signedUrl) {
+
+            console.error(
+                "No signed URL returned:",
+                data
+            );
+
+            alert(
+                "Could not create a link to the photo."
+            );
+
+            return;
+        }
+
+
+        window.open(
+            data.signedUrl,
+            "_blank"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Photo viewing error:",
+            error
+        );
+
+        alert(
+            "Could not load the package location photo."
+        );
+
+    }
+
+}
         );
 
         if (!response.ok) {
