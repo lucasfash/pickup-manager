@@ -1924,37 +1924,44 @@ async function viewLocationPhoto(fileName) {
         const photoLoading =
             document.getElementById(
                 "photoLoading"
+            );/* =========================================================
+   VIEW LOCATION PHOTO
+========================================================= */
+
+let currentPhotoUrl = null;
+
+async function viewLocationPhoto(fileName) {
+
+    try {
+
+        if (!fileName) {
+
+            alert(
+                "No photo was attached to this pickup."
             );
 
+            return;
+        }
 
-        /*
-           Show the photo window immediately.
-        */
+        const photoModal =
+            document.getElementById("photoModal");
 
-        photoModal.style.display =
-            "flex";
+        const photoViewer =
+            document.getElementById("locationPhotoViewer");
 
+        const photoLoading =
+            document.getElementById("photoLoading");
 
-        photoViewer.style.display =
-            "none";
+        photoModal.style.display = "flex";
 
+        photoViewer.style.display = "none";
 
-        photoViewer.src =
-            "";
+        photoViewer.src = "";
 
+        photoLoading.style.display = "block";
 
-        photoLoading.style.display =
-            "block";
+        photoLoading.textContent = "Loading photo...";
 
-
-        photoLoading.textContent =
-            "Loading photo...";
-
-
-        /*
-           Remove the previous temporary
-           browser image URL if one exists.
-        */
 
         if (currentPhotoUrl) {
 
@@ -1962,30 +1969,17 @@ async function viewLocationPhoto(fileName) {
                 currentPhotoUrl
             );
 
-            currentPhotoUrl =
-                null;
-
+            currentPhotoUrl = null;
         }
 
-
-        /*
-           Download the private image directly
-           through the authenticated Supabase
-           client.
-        */
 
         const {
             data,
             error
-        } =
-            await supabaseClient
-                .storage
-                .from(
-                    "package-location-images"
-                )
-                .download(
-                    fileName
-                );
+        } = await supabaseClient
+            .storage
+            .from("package-location-images")
+            .download(fileName);
 
 
         if (error) {
@@ -1995,41 +1989,24 @@ async function viewLocationPhoto(fileName) {
                 error
             );
 
-
             photoLoading.textContent =
                 "Could not load the photo.";
 
-
             return;
-
         }
 
 
         if (!data) {
 
-            console.error(
-                "No photo data returned."
-            );
-
-
             photoLoading.textContent =
                 "No photo data was returned.";
 
-
             return;
-
         }
 
 
-        /*
-           Convert the downloaded image into
-           a temporary browser-only URL.
-        */
-
         currentPhotoUrl =
-            URL.createObjectURL(
-                data
-            );
+            URL.createObjectURL(data);
 
 
         photoViewer.src =
@@ -2053,9 +2030,7 @@ async function viewLocationPhoto(fileName) {
 
 
         const photoLoading =
-            document.getElementById(
-                "photoLoading"
-            );
+            document.getElementById("photoLoading");
 
 
         if (photoLoading) {
@@ -2076,31 +2051,21 @@ async function viewLocationPhoto(fileName) {
 
 function closePhotoModal(event) {
 
-    /*
-       If the user clicks the dark background,
-       close the window.
-    */
-
     if (
         event &&
         event.target !== event.currentTarget
     ) {
 
         return;
-
     }
 
 
     const photoModal =
-        document.getElementById(
-            "photoModal"
-        );
+        document.getElementById("photoModal");
 
 
     const photoViewer =
-        document.getElementById(
-            "locationPhotoViewer"
-        );
+        document.getElementById("locationPhotoViewer");
 
 
     photoModal.style.display =
@@ -2111,106 +2076,17 @@ function closePhotoModal(event) {
         "";
 
 
-    /*
-       Delete the temporary browser URL
-       when the photo is closed.
-    */
-
     if (currentPhotoUrl) {
 
         URL.revokeObjectURL(
             currentPhotoUrl
         );
 
-        currentPhotoUrl =
-            null;
+        currentPhotoUrl = null;
 
     }
 
 }
-
-        const {
-            data,
-            error
-        } =
-            await supabaseClient
-                .storage
-                .from(
-                    "package-location-images"
-                )
-                .createSignedUrl(
-                    fileName,
-                    300
-                );
-
-
-        if (error) {
-
-            console.error(
-                "Photo error:",
-                error
-            );
-
-
-            alert(
-                "Could not open the package location photo."
-            );
-
-
-            return;
-
-        }
-
-
-        if (
-            !data ||
-            !data.signedUrl
-        ) {
-
-            console.error(
-                "No signed URL returned:",
-                data
-            );
-
-
-            alert(
-                "Could not create a link to the photo."
-            );
-
-
-            return;
-
-        }
-
-
-        /*
-           Open the actual signed URL
-           returned by Supabase.
-        */
-
-        window.open(
-            data.signedUrl,
-            "_blank"
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "Photo viewing error:",
-            error
-        );
-
-
-        alert(
-            "Could not load the package location photo."
-        );
-
-    }
-
-}
-
-
 /* =========================================================
    COMPLETE PICKUP
 ========================================================= */
