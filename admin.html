@@ -29,9 +29,14 @@
         }
 
 
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
         header {
             background: #172554;
             color: white;
+
             padding: 20px 30px;
 
             display: flex;
@@ -51,18 +56,27 @@
         }
 
 
+        /* =====================================================
+           MAIN CONTAINER
+        ===================================================== */
+
         .container {
             max-width: 1200px;
+
             margin: 30px auto;
+
             padding: 0 20px;
         }
 
 
         .top-bar {
             display: flex;
+
             justify-content: space-between;
             align-items: center;
+
             margin-bottom: 25px;
+
             gap: 15px;
         }
 
@@ -74,30 +88,44 @@
 
         .top-buttons {
             display: flex;
+
             align-items: center;
+
             gap: 8px;
+
             flex-wrap: wrap;
         }
 
 
+        /* =====================================================
+           BUTTONS
+        ===================================================== */
+
         button {
             border: none;
+
             border-radius: 7px;
+
             padding: 11px 18px;
+
             font-size: 14px;
+
             font-weight: bold;
+
             cursor: pointer;
         }
 
 
         button:disabled {
             opacity: 0.6;
+
             cursor: not-allowed;
         }
 
 
         .primary {
             background: #2563eb;
+
             color: white;
         }
 
@@ -109,6 +137,7 @@
 
         .secondary {
             background: #e5e7eb;
+
             color: #111827;
         }
 
@@ -120,6 +149,7 @@
 
         .archive-button {
             background: #7c3aed;
+
             color: white;
         }
 
@@ -131,9 +161,13 @@
 
         .logout-button {
             background: #dc2626;
+
             color: white;
+
             padding: 8px 13px;
+
             font-size: 13px;
+
             margin-left: 5px;
         }
 
@@ -143,10 +177,17 @@
         }
 
 
+        /* =====================================================
+           SEARCH
+        ===================================================== */
+
         .search-box {
             background: white;
+
             padding: 20px;
+
             border-radius: 10px;
+
             margin-bottom: 20px;
 
             box-shadow:
@@ -156,26 +197,39 @@
 
         .search-box input {
             width: 100%;
+
             padding: 12px;
 
-            border: 1px solid #d1d5db;
+            border:
+                1px solid #d1d5db;
+
             border-radius: 6px;
 
             font-size: 15px;
         }
 
 
+        /* =====================================================
+           DASHBOARD
+        ===================================================== */
+
         .dashboard {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
             gap: 15px;
+
             margin-bottom: 25px;
         }
 
 
         .stat {
             background: white;
+
             padding: 20px;
+
             border-radius: 10px;
 
             box-shadow:
@@ -185,20 +239,29 @@
 
         .stat-title {
             font-size: 13px;
+
             color: #6b7280;
+
             margin-bottom: 8px;
         }
 
 
         .stat-number {
             font-size: 28px;
+
             font-weight: bold;
         }
 
 
+        /* =====================================================
+           TABLE
+        ===================================================== */
+
         .table-container {
             background: white;
+
             border-radius: 10px;
+
             overflow: hidden;
 
             box-shadow:
@@ -208,16 +271,20 @@
 
         table {
             width: 100%;
+
             border-collapse: collapse;
         }
 
 
         th {
             background: #f9fafb;
+
             text-align: left;
+
             padding: 14px;
 
             font-size: 13px;
+
             color: #6b7280;
 
             border-bottom:
@@ -232,6 +299,8 @@
                 1px solid #e5e7eb;
 
             font-size: 14px;
+
+            vertical-align: top;
         }
 
 
@@ -240,29 +309,40 @@
         }
 
 
+        /* =====================================================
+           STATUS
+        ===================================================== */
+
         .status {
+            display: inline-block;
+
             padding: 5px 9px;
+
             border-radius: 20px;
 
             font-size: 12px;
+
             font-weight: bold;
         }
 
 
         .ready {
             background: #dcfce7;
+
             color: #166534;
         }
 
 
         .completed {
             background: #e5e7eb;
+
             color: #374151;
         }
 
 
         .archived {
             background: #ede9fe;
+
             color: #5b21b6;
         }
 
@@ -275,12 +355,14 @@
             display: none;
 
             position: fixed;
+
             inset: 0;
 
             background:
                 rgba(0,0,0,0.5);
 
             justify-content: center;
+
             align-items: center;
 
             padding: 20px;
@@ -293,19 +375,24 @@
             background: white;
 
             width: 100%;
+
             max-width: 650px;
 
             max-height: 90vh;
+
             overflow-y: auto;
 
             border-radius: 12px;
+
             padding: 30px;
         }
 
 
         .modal-header {
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
 
             margin-bottom: 25px;
@@ -319,15 +406,125 @@
 
         .close {
             background: none;
+
             font-size: 28px;
+
             cursor: pointer;
+
             padding: 0 8px;
+
             color: #374151;
         }
 
 
         .close:hover {
             color: #dc2626;
+        }
+
+
+        /* =====================================================
+           PICKUP DETAILS
+        ===================================================== */
+
+        .details-section {
+            margin-bottom: 24px;
+        }
+
+
+        .details-section-title {
+            font-size: 14px;
+
+            font-weight: bold;
+
+            color: #172554;
+
+            padding-bottom: 8px;
+
+            border-bottom:
+                1px solid #e5e7eb;
+
+            margin-bottom: 12px;
+        }
+
+
+        .details-grid {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 14px;
+        }
+
+
+        .details-item {
+            background: #f9fafb;
+
+            border:
+                1px solid #e5e7eb;
+
+            border-radius: 7px;
+
+            padding: 11px 12px;
+        }
+
+
+        .details-label {
+            font-size: 11px;
+
+            color: #6b7280;
+
+            text-transform: uppercase;
+
+            margin-bottom: 4px;
+        }
+
+
+        .details-value {
+            font-size: 14px;
+
+            color: #111827;
+
+            word-break: break-word;
+        }
+
+
+        .details-value a {
+            color: #2563eb;
+
+            text-decoration: none;
+        }
+
+
+        .details-value a:hover {
+            text-decoration: underline;
+        }
+
+
+        .details-full {
+            grid-column: 1 / -1;
+        }
+
+
+        .details-code {
+            text-align: center;
+
+            font-size: 28px;
+
+            font-weight: bold;
+
+            letter-spacing: 2px;
+
+            color: #172554;
+
+            margin-bottom: 10px;
+        }
+
+
+        .details-status {
+            text-align: center;
+
+            margin-bottom: 25px;
         }
 
 
@@ -342,6 +539,7 @@
 
         .photo-modal-content {
             max-width: 950px;
+
             text-align: center;
         }
 
@@ -350,6 +548,7 @@
             display: none;
 
             max-width: 100%;
+
             max-height: 70vh;
 
             object-fit: contain;
@@ -387,9 +586,12 @@
 
         .archive-search input {
             width: 100%;
+
             padding: 12px;
 
-            border: 1px solid #d1d5db;
+            border:
+                1px solid #d1d5db;
+
             border-radius: 6px;
 
             font-size: 15px;
@@ -399,7 +601,8 @@
         .archive-date {
             margin-bottom: 25px;
 
-            border: 1px solid #e5e7eb;
+            border:
+                1px solid #e5e7eb;
 
             border-radius: 10px;
 
@@ -419,7 +622,9 @@
             color: #172554;
 
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
         }
 
@@ -440,7 +645,8 @@
         .archive-ticket {
             padding: 15px 16px;
 
-            border-top: 1px solid #e5e7eb;
+            border-top:
+                1px solid #e5e7eb;
 
             display: grid;
 
@@ -502,6 +708,7 @@
             margin-bottom: 6px;
 
             font-size: 13px;
+
             font-weight: bold;
         }
 
@@ -509,7 +716,6 @@
         .form-group input,
         .form-group select,
         .form-group textarea {
-
             width: 100%;
 
             padding: 11px;
@@ -525,6 +731,7 @@
 
         .form-group textarea {
             min-height: 80px;
+
             resize: vertical;
         }
 
@@ -539,14 +746,20 @@
         }
 
 
+        /* =====================================================
+           CONFIRMATION
+        ===================================================== */
+
         .confirmation {
             text-align: center;
+
             padding: 25px;
         }
 
 
         .confirmation-code {
             font-size: 36px;
+
             font-weight: bold;
 
             letter-spacing: 3px;
@@ -580,6 +793,7 @@
             display: flex;
 
             justify-content: center;
+
             align-items: center;
 
             z-index: 9999;
@@ -592,6 +806,7 @@
             background: white;
 
             width: 100%;
+
             max-width: 420px;
 
             padding: 35px;
@@ -605,12 +820,14 @@
 
         .login-box h1 {
             color: #172554;
+
             margin-bottom: 8px;
         }
 
 
         .login-subtitle {
             color: #6b7280;
+
             margin-bottom: 25px;
         }
 
@@ -657,6 +874,7 @@
 
         .remember-row input {
             width: 16px;
+
             height: 16px;
 
             cursor: pointer;
@@ -714,23 +932,39 @@
 
 
             table {
-                min-width: 900px;
+                min-width: 950px;
             }
 
 
             .form-row {
                 grid-template-columns: 1fr;
+
                 gap: 0;
             }
 
 
             .archive-ticket {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns:
+                    1fr 1fr;
             }
 
 
             header {
                 padding: 15px 20px;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .details-full {
+                grid-column: auto;
             }
 
         }
@@ -750,7 +984,9 @@
 
             .top-bar {
                 flex-direction: column;
+
                 align-items: flex-start;
+
                 gap: 15px;
             }
 
@@ -761,7 +997,8 @@
 
 
             .archive-ticket {
-                grid-template-columns: 1fr;
+                grid-template-columns:
+                    1fr;
             }
 
         }
@@ -834,7 +1071,9 @@
     </div>
 
 
-    <!-- DASHBOARD STATS -->
+    <!-- =====================================================
+         DASHBOARD STATS
+    ===================================================== -->
 
     <div class="dashboard">
 
@@ -904,20 +1143,24 @@
     </div>
 
 
-    <!-- SEARCH -->
+    <!-- =====================================================
+         SEARCH
+    ===================================================== -->
 
     <div class="search-box">
 
         <input
             type="text"
             id="search"
-            placeholder="Search confirmation code, carrier, requester, company..."
+            placeholder="Search confirmation code, requester, company, email, phone, carrier..."
         >
 
     </div>
 
 
-    <!-- TABLE -->
+    <!-- =====================================================
+         TABLE
+    ===================================================== -->
 
     <div class="table-container">
 
@@ -965,6 +1208,47 @@
             </tbody>
 
         </table>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     PICKUP DETAILS MODAL
+========================================================= -->
+
+<div
+    class="modal"
+    id="detailsModal"
+    onclick="closeDetailsModal(event)"
+>
+
+    <div
+        class="modal-content"
+        onclick="event.stopPropagation()"
+    >
+
+        <div class="modal-header">
+
+            <h2>
+                Pickup Details
+            </h2>
+
+
+            <button
+                class="close"
+                onclick="closeDetailsModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div id="pickupDetailsContent">
+
+        </div>
 
     </div>
 
@@ -1099,7 +1383,6 @@
 
         <form id="pickupForm">
 
-
             <div class="form-row">
 
                 <div class="form-group">
@@ -1139,6 +1422,20 @@
                 <div class="form-group">
 
                     <label>
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="adminEmail"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
                         Phone / Contact
                     </label>
 
@@ -1149,6 +1446,10 @@
 
                 </div>
 
+            </div>
+
+
+            <div class="form-row">
 
                 <div class="form-group">
 
@@ -1158,31 +1459,31 @@
 
                     <select id="carrier">
 
-                        <option>
+                        <option value="FedEx">
                             FedEx
                         </option>
 
-                        <option>
+                        <option value="UPS">
                             UPS
                         </option>
 
-                        <option>
+                        <option value="Dayton Freight">
                             Dayton Freight
                         </option>
 
-                        <option>
+                        <option value="R+L Carriers">
                             R+L Carriers
                         </option>
 
-                        <option>
+                        <option value="Estes">
                             Estes
                         </option>
 
-                        <option>
+                        <option value="Customer Pickup">
                             Customer Pickup
                         </option>
 
-                        <option>
+                        <option value="Other">
                             Other
                         </option>
 
@@ -1190,10 +1491,6 @@
 
                 </div>
 
-            </div>
-
-
-            <div class="form-row">
 
                 <div class="form-group">
 
@@ -1209,6 +1506,10 @@
 
                 </div>
 
+            </div>
+
+
+            <div class="form-row">
 
                 <div class="form-group">
 
@@ -1224,10 +1525,6 @@
 
                 </div>
 
-            </div>
-
-
-            <div class="form-row">
 
                 <div class="form-group">
 
@@ -1245,21 +1542,21 @@
 
                 </div>
 
+            </div>
 
-                <div class="form-group">
 
-                    <label>
-                        Package Location
-                    </label>
+            <div class="form-group">
 
-                    <input
-                        type="text"
-                        id="location"
-                        placeholder="Example: Dock 2"
-                        required
-                    >
+                <label>
+                    Package Location
+                </label>
 
-                </div>
+                <input
+                    type="text"
+                    id="location"
+                    placeholder="Example: Dock 2"
+                    required
+                >
 
             </div>
 
@@ -1363,7 +1660,6 @@
 
 <script>
 
-
 /* =========================================================
    SUPABASE CONFIGURATION
 ========================================================= */
@@ -1399,6 +1695,57 @@ let pickups = [];
 let accessToken = null;
 
 let currentPhotoUrl = null;
+
+
+/* =========================================================
+   GENERATE CONFIRMATION CODE
+========================================================= */
+
+function generateCode() {
+
+    const number =
+        Math.floor(
+            10000 +
+            Math.random() * 90000
+        );
+
+
+    return "BS-" + number;
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(value) {
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
 
 
 /* =========================================================
@@ -1655,7 +2002,6 @@ async function adminLogin() {
             errorBox.textContent =
                 error.message ||
                 "Login failed.";
-
 
             return;
 
@@ -1951,14 +2297,6 @@ function displayPickups() {
             : "";
 
 
-    /*
-       Only READY and COMPLETED pickups
-       appear on the main dashboard.
-
-       ARCHIVED pickups stay in the
-       Picked Up folder.
-    */
-
     const activePickups =
         pickups.filter(
             function(pickup) {
@@ -1976,46 +2314,34 @@ function displayPickups() {
         activePickups.filter(
             function(pickup) {
 
-                return (
+                const searchable =
+                    [
 
-                    String(
-                        pickup.confirmation_code || ""
-                    )
-                    .toLowerCase()
-                    .includes(search)
+                        pickup.confirmation_code,
 
-                    ||
+                        pickup.requester_name,
 
-                    String(
-                        pickup.requester_name || ""
-                    )
-                    .toLowerCase()
-                    .includes(search)
+                        pickup.company,
 
-                    ||
+                        pickup.email,
 
-                    String(
-                        pickup.company || ""
-                    )
-                    .toLowerCase()
-                    .includes(search)
+                        pickup.phone,
 
-                    ||
+                        pickup.carrier,
 
-                    String(
-                        pickup.carrier || ""
-                    )
-                    .toLowerCase()
-                    .includes(search)
+                        pickup.package_location,
 
-                    ||
+                        pickup.package_description,
 
-                    String(
-                        pickup.package_location || ""
-                    )
-                    .toLowerCase()
-                    .includes(search)
+                        pickup.special_instructions
 
+                    ]
+                    .join(" ")
+                    .toLowerCase();
+
+
+                return searchable.includes(
+                    search
                 );
 
             }
@@ -2024,6 +2350,37 @@ function displayPickups() {
 
     table.innerHTML =
         "";
+
+
+    if (
+        filtered.length === 0
+    ) {
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="7"
+                    style="
+                        text-align:center;
+                        padding:40px;
+                        color:#6b7280;
+                    "
+                >
+                    No pickup requests found.
+                </td>
+
+            </tr>
+
+        `;
+
+
+        updateStats();
+
+        return;
+
+    }
 
 
     filtered.forEach(
@@ -2074,10 +2431,6 @@ function displayPickups() {
             }
 
 
-            let actionButton =
-                "";
-
-
             const safeCode =
                 String(
                     pickup.confirmation_code
@@ -2092,14 +2445,28 @@ function displayPickups() {
                 );
 
 
+            let actionButton =
+                `
+
+                    <button
+                        class="secondary"
+                        onclick="viewPickupDetails('${safeCode}')"
+                    >
+                        👁️ Details
+                    </button>
+
+                `;
+
+
             if (
                 pickup.status === "READY"
             ) {
 
-                actionButton = `
+                actionButton += `
 
                     <button
                         class="primary"
+                        style="margin-top:6px;"
                         onclick="completePickup('${safeCode}')"
                     >
                         Picked Up
@@ -2111,10 +2478,11 @@ function displayPickups() {
                 pickup.status === "COMPLETED"
             ) {
 
-                actionButton = `
+                actionButton += `
 
                     <button
                         class="archive-button"
+                        style="margin-top:6px;"
                         onclick="archivePickup('${safeCode}')"
                     >
                         📁 Archive
@@ -2139,23 +2507,42 @@ function displayPickups() {
 
 
                 <td>
+
                     ${escapeHtml(
                         pickup.requester_name
                     )}
+
+                    <br>
+
+                    <span
+                        style="
+                            font-size:12px;
+                            color:#6b7280;
+                        "
+                    >
+                        ${escapeHtml(
+                            pickup.company
+                        )}
+                    </span>
+
                 </td>
 
 
                 <td>
+
                     ${escapeHtml(
                         pickup.carrier
                     )}
+
                 </td>
 
 
                 <td>
+
                     ${Number(
                         pickup.package_count || 0
                     )}
+
                 </td>
 
 
@@ -2190,7 +2577,9 @@ function displayPickups() {
 
 
                 <td>
+
                     ${actionButton}
+
                 </td>
 
             `;
@@ -2210,34 +2599,566 @@ function displayPickups() {
 
 
 /* =========================================================
-   ESCAPE HTML
+   VIEW PICKUP DETAILS
 ========================================================= */
 
-function escapeHtml(value) {
+function viewPickupDetails(code) {
 
-    return String(
-        value ?? ""
-    )
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-    .replace(
-        /</g,
-        "&lt;"
-    )
-    .replace(
-        />/g,
-        "&gt;"
-    )
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-    .replace(
-        /'/g,
-        "&#039;"
-    );
+    const pickup =
+        pickups.find(
+            function(item) {
+
+                return (
+                    item.confirmation_code ===
+                    code
+                );
+
+            }
+        );
+
+
+    if (!pickup) {
+
+        alert(
+            "Pickup could not be found."
+        );
+
+        return;
+
+    }
+
+
+    const container =
+        document.getElementById(
+            "pickupDetailsContent"
+        );
+
+
+    const statusClass =
+        pickup.status === "READY"
+            ? "ready"
+            : pickup.status === "COMPLETED"
+                ? "completed"
+                : "archived";
+
+
+    const pickupDate =
+        pickup.pickup_date
+            ? new Date(
+                pickup.pickup_date +
+                "T00:00:00"
+            ).toLocaleDateString(
+                "en-US",
+                {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+                }
+            )
+            : "Not provided";
+
+
+    let pickupTime =
+        pickup.pickup_time || "";
+
+
+    if (pickupTime) {
+
+        const timeParts =
+            pickupTime.split(":");
+
+
+        const hours =
+            Number(
+                timeParts[0]
+            );
+
+
+        const minutes =
+            timeParts[1] || "00";
+
+
+        const displayHour =
+            hours === 0
+                ? 12
+                : hours > 12
+                    ? hours - 12
+                    : hours;
+
+
+        const amPm =
+            hours >= 12
+                ? "PM"
+                : "AM";
+
+
+        pickupTime =
+            `${displayHour}:${minutes} ${amPm}`;
+
+    } else {
+
+        pickupTime =
+            "Not provided";
+
+    }
+
+
+    const submittedDate =
+        pickup.created_at
+            ? new Date(
+                pickup.created_at
+            ).toLocaleString(
+                "en-US",
+                {
+                    dateStyle: "medium",
+                    timeStyle: "short"
+                }
+            )
+            : "Not available";
+
+
+    const pickedUpDate =
+        pickup.picked_up_at
+            ? new Date(
+                pickup.picked_up_at
+            ).toLocaleString(
+                "en-US",
+                {
+                    dateStyle: "medium",
+                    timeStyle: "short"
+                }
+            )
+            : "Not picked up yet";
+
+
+    let photoButton =
+        "";
+
+
+    if (
+        pickup.package_location_image
+    ) {
+
+        const safeFileName =
+            String(
+                pickup.package_location_image
+            )
+            .replace(
+                /\\/g,
+                "\\\\"
+            )
+            .replace(
+                /'/g,
+                "\\'"
+            );
+
+
+        photoButton = `
+
+            <button
+                class="secondary"
+                onclick="viewLocationPhoto('${safeFileName}')"
+            >
+                📷 View Package Location Photo
+            </button>
+
+        `;
+
+    } else {
+
+        photoButton = `
+
+            <span
+                style="color:#6b7280;"
+            >
+                No photo attached.
+            </span>
+
+        `;
+
+    }
+
+
+    container.innerHTML = `
+
+        <div class="details-code">
+
+            ${escapeHtml(
+                pickup.confirmation_code
+            )}
+
+        </div>
+
+
+        <div class="details-status">
+
+            <span
+                class="status ${statusClass}"
+            >
+                ${escapeHtml(
+                    pickup.status
+                )}
+            </span>
+
+        </div>
+
+
+        <!-- REQUESTER -->
+
+        <div class="details-section">
+
+            <div class="details-section-title">
+                Requester Information
+            </div>
+
+
+            <div class="details-grid">
+
+                <div class="details-item">
+
+                    <div class="details-label">
+                        Name
+                    </div>
+
+                    <div class="details-value">
+
+                        ${escapeHtml(
+                            pickup.requester_name
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="details-item">
+
+                    <div class="details-label">
+                        Company
+                    </div>
+
+                    <div class="details-value">
+
+                        ${escapeHtml(
+                            pickup.company
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="details-item">
+
+                    <div class="details-label">
+                        Email
+                    </div>
+
+                    <div class="details-value">
+
+                        ${
+                            pickup.email
+                                ? `
+                                    <a
+                                        href="mailto:${escapeHtml(
+                                            pickup.email
+                                        )}"
+                                    >
+                                        ${escapeHtml(
+                                            pickup.email
+                                        )}
+                                    </a>
+                                `
+                                : "Not provided"
+                        }
+
+                    </div>
+
+                </div>
+
+
+                <div class="details-item">
+
+                    <div class="details-label">
+                        Phone
+                    </div>
+
+                    <div class="details-value">
+
+                        ${
+                            pickup.phone
+                                ? `
+                                    <a
+                                        href="tel:${escapeHtml(
+                                            pickup.phone
+                                        )}"
+                                    >
+                                        ${escapeHtml(
+                                            pickup.phone
+                                        )}
+                                    </a>
+                                `
+                                : "Not provided"
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PICKUP -->
+
+        <div class="details-section">
+
+            <div class="details-section-title">
+                Pickup Information
+            </div>
+
+
+            <div class="details-grid">
+
+                <div class="details-item">
+
+                    <div class="details-label">
+                        Carrier
+                    </div>
+
+                    <div class="details-value">
+
+                        ${escapeHtml(
+                            pickup.carrier
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="details-item">
+
+                    <div class="details-label">
+                        Pickup Date
+                    </div>
+
+                    <div class="details-value">
+
+                        ${escapeHtml(
+                            pickupDate
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="details-item">
+
+                    <div class="details-label">
+                        Pickup Time
+                    </div>
+
+                    <div class="details-value">
+
+                        ${escapeHtml(
+                            pickupTime
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="details-item">
+
+                    <div class="details-label">
+                        Number of Packages
+                    </div>
+
+                    <div class="details-value">
+
+                        ${Number(
+                            pickup.package_count || 0
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="details-item details-full">
+
+                    <div class="details-label">
+                        Package Location
+                    </div>
+
+                    <div class="details-value">
+
+                        ${escapeHtml(
+                            pickup.package_location
+                        )}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PACKAGE -->
+
+        <div class="details-section">
+
+            <div class="details-section-title">
+                Package Information
+            </div>
+
+
+            <div class="details-grid">
+
+                <div class="details-item details-full">
+
+                    <div class="details-label">
+                        Package Description
+                    </div>
+
+                    <div class="details-value">
+
+                        ${escapeHtml(
+                            pickup.package_description
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="details-item details-full">
+
+                    <div class="details-label">
+                        Special Instructions
+                    </div>
+
+                    <div class="details-value">
+
+                        ${
+                            pickup.special_instructions
+                                ? escapeHtml(
+                                    pickup.special_instructions
+                                )
+                                : "None"
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PHOTO -->
+
+        <div class="details-section">
+
+            <div class="details-section-title">
+                Package Location Photo
+            </div>
+
+            ${photoButton}
+
+        </div>
+
+
+        <!-- RECORD INFORMATION -->
+
+        <div class="details-section">
+
+            <div class="details-section-title">
+                Record Information
+            </div>
+
+
+            <div class="details-grid">
+
+                <div class="details-item">
+
+                    <div class="details-label">
+                        Submitted
+                    </div>
+
+                    <div class="details-value">
+
+                        ${escapeHtml(
+                            submittedDate
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="details-item">
+
+                    <div class="details-label">
+                        Picked Up
+                    </div>
+
+                    <div class="details-value">
+
+                        ${escapeHtml(
+                            pickedUpDate
+                        )}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    document
+        .getElementById(
+            "detailsModal"
+        )
+        .style.display =
+        "flex";
+
+}
+
+
+/* =========================================================
+   CLOSE DETAILS MODAL
+========================================================= */
+
+function closeDetailsModal(event) {
+
+    if (
+        event &&
+        event.target !== event.currentTarget
+    ) {
+
+        return;
+
+    }
+
+
+    document
+        .getElementById(
+            "detailsModal"
+        )
+        .style.display =
+        "none";
 
 }
 
@@ -2350,7 +3271,6 @@ async function viewLocationPhoto(
             photoLoading.textContent =
                 "No photo data was returned.";
 
-
             return;
 
         }
@@ -2394,9 +3314,7 @@ async function viewLocationPhoto(
    CLOSE PHOTO VIEWER
 ========================================================= */
 
-function closePhotoModal(
-    event
-) {
+function closePhotoModal(event) {
 
     if (
         event &&
@@ -2446,9 +3364,7 @@ function closePhotoModal(
    COMPLETE PICKUP
 ========================================================= */
 
-async function completePickup(
-    code
-) {
+async function completePickup(code) {
 
     const confirmed =
         confirm(
@@ -2531,9 +3447,7 @@ async function completePickup(
    ARCHIVE PICKUP
 ========================================================= */
 
-async function archivePickup(
-    code
-) {
+async function archivePickup(code) {
 
     const confirmed =
         confirm(
@@ -2699,11 +3613,17 @@ function displayArchive() {
 
                         pickup.company,
 
+                        pickup.email,
+
+                        pickup.phone,
+
                         pickup.carrier,
 
                         pickup.package_location,
 
-                        pickup.package_description
+                        pickup.package_description,
+
+                        pickup.special_instructions
 
                     ]
                     .join(" ")
@@ -2743,10 +3663,6 @@ function displayArchive() {
     }
 
 
-    /*
-       Sort newest pickup date first.
-    */
-
     filtered.sort(
         function(a, b) {
 
@@ -2762,10 +3678,6 @@ function displayArchive() {
         }
     );
 
-
-    /*
-       Group tickets by pickup date.
-    */
 
     const groups = {};
 
@@ -2896,6 +3808,20 @@ function displayArchive() {
                             : "Unknown";
 
 
+                    const safeCode =
+                        String(
+                            pickup.confirmation_code
+                        )
+                        .replace(
+                            /\\/g,
+                            "\\\\"
+                        )
+                        .replace(
+                            /'/g,
+                            "\\'"
+                        );
+
+
                     let photoButton =
                         "";
 
@@ -2964,7 +3890,12 @@ function displayArchive() {
                                 )}
                             </div>
 
-                            <div style="font-size:12px;color:#6b7280;">
+                            <div
+                                style="
+                                    font-size:12px;
+                                    color:#6b7280;
+                                "
+                            >
                                 ${escapeHtml(
                                     pickup.company
                                 )}
@@ -2985,7 +3916,12 @@ function displayArchive() {
                                 )}
                             </div>
 
-                            <div style="font-size:12px;color:#6b7280;">
+                            <div
+                                style="
+                                    font-size:12px;
+                                    color:#6b7280;
+                                "
+                            >
                                 ${escapeHtml(
                                     pickup.package_location
                                 )}
@@ -3006,7 +3942,12 @@ function displayArchive() {
                                 )}
                             </div>
 
-                            <div style="font-size:12px;color:#6b7280;">
+                            <div
+                                style="
+                                    font-size:12px;
+                                    color:#6b7280;
+                                "
+                            >
                                 ${Number(
                                     pickup.package_count || 0
                                 )}
@@ -3019,6 +3960,16 @@ function displayArchive() {
                                         : "packages"
                                 }
                             </div>
+
+
+                            <button
+                                class="secondary"
+                                style="margin-top:8px;"
+                                onclick="viewPickupDetails('${safeCode}')"
+                            >
+                                👁️ Details
+                            </button>
+
 
                             ${photoButton}
 
@@ -3273,7 +4224,12 @@ document
                         .trim(),
 
                 email:
-                    "",
+                    document
+                        .getElementById(
+                            "adminEmail"
+                        )
+                        .value
+                        .trim(),
 
                 phone:
                     document
@@ -3419,28 +4375,6 @@ document
 
         }
     );
-
-
-/* =========================================================
-   GENERATE CONFIRMATION CODE
-========================================================= */
-
-function generateCode() {
-
-    const number =
-        Math.floor(
-            10000 +
-            Math.random() *
-            90000
-        );
-
-
-    return (
-        "BS-" +
-        number
-    );
-
-}
 
 
 /* =========================================================
