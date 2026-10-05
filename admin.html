@@ -12,7 +12,6 @@
 
     <title>Pickup Manager - Admin</title>
 
-
     <script
         src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
     ></script>
@@ -250,7 +249,7 @@
 
 
         /* =====================================================
-           MAIN APP
+           APP
         ===================================================== */
 
         #app {
@@ -419,6 +418,227 @@
 
 
         /* =====================================================
+           SCHEDULED PICKUPS
+        ===================================================== */
+
+        .scheduled-card {
+
+            background: white;
+
+            border:
+                1px solid
+                #e5e7eb;
+
+            border-radius: 12px;
+
+            margin-bottom: 25px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 2px 5px
+                rgba(0, 0, 0, 0.04);
+        }
+
+
+        .scheduled-header {
+
+            padding:
+                18px 20px;
+
+            border-bottom:
+                1px solid
+                #e5e7eb;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+        }
+
+
+        .scheduled-header h2 {
+
+            font-size: 18px;
+
+            color: #111827;
+        }
+
+
+        .scheduled-date-controls {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            min-width: 300px;
+        }
+
+
+        .scheduled-date-controls input {
+
+            width: auto;
+
+            min-width: 180px;
+        }
+
+
+        .scheduled-count {
+
+            padding:
+                10px 14px;
+
+            background: #eff6ff;
+
+            color: #1d4ed8;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+
+        .scheduled-list {
+
+            padding: 0;
+        }
+
+
+        .scheduled-item {
+
+            display: grid;
+
+            grid-template-columns:
+                110px
+                130px
+                1fr
+                150px
+                100px
+                auto;
+
+            align-items: center;
+
+            gap: 15px;
+
+            padding:
+                15px 20px;
+
+            border-bottom:
+                1px solid
+                #f0f0f0;
+        }
+
+
+        .scheduled-item:last-child {
+
+            border-bottom: none;
+        }
+
+
+        .scheduled-item:hover {
+
+            background: #fafafa;
+        }
+
+
+        .scheduled-time {
+
+            font-weight: 800;
+
+            color: #111827;
+        }
+
+
+        .scheduled-code {
+
+            font-family:
+                monospace;
+
+            font-weight: 800;
+
+            color: #2563eb;
+        }
+
+
+        .scheduled-requester {
+
+            min-width: 0;
+        }
+
+
+        .scheduled-requester-name {
+
+            font-weight: 700;
+
+            color: #111827;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            white-space: nowrap;
+        }
+
+
+        .scheduled-company {
+
+            color: #6b7280;
+
+            font-size: 12px;
+
+            margin-top: 3px;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            white-space: nowrap;
+        }
+
+
+        .scheduled-carrier {
+
+            color: #374151;
+
+            font-size: 14px;
+        }
+
+
+        .scheduled-packages {
+
+            color: #374151;
+
+            font-size: 14px;
+        }
+
+
+        .scheduled-status {
+
+            text-align: right;
+        }
+
+
+        .scheduled-empty {
+
+            padding:
+                35px 20px;
+
+            text-align: center;
+
+            color: #6b7280;
+        }
+
+
+        /* =====================================================
            TOOLBAR
         ===================================================== */
 
@@ -538,7 +758,8 @@
 
         .table-header {
 
-            padding: 18px 20px;
+            padding:
+                18px 20px;
 
             border-bottom:
                 1px solid
@@ -718,10 +939,6 @@
             background: #dbeafe;
         }
 
-
-        /*
-         * Picked Up button is intentionally gray.
-         */
 
         .complete-button {
 
@@ -1205,6 +1422,22 @@
            RESPONSIVE
         ===================================================== */
 
+        @media (max-width: 1100px) {
+
+            .scheduled-item {
+
+                grid-template-columns:
+                    100px
+                    120px
+                    1fr
+                    120px
+                    80px
+                    auto;
+            }
+
+        }
+
+
         @media (max-width: 900px) {
 
             .stats-grid {
@@ -1230,6 +1463,45 @@
             .container {
 
                 padding: 20px;
+            }
+
+
+            .scheduled-header {
+
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+
+            .scheduled-date-controls {
+
+                min-width: 0;
+
+                width: 100%;
+            }
+
+
+            .scheduled-date-controls input {
+
+                flex: 1;
+
+                width: 100%;
+            }
+
+
+            .scheduled-item {
+
+                grid-template-columns:
+                    1fr 1fr;
+
+                gap: 10px;
+            }
+
+
+            .scheduled-status {
+
+                text-align: left;
             }
 
         }
@@ -1287,6 +1559,36 @@
             .login-card {
 
                 padding: 25px;
+            }
+
+
+            .scheduled-date-controls {
+
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+
+            .scheduled-count {
+
+                text-align: center;
+            }
+
+
+            .scheduled-item {
+
+                grid-template-columns:
+                    1fr;
+
+                padding:
+                    15px;
+            }
+
+
+            .scheduled-status {
+
+                text-align: left;
             }
 
         }
@@ -1427,6 +1729,10 @@
     <main class="container">
 
 
+        <!-- =================================================
+             STATS
+        ================================================= -->
+
         <div class="stats-grid">
 
 
@@ -1498,6 +1804,59 @@
 
 
 
+        <!-- =================================================
+             SCHEDULED PICKUPS
+        ================================================= -->
+
+        <div class="scheduled-card">
+
+
+            <div class="scheduled-header">
+
+
+                <h2>
+                    Scheduled Pickups
+                </h2>
+
+
+                <div
+                    class="scheduled-date-controls"
+                >
+
+                    <input
+                        type="date"
+                        id="scheduledDate"
+                        onchange="displayScheduledPickups()"
+                    >
+
+
+                    <div
+                        class="scheduled-count"
+                        id="scheduledCount"
+                    >
+                        0 scheduled
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <div
+                class="scheduled-list"
+                id="scheduledList"
+            ></div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             TOOLBAR
+        ================================================= -->
+
         <div class="toolbar">
 
 
@@ -1536,13 +1895,19 @@
 
 
 
+        <!-- =================================================
+             ACTIVE PICKUPS
+        ================================================= -->
+
         <div class="table-card">
+
 
             <div class="table-header">
 
                 <h2>
                     Active Pickups
                 </h2>
+
 
                 <button
                     class="secondary-button"
@@ -1623,11 +1988,13 @@
 
     <div class="modal-content">
 
+
         <div class="modal-header">
 
             <h2>
                 Pickup Details
             </h2>
+
 
             <button
                 class="close-button"
@@ -1673,11 +2040,13 @@
 
     <div class="modal-content photo-modal-content">
 
+
         <div class="modal-header">
 
             <h2>
                 Package Location Photo
             </h2>
+
 
             <button
                 class="close-button"
@@ -1717,11 +2086,13 @@
 
     <div class="modal-content">
 
+
         <div class="modal-header">
 
             <h2>
                 Create New Pickup
             </h2>
+
 
             <button
                 class="close-button"
@@ -1734,6 +2105,7 @@
 
 
         <form id="createPickupForm">
+
 
             <div class="modal-body">
 
@@ -1964,6 +2336,7 @@
 
             </div>
 
+
         </form>
 
     </div>
@@ -1983,11 +2356,13 @@
 
     <div class="modal-content">
 
+
         <div class="modal-header">
 
             <h2>
                 Picked Up / Archived
             </h2>
+
 
             <button
                 class="close-button"
@@ -2000,6 +2375,7 @@
 
 
         <div class="modal-body">
+
 
             <div class="form-group">
 
@@ -2014,6 +2390,7 @@
 
 
             <div id="archiveContent"></div>
+
 
         </div>
 
@@ -2242,6 +2619,8 @@ function showApp(user) {
         user.email || "";
 
 
+    setDefaultScheduledDate();
+
     loadPickups();
 
 }
@@ -2282,6 +2661,38 @@ async function logout() {
 
 
     showLogin();
+
+}
+
+
+
+/* =========================================================
+   DEFAULT SCHEDULED DATE
+========================================================= */
+
+function setDefaultScheduledDate() {
+
+    const dateInput =
+        document
+            .getElementById(
+                "scheduledDate"
+            );
+
+
+    if (
+        !dateInput.value
+    ) {
+
+        const today =
+            new Date()
+                .toISOString()
+                .split("T")[0];
+
+
+        dateInput.value =
+            today;
+
+    }
 
 }
 
@@ -2330,6 +2741,8 @@ async function loadPickups() {
         updateStats();
 
         displayPickups();
+
+        displayScheduledPickups();
 
 
     } catch (error) {
@@ -2457,7 +2870,227 @@ function updateStats() {
 
 
 /* =========================================================
-   DISPLAY PICKUPS
+   SCHEDULED PICKUPS
+========================================================= */
+
+function displayScheduledPickups() {
+
+    const selectedDate =
+        document
+            .getElementById(
+                "scheduledDate"
+            )
+            .value;
+
+
+    const list =
+        document
+            .getElementById(
+                "scheduledList"
+            );
+
+
+    const count =
+        document
+            .getElementById(
+                "scheduledCount"
+            );
+
+
+    if (!selectedDate) {
+
+        count.textContent =
+            "0 scheduled";
+
+
+        list.innerHTML = `
+
+            <div class="scheduled-empty">
+
+                Select a date to view scheduled pickups.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    /*
+     * Archived pickups are excluded.
+     *
+     * READY and COMPLETED pickups remain visible
+     * because they were scheduled for that date.
+     */
+
+    const scheduled =
+        pickups
+            .filter(
+                function(pickup) {
+
+                    return (
+                        pickup.pickup_date ===
+                        selectedDate &&
+                        (
+                            pickup.status === "READY" ||
+                            pickup.status === "COMPLETED"
+                        )
+                    );
+
+                }
+            )
+            .sort(
+                function(a, b) {
+
+                    return String(
+                        a.pickup_time || ""
+                    ).localeCompare(
+                        String(
+                            b.pickup_time || ""
+                        )
+                    );
+
+                }
+            );
+
+
+    count.textContent =
+        scheduled.length +
+        (
+            scheduled.length === 1
+                ? " scheduled"
+                : " scheduled"
+        );
+
+
+    if (
+        scheduled.length === 0
+    ) {
+
+        list.innerHTML = `
+
+            <div class="scheduled-empty">
+
+                No pickups scheduled for
+                ${formatDate(selectedDate)}.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    list.innerHTML =
+        scheduled
+            .map(
+                function(pickup) {
+
+                    const statusClass =
+                        pickup.status === "READY"
+                            ? "status-ready"
+                            : "status-completed";
+
+
+                    return `
+
+                        <div class="scheduled-item">
+
+
+                            <div class="scheduled-time">
+
+                                ${formatTime(
+                                    pickup.pickup_time
+                                )}
+
+                            </div>
+
+
+                            <div class="scheduled-code">
+
+                                ${escapeHtml(
+                                    pickup.confirmation_code
+                                )}
+
+                            </div>
+
+
+                            <div class="scheduled-requester">
+
+                                <div class="scheduled-requester-name">
+
+                                    ${escapeHtml(
+                                        pickup.requester_name
+                                    )}
+
+                                </div>
+
+
+                                <div class="scheduled-company">
+
+                                    ${escapeHtml(
+                                        pickup.company
+                                    )}
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="scheduled-carrier">
+
+                                ${escapeHtml(
+                                    pickup.carrier
+                                )}
+
+                            </div>
+
+
+                            <div class="scheduled-packages">
+
+                                ${escapeHtml(
+                                    pickup.package_count
+                                )}
+                                ${Number(pickup.package_count) === 1
+                                    ? "package"
+                                    : "packages"}
+
+                            </div>
+
+
+                            <div class="scheduled-status">
+
+                                <span
+                                    class="status ${statusClass}"
+                                >
+
+                                    ${escapeHtml(
+                                        pickup.status
+                                    )}
+
+                                </span>
+
+                            </div>
+
+
+                        </div>
+
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+
+/* =========================================================
+   DISPLAY ACTIVE PICKUPS
 ========================================================= */
 
 function displayPickups() {
@@ -2506,13 +3139,21 @@ function displayPickups() {
                 const searchable = [
 
                     pickup.confirmation_code,
+
                     pickup.requester_name,
+
                     pickup.company,
+
                     pickup.email,
+
                     pickup.phone,
+
                     pickup.carrier,
+
                     pickup.package_location,
+
                     pickup.package_description,
+
                     pickup.special_instructions
 
                 ]
@@ -2541,7 +3182,9 @@ function displayPickups() {
                     colspan="7"
                     class="empty-state"
                 >
+
                     No active pickups found.
+
                 </td>
 
             </tr>
@@ -2811,7 +3454,9 @@ function viewPickupDetails(code) {
                         font-size:13px;
                     "
                 >
+
                     No photo uploaded.
+
                 </span>
 
             `;
@@ -3234,13 +3879,6 @@ async function deletePickup(code) {
 
     try {
 
-        /*
-         * Delete the database row first.
-         *
-         * This is the important part.
-         * We check the returned data so we know
-         * whether Supabase actually removed the row.
-         */
 
         const {
             data: deletedRows,
@@ -3277,10 +3915,6 @@ async function deletePickup(code) {
         }
 
 
-        /*
-         * Make absolutely sure a row was deleted.
-         */
-
         if (
             !deletedRows ||
             deletedRows.length === 0
@@ -3304,7 +3938,7 @@ async function deletePickup(code) {
 
 
         /*
-         * Remove it from the local list immediately.
+         * Remove from local data immediately.
          */
 
         pickups =
@@ -3321,11 +3955,7 @@ async function deletePickup(code) {
 
 
         /*
-         * Delete the associated photo.
-         *
-         * If this fails, the pickup itself is still
-         * successfully deleted. The photo can be
-         * cleaned up later.
+         * Delete associated photo.
          */
 
         if (
@@ -3357,27 +3987,15 @@ async function deletePickup(code) {
         }
 
 
-        /*
-         * Close details.
-         */
-
         closeDetailsModal();
 
-
-        /*
-         * Refresh the dashboard using the
-         * updated local list immediately.
-         */
 
         updateStats();
 
         displayPickups();
 
+        displayScheduledPickups();
 
-        /*
-         * Reload from Supabase to verify that
-         * the record is really gone.
-         */
 
         await loadPickups();
 
@@ -4006,7 +4624,7 @@ async function generateConfirmationCode() {
 
 
 /* =========================================================
-   ADMIN TIMES
+   ADMIN TIME OPTIONS
 ========================================================= */
 
 function populateAdminTimes() {
@@ -4192,13 +4810,21 @@ function displayArchive() {
                     const searchable = [
 
                         pickup.confirmation_code,
+
                         pickup.requester_name,
+
                         pickup.company,
+
                         pickup.email,
+
                         pickup.phone,
+
                         pickup.carrier,
+
                         pickup.package_location,
+
                         pickup.package_description,
+
                         pickup.special_instructions
 
                     ]
@@ -4232,14 +4858,15 @@ function displayArchive() {
 
 
     if (
-        archived.length ===
-        0
+        archived.length === 0
     ) {
 
         container.innerHTML = `
 
             <div class="empty-state">
+
                 No archived pickups found.
+
             </div>
 
         `;
@@ -4307,6 +4934,7 @@ function displayArchive() {
 
                         <div class="archive-group">
 
+
                             <div class="archive-date">
 
                                 ${formatDate(date)}
@@ -4322,7 +4950,9 @@ function displayArchive() {
 
                                             <div class="archive-item">
 
+
                                                 <div class="archive-main">
+
 
                                                     <div class="archive-name">
 
@@ -4366,10 +4996,12 @@ function displayArchive() {
 
                                                     </div>
 
+
                                                 </div>
 
 
                                                 <div class="action-buttons">
+
 
                                                     <button
                                                         class="small-button details-button"
@@ -4396,7 +5028,9 @@ function displayArchive() {
                                                             : ""
                                                     }
 
+
                                                 </div>
+
 
                                             </div>
 
@@ -4405,6 +5039,7 @@ function displayArchive() {
                                     }
                                 )
                                 .join("")}
+
 
                         </div>
 
